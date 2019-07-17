@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/07/03 06:14:37 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/07/16 23:16:04 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ARCHIVE = libft/libft.a
 AUTHOR	= rpapagna
 
 CFLAGS	= -Wall -Wextra -Werror
-INCL	= -I includes/
+INCL	= -I /
 OBJ_PATH= obj
 
 #COLOR OUTPUT OPIONS
@@ -42,7 +42,7 @@ fclean:
 		@make -C libft fclean
 		@rm -rf $(NAME).dSYM
 		@rm -rf $(NAME)
-		@rm -rf includes/$(NAME).h.gch
+		@rm -rf $(NAME).h.gch
 
 re: fclean all
 
@@ -58,7 +58,7 @@ $(OBJ_PATH)/%.o: srcs/%.c | $(OBJ_PATH)
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 
 1mo:
-		@gcc -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(ARCHIVE) -o $(NAME)
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
 
 debug:

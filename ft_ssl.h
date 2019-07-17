@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/07/03 06:22:40 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/07/16 23:13:09 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define FT_SSL_H
 
 # include "../libft/includes/libft.h"
-
+# include <dirent.h>
+# include <errno.h>
 /*
 **	--------------------------------
 **				MACROS
@@ -22,6 +23,16 @@
 */
 
 # define USAGE "usage: ft_ssl command [command opts] [command args]\n"
+# define ER "ft_ssl: Error: '"
+# define ROR "' is an invalid command."
+# define S "Standard commands:\n"
+# define M "Message Digest commands:\nmd5\nsha256\n"
+# define C "Cipher commands:\n"
+# define O_ER "unknown option"
+# define O_P "-p\techo STDIN to STDOUT and append the checksum to STDOUT\n"
+# define O_Q "-q\tquiet mode\n"
+# define O_R "-r\treverse the format of the output\n"
+# define O_S "-s\tprint the sum of the given string\n"
 
 /*
 **	(COLORS)
@@ -49,6 +60,5 @@
 # define UMAG "\e[4;35m"
 # define UCYN "\e[4;36m"
 # define UWHT "\e[4;37m"
-
 
 #endif
