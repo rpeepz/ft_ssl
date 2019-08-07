@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/07/16 23:13:09 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/06 17:59:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,10 @@
 */
 
 # define USAGE "usage: ft_ssl command [command opts] [command args]\n"
-# define ER "ft_ssl: Error: '"
-# define ROR "' is an invalid command."
+# define USAGEMD5 "usage: md5 [-pqr] [-s string] [files ...]\n"
 # define S "Standard commands:\n"
 # define M "Message Digest commands:\nmd5\nsha256\n"
 # define C "Cipher commands:\n"
-# define O_ER "unknown option"
 # define O_P "-p\techo STDIN to STDOUT and append the checksum to STDOUT\n"
 # define O_Q "-q\tquiet mode\n"
 # define O_R "-r\treverse the format of the output\n"
