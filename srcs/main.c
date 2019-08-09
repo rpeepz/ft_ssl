@@ -6,27 +6,27 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:11:57 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/08 18:58:34 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/08 23:55:33 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ssl.h"
 
-void			read_files(int *fd, char **input, short options, int i)
+void			read_files(int *fd, char **input, short mask, int i)
 {
 	while (i < 16)
-		options &= ~(1 << i++);
+		mask &= ~(1 << i++);
 	i = 0;
-	while (options && input[options])
+	while (mask && input[mask])
 	{
-		opendir(input[options]);
+		opendir(input[mask]);
 		if (!(ft_strncmp(strerror(errno), "No such file or directory", 26)))
-			ft_printf("ft_ssl: %s: %s: %s\n", input[1], input[options],
+			ft_printf("ft_ssl: %s: %s: %s\n", input[1], input[mask],
 			strerror(errno));
 		else
-			fd[i] = open(input[options], O_RDONLY);
+			fd[i] = open(input[mask], O_RDONLY);
 		i++;
-		options++;
+		mask++;
 	}
 }
 
@@ -34,14 +34,14 @@ char			dash_s(char **input, int *i, int *j, short *mask)
 {
 	if (input[*i][++(*j)])
 	{
-		ft_printf("%s\n", &input[*i][*j]);//do sum of string
 		*mask |= 0x8000;
+		hash(input[1], &input[*i][*j], 0, *mask);
 		return (1);
 	}
 	if (input[++(*i)] && input[*i][0])
 	{
-		ft_printf("%s\n", &input[*i][0]);//do sum of string
 		*mask |= 0x8000;
+		hash(input[1], &input[*i][0], 0, *mask);
 		return (1);
 	}
 	return (0);
@@ -56,17 +56,15 @@ short			parse_av(char **input, short mask, int i, int j)
 			if (input[i][j] != 'p' && input[i][j] != 'q' &&
 				input[i][j] != 'r' && input[i][j] != 's')
 				IF_RETURN(ft_printf("unknown option '-%c'\n", input[i][j]), 0);
-			if (input[i][j] == 'p')
-				mask |= 0x1000;
-			else if (input[i][j] == 'q')
-				mask |= 0x2000;
-			else if (input[i][j] == 'r')
-				mask |= 0x4000;
-			else if (input[i][j] == 's')
+			IF_THEN(input[i][j] == 'p', mask |= 0x1000);
+			IF_THEN(input[i][j] == 'q', mask |= 0x2000);
+			IF_THEN(input[i][j] == 'r', mask |= 0x4000);
+			if (input[i][j] == 's')
 			{
 				if (dash_s(input, &i, &j, &mask))
 					break ;
-				IF_RETURN(ft_printf("%s", MD5SFLAG), 0);
+				if (input[1][0] == 'm' ? ft_printf("%s", MD5SFLAG) : 1)
+					return (0);
 			}
 			j++;
 		}
@@ -77,26 +75,28 @@ short			parse_av(char **input, short mask, int i, int j)
 int				main(int ac, char **av)
 {
 	int		fd[255];
+	int		*ptr;
 	char	*line;
-	short	options;
+	short	mask;
 
-	IF_RETURN(!(options = 0) && ac < 2, write(1, USAGE, 53));
-	IF_RETURN((ft_strncmp(av[1], "md5", 3) && ft_strncmp(av[1], "sha256", 6)),
+	IF_RETURN(!(mask = 0) && ac < 2, write(1, USAGE, 53));
+	IF_RETURN((ptr = fd) && (ft_strncmp(av[1], "md5", 3) &&
+		ft_strncmp(av[1], "sha256", 6) && ft_strncmp(av[1], "sha512", 6)),
 		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n%s\n%s\n%s\n",
 		av[1], S, M, C));
-	if ((av[2]) && !(options = parse_av(av, 0, 1, 0)))
+	if ((av[2]) && !(mask = parse_av(av, 0, 1, 0)))
 	{
-		if (!ft_strncmp(av[1], "md5", 3))
-			return (ft_printf("%s", USAGEMD5));
-		return (ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S));
+		return (!ft_strncmp(av[1], "md5", 3) ? ft_printf("%s", USAGEMD5) :
+		ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S));
 	}
-	IF_THEN(!(line = NULL) && ac > 2, read_files(fd, av, options, 12));
-	if ((!options || options & 0x1000) && get_next_line(0, &line) > -1)
+	if (!(line = NULL) && ac > 2)
+		read_files(fd, av, mask, 8);
+	if ((!mask || mask & 0x1000) && get_next_line(0, &line) > -1)
 	{
-		ft_putstr(line);
+		hash(av[1], line, 0, mask);
 		free(line);
 	}
-	else
-		return (1);
+	while (*ptr)
+		hash(av[1], line, *(ptr++), mask);
 	return (0);
 }

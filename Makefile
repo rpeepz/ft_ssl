@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/08/06 17:50:23 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/08/08 21:46:06 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ YELLOW	=\033[0;33m
 MAG		=\033[0;35m
 NC		=\033[0m
 
-SRCS 	=main.c
+SRCS 	=main.c\
+		md5.c
 
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 
