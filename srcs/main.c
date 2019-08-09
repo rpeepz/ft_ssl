@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:11:57 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/06 18:19:15 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/08 18:58:34 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@ void			read_files(int *fd, char **input, short options, int i)
 	}
 }
 
+char			dash_s(char **input, int *i, int *j, short *mask)
+{
+	if (input[*i][++(*j)])
+	{
+		ft_printf("%s\n", &input[*i][*j]);//do sum of string
+		*mask |= 0x8000;
+		return (1);
+	}
+	if (input[++(*i)] && input[*i][0])
+	{
+		ft_printf("%s\n", &input[*i][0]);//do sum of string
+		*mask |= 0x8000;
+		return (1);
+	}
+	return (0);
+}
+
 short			parse_av(char **input, short mask, int i, int j)
 {
 	while ((input[++i]) && input[i][0] == '-' && (j = 1))
@@ -46,7 +63,11 @@ short			parse_av(char **input, short mask, int i, int j)
 			else if (input[i][j] == 'r')
 				mask |= 0x4000;
 			else if (input[i][j] == 's')
-				mask |= 0x8000; //do something with teh next word
+			{
+				if (dash_s(input, &i, &j, &mask))
+					break ;
+				IF_RETURN(ft_printf("%s", MD5SFLAG), 0);
+			}
 			j++;
 		}
 	}
@@ -65,7 +86,7 @@ int				main(int ac, char **av)
 		av[1], S, M, C));
 	if ((av[2]) && !(options = parse_av(av, 0, 1, 0)))
 	{
-		if (!ft_strncmp(av[1], "md5", 3) || !ft_strncmp(av[1], "MD5", 3))
+		if (!ft_strncmp(av[1], "md5", 3))
 			return (ft_printf("%s", USAGEMD5));
 		return (ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S));
 	}

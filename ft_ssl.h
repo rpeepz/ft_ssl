@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/06 17:59:16 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/08 18:18:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define USAGE "usage: ft_ssl command [command opts] [command args]\n"
 # define USAGEMD5 "usage: md5 [-pqr] [-s string] [files ...]\n"
+# define MD5SFLAG "md5: option requires an argument -- s\n"
 # define S "Standard commands:\n"
 # define M "Message Digest commands:\nmd5\nsha256\n"
 # define C "Cipher commands:\n"
