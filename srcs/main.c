@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:11:57 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/08 23:55:33 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/10 03:48:08 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,32 @@ void			read_files(int *fd, char **input, short mask, int i)
 		i++;
 		mask++;
 	}
+	return ;
 }
 
 char			dash_s(char **input, int *i, int *j, short *mask)
 {
+	char	p_flag;
+	int		fd[255];
+
+	read_files(fd, input, *mask, 8);
+	p_flag = 0;
+	if (*mask & 0x1000)
+		p_flag = 1;
+	if (!(*mask & 0x4000))
+		*mask |= 0x8000;
 	if (input[*i][++(*j)])
 	{
-		*mask |= 0x8000;
-		hash(input[1], &input[*i][*j], 0, *mask);
+		hash(input[1], &input[*i][*j], *(fd) ? *(fd) : 0, (*mask &= ~0x1000));
+		if (p_flag)
+			*mask |= 0x1000;
 		return (1);
 	}
 	if (input[++(*i)] && input[*i][0])
 	{
-		*mask |= 0x8000;
-		hash(input[1], &input[*i][0], 0, *mask);
+		hash(input[1], &input[*i][0], *(fd) ? *fd : 0, (*mask &= ~0x1000));
+		if (p_flag)
+			*mask |= 0x1000;
 		return (1);
 	}
 	return (0);
@@ -75,28 +87,27 @@ short			parse_av(char **input, short mask, int i, int j)
 int				main(int ac, char **av)
 {
 	int		fd[255];
-	int		*ptr;
+	int		i;
 	char	*line;
 	short	mask;
 
 	IF_RETURN(!(mask = 0) && ac < 2, write(1, USAGE, 53));
-	IF_RETURN((ptr = fd) && (ft_strncmp(av[1], "md5", 3) &&
-		ft_strncmp(av[1], "sha256", 6) && ft_strncmp(av[1], "sha512", 6)),
+	IF_RETURN((i = -1) && valid_hashable(av[1]),
 		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n%s\n%s\n%s\n",
 		av[1], S, M, C));
-	if ((av[2]) && !(mask = parse_av(av, 0, 1, 0)))
+	IF_RETURN(((av[2]) && !(mask = parse_av(av, 0, 1, 0))),
+		(!ft_strncmp(av[1], "md5", 3) ? ft_printf("%s", USAGEMD5) :
+		ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S)));
+	IF_THEN((!(line = NULL) && ac > 2), read_files(fd, av, mask, 8));
+	if ((!mask || mask & 0x3000) && get_next_line(0, &line) > -1)
 	{
-		return (!ft_strncmp(av[1], "md5", 3) ? ft_printf("%s", USAGEMD5) :
-		ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S));
-	}
-	if (!(line = NULL) && ac > 2)
-		read_files(fd, av, mask, 8);
-	if ((!mask || mask & 0x1000) && get_next_line(0, &line) > -1)
-	{
-		hash(av[1], line, 0, mask);
+		mask &= ~0x8000;
+		hash(av[1], line, 0, !mask || mask & 0x2000 ? mask : (mask |= 0x1000));
 		free(line);
+		mask &= ~0x1000;
 	}
-	while (*ptr)
-		hash(av[1], line, *(ptr++), mask);
+	while (fd[++i])
+		hash(av[1], !av[fd[i]] ? av[i + fd[i] - 1] : av[loopdown(mask, 4)],
+		fd[i], mask &= ~0x8000);
 	return (0);
 }

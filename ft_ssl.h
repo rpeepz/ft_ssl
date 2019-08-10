@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/08 23:55:06 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/10 04:14:18 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,15 @@
 **	--------------------------------
 */
 
+char			*ft_tolower_str(char *str);
+char			*ft_toupper_str(char *str);
+int				valid_hashable(char *input);
+short			loopdown(short mask, int i);
+void			mask_hashable(char *input, short *mask);
 int				hash(char *input, char *to_hash, int fd, short mask);
+char            *md5(char *to_hash);
+char            *sha256(char *to_hash);
+char            *sha512(char *to_hash);
 
 /*
 **	(COLORS)

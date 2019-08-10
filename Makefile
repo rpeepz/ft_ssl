@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/08/08 21:46:06 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/08/10 03:50:50 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,11 @@ MAG		=\033[0;35m
 NC		=\033[0m
 
 SRCS 	=main.c\
-		md5.c
+		utils.c\
+		hash.c\
+		md5.c\
+		sha256.c\
+		sha512.c
 
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 
