@@ -46,9 +46,9 @@ int				valid_hashable(char *input);
 short			loopdown(short mask, int i);
 void			mask_hashable(char *input, short *mask);
 int				hash(char *input, char *to_hash, int fd, short mask);
-char            *md5(char *to_hash);
-char            *sha256(char *to_hash);
-char            *sha512(char *to_hash);
+char			*md5(char *to_hash);
+char			*sha256(char *to_hash);
+char			*sha512(char *to_hash);
 
 /*
 **	(COLORS)
