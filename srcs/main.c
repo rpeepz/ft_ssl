@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:11:57 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/10 03:48:08 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/22 05:54:28 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			read_files(int *fd, char **input, short mask, int i)
 	{
 		opendir(input[mask]);
 		if (!(ft_strncmp(strerror(errno), "No such file or directory", 26)))
-			ft_printf("ft_ssl: %s: %s: %s\n", input[1], input[mask],
+			ft_printf("%s: %s: %s\n", input[1], input[mask],
 			strerror(errno));
 		else
 			fd[i] = open(input[mask], O_RDONLY);
@@ -75,7 +75,7 @@ short			parse_av(char **input, short mask, int i, int j)
 			{
 				if (dash_s(input, &i, &j, &mask))
 					break ;
-				if (input[1][0] == 'm' ? ft_printf("%s", MD5SFLAG) : 1)
+				if (input[1][0] == 'm' ? ft_printf("%s", SFLAG, SFLAG1) : 1)
 					return (0);
 			}
 			j++;
@@ -94,7 +94,7 @@ int				main(int ac, char **av)
 	IF_RETURN(!(mask = 0) && ac < 2, write(1, USAGE, 53));
 	IF_RETURN((i = -1) && valid_hashable(av[1]),
 		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n%s\n%s\n%s\n",
-		av[1], S, M, C));
+		av[1], SC, MC, CC));
 	IF_RETURN(((av[2]) && !(mask = parse_av(av, 0, 1, 0))),
 		(!ft_strncmp(av[1], "md5", 3) ? ft_printf("%s", USAGEMD5) :
 		ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S)));

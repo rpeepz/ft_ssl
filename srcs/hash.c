@@ -6,35 +6,45 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 21:28:37 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/10 04:15:50 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/22 07:09:49 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ssl.h"
+void			do_this_thing(char *buf, char **contents, char **tmp)
+{
+	buf[PAGESIZE] = 0;
+	*tmp = ft_strjoin(*contents, buf);
+	if (ft_strcmp(*contents, ""))
+		ft_strdel(contents);
+	*contents = ft_strdup(*tmp);
+	ft_strdel(tmp);
+}
 
 char			*get_hash(char *to_hash, char *input, short mask, int fd)
 {
-	char	buf[32];
+	char	buf[PAGESIZE + 1];
 	char	*tmp;
 	char	*contents;
 
+	ft_bzero(buf, PAGESIZE);
 	contents = "";
 	if (fd > 2)
 	{
-		while (read(fd, buf, 31))
-		{
-			tmp = ft_strjoin(contents, buf);
-			contents = tmp;
-			free(tmp);
-		}
+		while (read(fd, buf, PAGESIZE) > 0)
+	 	{
+			do_this_thing((char *)buf, &contents, &tmp);
+			ft_bzero(buf, PAGESIZE);
+	 	}
+		do_this_thing((char*)buf, &contents, &tmp);
 		to_hash = contents;
 		close(fd);
 	}
 	mask_hashable(ft_tolower_str(input), &mask);
-	IF_RETURN(mask & 0x100, md5(to_hash));
+	IF_RETURN(mask & 0x100, md5(buf, to_hash));
 	IF_RETURN(mask & 0x200, sha256(to_hash));
 	IF_RETURN(mask & 0x400, sha512(to_hash));
-	return ("custom(to_hash)");
+	return (custom(buf, to_hash));
 }
 
 int				hash(char *input, char *to_hash, int fd, short mask)
@@ -50,6 +60,7 @@ int				hash(char *input, char *to_hash, int fd, short mask)
 	ft_printf("%s%c", get_hash(to_hash, input, mask, fd),
 		((!(mask & 0x4000) || mask & 0x2000 || mask & 0x8000) ||
 		(mask & 0x4000 && !(mask & 0x2000) && (mask & 0x1000)) ? '\n' : ' '));
+	mask_hashable(input, &mask);
 	if (!(mask & 0x8000) && mask & 0x4000 && !(mask & 0x3000))
 		ft_printf("%c%s%c\n", fd < 1 ? '\"' : 0,
 		(fd || mask & 0x4000) ? to_hash : "\0", fd < 1 ? '\"' : 0);

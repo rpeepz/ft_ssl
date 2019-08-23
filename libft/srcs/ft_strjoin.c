@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 00:13:27 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/03 00:47:00 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/18 20:01:43 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	s2_len;
 
 	if (!s1 || !s2)
-		return (NULL);
+		return (s1 ? ft_strdup(s1) : ft_strdup(s2));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	if (!(new_str = ft_strnew(s1_len + s2_len)))

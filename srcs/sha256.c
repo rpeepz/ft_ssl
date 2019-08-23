@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:50:26 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/10 04:14:06 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/12 12:12:05 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 char			*sha256(char *to_hash)
 {
+	to_hash = 0;
 	return ("[sha256hashasdasdasd]");
 }

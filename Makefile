@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/08/10 03:50:50 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/08/22 07:14:04 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ NC		=\033[0m
 SRCS 	=main.c\
 		utils.c\
 		hash.c\
+		custom.c\
 		md5.c\
 		sha256.c\
 		sha512.c
