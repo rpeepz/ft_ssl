@@ -84,7 +84,7 @@ short			parse_av(char **input, short mask, int i, int j)
 	return (input[i] ? mask += i : mask);
 }
 
-void			inputs(int *ac, char ***av)
+static int		inputs(int *ac, char ***av)
 {
 	char	**replace;
 
@@ -97,9 +97,16 @@ void			inputs(int *ac, char ***av)
 		ft_printf("ft_ssl> ");
 		ft_strdel(&replace[1]);
 		get_stdin(&(replace[1]), 0, 0, 0);
+		if (!replace[1])
+		{
+			ft_strdel(&replace[0]);
+			free(replace);
+			return (1);
+		}
 	}
 	replace[*ac] = 0;
 	*av = replace;
+	return (0);
 }
 
 int				main(int ac, char **av)
@@ -109,7 +116,7 @@ int				main(int ac, char **av)
 	char	*line;
 	short	mask;
 
-	IF_THEN(!(mask = 0) && ac < 2, inputs(&ac, &av));
+	IF_RETURN(!(mask = 0) && ac < 2 && inputs(&ac, &av), 0);
 	IF_RETURN((i = -1) && valid_hashable(av[1]), ft_error(1, av[1]));
 	IF_RETURN(((av[2]) && !(mask = parse_av(av, 0, 1, 0))),
 		ft_error(3, av[1]));
