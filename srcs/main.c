@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:11:57 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/22 05:54:28 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/08/28 05:27:34 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,31 @@ short			parse_av(char **input, short mask, int i, int j)
 			{
 				if (dash_s(input, &i, &j, &mask))
 					break ;
-				if (input[1][0] == 'm' ? ft_printf("%s", SFLAG, SFLAG1) : 1)
-					return (0);
+				ft_error(2, input[1]);
+				return (0);
 			}
 			j++;
 		}
 	}
 	return (input[i] ? mask += i : mask);
+}
+
+void			inputs(int *ac, char ***av)
+{
+	char	**replace;
+
+	*ac += 1;
+	replace = malloc(sizeof(*replace) * *ac + 1);
+	replace[0] = ft_strdup(**av);
+	replace[1] = ft_strdup("\n");
+	while (replace[1][0] == '\n' || replace[1][0] == '\0')
+	{
+		ft_printf("ft_ssl> ");
+		ft_strdel(&replace[1]);
+		get_stdin(&(replace[1]), 0, 0, 0);
+	}
+	replace[*ac] = 0;
+	*av = replace;
 }
 
 int				main(int ac, char **av)
@@ -91,15 +109,12 @@ int				main(int ac, char **av)
 	char	*line;
 	short	mask;
 
-	IF_RETURN(!(mask = 0) && ac < 2, write(1, USAGE, 53));
-	IF_RETURN((i = -1) && valid_hashable(av[1]),
-		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n%s\n%s\n%s\n",
-		av[1], SC, MC, CC));
+	IF_THEN(!(mask = 0) && ac < 2, inputs(&ac, &av));
+	IF_RETURN((i = -1) && valid_hashable(av[1]), ft_error(1, av[1]));
 	IF_RETURN(((av[2]) && !(mask = parse_av(av, 0, 1, 0))),
-		(!ft_strncmp(av[1], "md5", 3) ? ft_printf("%s", USAGEMD5) :
-		ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S)));
-	IF_THEN((!(line = NULL) && ac > 2), read_files(fd, av, mask, 8));
-	if ((!mask || mask & 0x3000) && get_next_line(0, &line) > -1)
+		ft_error(3, av[1]));
+	IF_THEN(((line = "") && ac > 2), read_files(fd, av, mask, 8));
+	if ((!mask || mask & 0x3000) && get_stdin(&line, 0, 1, 0))
 	{
 		mask &= ~0x8000;
 		hash(av[1], line, 0, !mask || mask & 0x2000 ? mask : (mask |= 0x1000));

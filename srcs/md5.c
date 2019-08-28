@@ -5,35 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/10 03:50:21 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/18 20:40:47 by rpapagna         ###   ########.fr       */
+/*   Created: 2019/08/27 22:31:22 by rpapagna          #+#    #+#             */
+/*   Updated: 2019/08/28 01:57:26 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ssl.h"
-
-unsigned int    left_rotate(unsigned int x, unsigned int c)
-{
-    return ((x << c) | (x >> (32 - c)));
-}
-void            byte_rev(unsigned int *c)
-{
-    unsigned int    num;
-    int             i;
-
-    num = 0;
-    i = 0;
-    num += *c & 0xff;
-    num = LEFT_SHIFT;
-    while (++i < 4)
-    {
-        num += *c >> (i * 8) & 0xff;
-        if ((i * 8) == 24)
-            break;
-        num = LEFT_SHIFT;
-    }
-    *c = num;
-}
 
 unsigned int	g_md5_s[64] =
 {
@@ -43,7 +20,7 @@ unsigned int	g_md5_s[64] =
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 };
 
-unsigned int	g_md5_K[64] =
+unsigned int	g_md5_k[64] =
 {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -63,104 +40,113 @@ unsigned int	g_md5_K[64] =
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-static void 	md5_loop(int i, t_md5 *md)
+static void		md5_loop(int i, t_md5 *b)
 {
-	if (0 <= i && i <= 15)
+	if (i >= 0 && i < 16)
 	{
-		md->f = (md->b & md->c) | ((~md->b) & md->d);
-		md->g = i;
+		b->bit = (b->b & b->c) | ((~b->b) & b->d);
+		b->mod = i;
 	}
-	else if (16 <= i && i <= 31)
+	else if (i >= 16 && i < 32)
 	{
-		md->f = (md->d & md->b) | ((~md->d) & md->c);
-		md->g = (5 * i + 1) % 16;
+		b->bit = (b->d & b->b) | ((~b->d) & b->c);
+		b->mod = ((5 * i) + 1) % 16;
 	}
-	else if (32 <= i && i <= 47)
+	else if (i >= 32 && i < 48)
 	{
-		md->f = md->b ^ md->c ^ md->d;
-		md->g = (3 * i + 5) % 16;
+		b->bit = b->b ^ b->c ^ b->d;
+		b->mod = ((3 * i) + 5) % 16;
 	}
 	else
 	{
-	md->f = md->c ^ (md->b | (~md->d));
-		md->g = (7 * i) % 16;
+		b->bit = b->c ^ (b->b | (~b->d));
+		b->mod = (7 * i) % 16;
 	}
-	md->f = md->f + md->a + g_md5_K[i] + *((unsigned int *)(md->mem[md->g]));
-	md->a = md->d;
-	md->d = md->c;
-	md->c = md->b;
-	md->b = md->b + left_rotate(md->f, g_md5_s[i]);
+	b->bit = b->bit + b->a + g_md5_k[i] + *((unsigned int *)b->table[b->mod]);
+	b->a = b->d;
+	b->d = b->c;
+	b->c = b->b;
+	b->b = b->b + ((b->bit << g_md5_s[i]) | (b->bit >> (32 - g_md5_s[i])));
 }
 
-static void 	md5_oper(int i, t_md5 *md)
+static void		md5_cycle(int count, t_md5 *b)
 {
-	int		index;
+	int		i;
 	int		j;
 
-	index = -1;
-	while (++index < 16)
+	i = -1;
+	while (++i < 16)
 	{
 		j = -1;
 		while (++j < 4)
-			md->mem[index][j] = md->msg[i * 64 + index * 4 + j];
+			b->table[i][j] = b->message[(count * 64) + (i * 4) + j];
 	}
-	md->a = md->a_1;
-	md->b = md->b_1;
-	md->c = md->c_1;
-	md->d = md->d_1;
-	index = -1;
-	while (++index < 64)
-		md5_loop(index, md);
-	md->a_1 += md->a;
-	md->b_1 += md->b;
-	md->c_1 += md->c;
-	md->d_1 += md->d;
+	b->a = b->initial_a;
+	b->b = b->initial_b;
+	b->c = b->initial_c;
+	b->d = b->initial_d;
+	i = -1;
+	while (++i < 64)
+		md5_loop(i, b);
+	b->initial_a += b->a;
+	b->initial_b += b->b;
+	b->initial_c += b->c;
+	b->initial_d += b->d;
 }
 
-static void 	md5_set(char *to_hash, t_md5 *md)
+static void		md5_set(char *to_hash, t_md5 *b, int i, uint64_t len)
 {
-	int i;
-	uint64_t	len;
-
-	md->a_1 = 0x67452301;
-	md->b_1 = 0xefcdab89;
-	md->c_1 = 0x98badcfe;
-	md->d_1 = 0x10325476;
-	len = 0;
-	if (to_hash)
-		md->set = (ft_strlen(to_hash) + 8) / 64 + 1;
-	else
-		md->set = 1;
-	md->msg = (unsigned char *)malloc(64 * md->set);
-	i = -1;
-	while (++i < (int)(64 * md->set))
-		md->msg[i] = 0;
-	i = -1;
-	while (to_hash && to_hash[++i])
-		md->msg[i] = to_hash[i];
-	md->msg[i == -1 ? 0 : i] = 1 << 7;
-	len = i << 3;
-	i = -1;
+	b->initial_a = 0x67452301;
+	b->initial_b = 0xefcdab89;
+	b->initial_c = 0x98badcfe;
+	b->initial_d = 0x10325476;
+	len = ft_strlen(to_hash);
+	b->multiples = len ? ((len + 8) / 64) + 1 : 1;
+	b->message = malloc(64 * b->multiples);
+	ft_bzero(b->message, (int)(64 * b->multiples));
+	ft_strcpy((char *)b->message, to_hash);
+	b->message[len ? len : 0] = 1 << 7;
+	len = len << 3;
 	while (++i < 8)
-		md->msg[64 * md->set - 8 + i] = len >> (i * 8);
+		b->message[((64 * b->multiples) - 8) + i] = len >> (i * 8);
+}
+
+static void		endian_rev(unsigned int *c)
+{
+	unsigned int	num;
+	int				i;
+
+	num = 0;
+	i = 0;
+	num += *c & 0xff;
+	num = num << 8;
+	while (++i < 4)
+	{
+		num += *c >> (i * 8) & 0xff;
+		if ((i * 8) == 24)
+			break ;
+		num = num << 8;
+	}
+	*c = num;
 }
 
 char			*md5(char *buf, char *to_hash)
 {
-	t_md5	md;
-	int		i;
+	t_md5		b;
+	int			i;
 
 	i = -1;
-	ft_bzero(&md, 10);
-	md5_set(to_hash, &md);
-	while (++i < (int)(md.set))
-		md5_oper(i, &md);
-	byte_rev(&md.a_1);
-	byte_rev(&md.b_1);
-	byte_rev(&md.c_1);
-	byte_rev(&md.d_1);
+	ft_bzero(&b, sizeof(t_md5));
+	md5_set(to_hash, &b, (int)-1, (uint64_t)0);
+	while (++i < (int)b.multiples)
+		md5_cycle(i, &b);
+	endian_rev(&b.initial_a);
+	endian_rev(&b.initial_b);
+	endian_rev(&b.initial_c);
+	endian_rev(&b.initial_d);
 	to_hash = buf;
-	ft_sprintf(to_hash, "%.8x%.8x%.8x%.8x", md.a_1, md.b_1, md.c_1, md.d_1);
-	free(md.msg);
+	ft_sprintf(to_hash, "%.8x%.8x%.8x%.8x",
+		b.initial_a, b.initial_b, b.initial_c, b.initial_d);
+	free(b.message);
 	return (to_hash);
 }
