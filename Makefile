@@ -28,7 +28,6 @@ NC		=\033[0m
 SRCS 	=main.c\
 		utils.c\
 		hash.c\
-		custom.c\
 		md5.c\
 		sha256.c\
 		sha512.c

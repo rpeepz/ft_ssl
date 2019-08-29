@@ -121,8 +121,10 @@ int				main(int ac, char **av)
 	IF_RETURN(((av[2]) && !(mask = parse_av(av, 0, 1, 0))),
 		ft_error(3, av[1]));
 	IF_THEN(((line = "") && ac > 2), read_files(fd, av, mask, 8));
-	if ((!mask || mask & 0x3000) && get_stdin(&line, 0, 1, 0))
+	if ((!mask || mask & 0x1000 || (!*fd && mask & 0x4000))
+		&& get_stdin(&line, 0, 1, 0))
 	{
+		IF_THEN(!line, (line = ft_strdup("")));
 		mask &= ~0x8000;
 		hash(av[1], line, 0, !mask || mask & 0x2000 ? mask : (mask |= 0x1000));
 		free(line);

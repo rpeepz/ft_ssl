@@ -39,13 +39,14 @@ char			*get_hash(char *to_hash, char *input, short mask, int fd)
 		}
 		do_this_thing((char*)buf, &contents, &tmp);
 		to_hash = contents;
+		free(contents);
 		close(fd);
 	}
 	mask_hashable(ft_strtolower(input), &mask);
 	IF_RETURN(mask & 0x100, md5(buf, to_hash));
-	IF_RETURN(mask & 0x200, sha256(to_hash));
-	IF_RETURN(mask & 0x400, sha512(to_hash));
-	return (custom(buf, to_hash));
+	IF_RETURN(mask & 0x200, sha256(buf, to_hash));
+	IF_RETURN(mask & 0x400, sha512(buf, to_hash));
+	return ("----No hash specified----");
 }
 
 int				hash(char *input, char *to_hash, int fd, short mask)
