@@ -28,7 +28,7 @@
 # define USAGEMD5 "usage: md5 [-pqr] [-s string] [files ...]\n"
 # define SFLAG ": option requires an argument -- s\n"
 # define SC "Standard commands:\n"
-# define MC "Message Digest commands:\nmd5\t\tsha256\t\tsha512\n"
+# define MC "Supported commands:\nmd5\t\tsha256\t\tbasic\n"
 # define CC "Cipher commands:\n"
 # define O_P "-p\techo STDIN to STDOUT and append the checksum to STDOUT\n"
 # define O_Q "-q\tquiet mode\n"
@@ -44,10 +44,7 @@
 
 typedef struct		s_md5
 {
-	unsigned int	initial_a;
-	unsigned int	initial_b;
-	unsigned int	initial_c;
-	unsigned int	initial_d;
+	unsigned int	hash[4];
 	unsigned int	multiples;
 	unsigned int	a;
 	unsigned int	b;
@@ -58,22 +55,55 @@ typedef struct		s_md5
 	unsigned char	*message;
 	unsigned char	table[16][4];
 }					t_md5;
+
+typedef struct		s_sha
+{
+	unsigned int	hash[8];
+	unsigned int	multiples;
+	unsigned int	a;
+	unsigned int	b;
+	unsigned int	c;
+	unsigned int	d;
+	unsigned int	e;
+	unsigned int	f;
+	unsigned int	g;
+	unsigned int	h;
+	unsigned char	*message;
+	unsigned int	array[64];
+}					t_sha;
+
+typedef struct		s_sha512
+{
+	uint64_t		hash[8];
+	uint64_t		multiples;
+	uint64_t		a;
+	uint64_t		b;
+	uint64_t		c;
+	uint64_t		d;
+	uint64_t		e;
+	uint64_t		f;
+	uint64_t		g;
+	uint64_t		h;
+	unsigned char	*message;
+	uint64_t		array[80];
+}					t_sha512;
+
 /*
 **	--------------------------------
 **	    		FUNCTIONS
 **	--------------------------------
 */
 
+int					ft_error(int err, char *ex);
 int					get_stdin(char **line, char *str, int x, int i);
 int					valid_hashable(char *input);
-short				loopdown(short mask, int i);
 void				mask_hashable(char *input, short *mask);
+short				loopdown(short mask, int i);
 int					hash(char *input, char *to_hash, int fd, short mask);
 char				*md5(char *buf, char *to_hash);
 char				*custom(char *buf, char *to_hash);
-char				*sha256(char *to_hash);
-char				*sha512(char *to_hash);
-int					ft_error(int err, char *ex);
+char				*sha256(char *buf, char *to_hash);
+char				*sha512(char *buf, char *to_hash);
 
 /*
 **	(COLORS)

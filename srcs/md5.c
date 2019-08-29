@@ -81,25 +81,25 @@ static void		md5_cycle(int count, t_md5 *b)
 		while (++j < 4)
 			b->table[i][j] = b->message[(count * 64) + (i * 4) + j];
 	}
-	b->a = b->initial_a;
-	b->b = b->initial_b;
-	b->c = b->initial_c;
-	b->d = b->initial_d;
+	b->a = b->hash[0];
+	b->b = b->hash[1];
+	b->c = b->hash[2];
+	b->d = b->hash[3];
 	i = -1;
 	while (++i < 64)
 		md5_loop(i, b);
-	b->initial_a += b->a;
-	b->initial_b += b->b;
-	b->initial_c += b->c;
-	b->initial_d += b->d;
+	b->hash[0] += b->a;
+	b->hash[1] += b->b;
+	b->hash[2] += b->c;
+	b->hash[3] += b->d;
 }
 
 static void		md5_set(char *to_hash, t_md5 *b, int i, uint64_t len)
 {
-	b->initial_a = 0x67452301;
-	b->initial_b = 0xefcdab89;
-	b->initial_c = 0x98badcfe;
-	b->initial_d = 0x10325476;
+	b->hash[0] = 0x67452301;
+	b->hash[1] = 0xefcdab89;
+	b->hash[2] = 0x98badcfe;
+	b->hash[3] = 0x10325476;
 	len = ft_strlen(to_hash);
 	b->multiples = len ? ((len + 8) / 64) + 1 : 1;
 	b->message = malloc(64 * b->multiples);
@@ -140,13 +140,13 @@ char			*md5(char *buf, char *to_hash)
 	md5_set(to_hash, &b, (int)-1, (uint64_t)0);
 	while (++i < (int)b.multiples)
 		md5_cycle(i, &b);
-	endian_rev(&b.initial_a);
-	endian_rev(&b.initial_b);
-	endian_rev(&b.initial_c);
-	endian_rev(&b.initial_d);
+	endian_rev(&b.hash[0]);
+	endian_rev(&b.hash[1]);
+	endian_rev(&b.hash[2]);
+	endian_rev(&b.hash[3]);
 	to_hash = buf;
 	ft_sprintf(to_hash, "%.8x%.8x%.8x%.8x",
-		b.initial_a, b.initial_b, b.initial_c, b.initial_d);
+		b.hash[0], b.hash[1], b.hash[2], b.hash[3]);
 	free(b.message);
 	return (to_hash);
 }

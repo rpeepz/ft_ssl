@@ -20,7 +20,7 @@ int				valid_hashable(char *input)
 		return (0);
 	else if (!ft_strcmp(input, "sha512"))
 		return (0);
-	else if (!ft_strcmp(input, "basic"))
+	else if (!ft_strcmp(input, "none"))
 		return (0);
 	return (1);
 }
@@ -35,7 +35,7 @@ void			mask_hashable(char *input, short *mask)
 		*mask |= 0x200;
 	else if (!ft_strcmp(input, "sha512"))
 		*mask |= 0x400;
-	else if (!ft_strcmp(input, "basic"))
+	else if (!ft_strcmp(input, "none"))
 		*mask |= 0x800;
 }
 
@@ -69,7 +69,7 @@ int				get_stdin(char **line, char *str, int x, int i)
 		str = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
-	*line = ft_strdup(str);
+	*line = i == 1 ? ft_strjoin(str, "\n") : ft_strdup(str);
 	ft_strdel(&str);
 	IF_THEN(!x, ft_strdel(&tmp));
 	return (x);
