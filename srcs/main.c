@@ -67,7 +67,7 @@ short			parse_av(char **input, short mask, int i, int j)
 		{
 			if (input[i][j] != 'p' && input[i][j] != 'q' &&
 				input[i][j] != 'r' && input[i][j] != 's')
-				IF_RETURN(ft_printf("unknown option '-%c'\n", input[i][j]), 0);
+				IF_RETURN(ft_error(4, &input[i][j]), 0);
 			IF_THEN(input[i][j] == 'p', mask |= 0x1000);
 			IF_THEN(input[i][j] == 'q', mask |= 0x2000);
 			IF_THEN(input[i][j] == 'r', mask |= 0x4000);
