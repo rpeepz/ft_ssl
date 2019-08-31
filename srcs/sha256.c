@@ -45,7 +45,7 @@ static void		sha256_loop(int i, t_sha32bit *s, uint32_t *w)
 	s->d = s->c;
 	s->c = s->b;
 	s->b = s->a;
-	s->a = t1 + t2;;
+	s->a = t1 + t2;
 }
 
 void			sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i)
