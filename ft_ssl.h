@@ -13,6 +13,12 @@
 #ifndef FT_SSL_H
 # define FT_SSL_H
 
+# define RR(a, b) (((a) >> (b)) | ((a) << (64 - (b))))
+# define E0(x) (RR(x, 28) ^ RR(x, 34) ^ RR(x, 39))
+# define E1(x) (RR(x, 14) ^ RR(x, 18) ^ RR(x, 41))
+# define S0(x) (RR(x, 1) ^ RR(x, 8) ^ ((x) >> 7))
+# define S1(x) (RR(x, 19) ^ RR(x, 61) ^ ((x) >> 6))
+
 # include "libft/includes/libft.h"
 # include <dirent.h>
 # include <errno.h>
@@ -75,7 +81,7 @@ typedef struct		s_sha
 typedef struct		s_sha512
 {
 	uint64_t		hash[8];
-	uint64_t		multiples;
+	int				multiples;
 	uint64_t		a;
 	uint64_t		b;
 	uint64_t		c;
@@ -84,8 +90,7 @@ typedef struct		s_sha512
 	uint64_t		f;
 	uint64_t		g;
 	uint64_t		h;
-	unsigned char	*message;
-	uint64_t		array[80];
+	uint64_t		**message;
 }					t_sha512;
 
 /*
