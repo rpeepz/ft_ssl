@@ -127,11 +127,13 @@ int				main(int ac, char **av)
 		IF_THEN(!line, (line = ft_strdup("")));
 		mask &= ~0x8000;
 		hash(av[1], line, 0, !mask || mask & 0x2000 ? mask : (mask |= 0x1000));
-		free(line);
-		mask &= ~0x1000;
+		IF_THEN(ft_pipewrench("-s", line), mask &= ~0x1000);
 	}
 	while (fd[++i])
-		hash(av[1], !av[fd[i]] ? av[i + fd[i] - 1] : av[loopdown(mask, 4)],
-		fd[i], mask &= ~0x8000);
+	{
+		mask &= ~0x8000;
+		hash(av[1], loopdown(mask, 4) < 3 ?
+		av[fd[i] - 1] : av[loopdown(mask, 4) + i], fd[i], mask);
+	}
 	return (0);
 }

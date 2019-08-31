@@ -28,8 +28,11 @@ NC		=\033[0m
 SRCS 	=main.c\
 		utils.c\
 		hash.c\
+		error.c\
 		md5.c\
+		sha224.c\
 		sha256.c\
+		sha384.c\
 		sha512.c
 
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))

@@ -13,6 +13,12 @@
 #ifndef FT_SSL_H
 # define FT_SSL_H
 
+# define RR_32(a, b) (((a) >> (b)) | ((a) << (32 - (b))))
+# define E0_32(x) (RR_32(x, 2) ^ RR_32(x, 13) ^ RR_32(x, 22))
+# define E1_32(x) (RR_32(x, 6) ^ RR_32(x, 11) ^ RR_32(x, 25))
+# define S0_32(x) (RR_32(x, 7) ^ RR_32(x, 18) ^ ((x) >> 3))
+# define S1_32(x) (RR_32(x, 17) ^ RR_32(x, 19) ^ ((x) >> 10))
+
 # define RR(a, b) (((a) >> (b)) | ((a) << (64 - (b))))
 # define E0(x) (RR(x, 28) ^ RR(x, 34) ^ RR(x, 39))
 # define E1(x) (RR(x, 14) ^ RR(x, 18) ^ RR(x, 41))
@@ -62,23 +68,22 @@ typedef struct		s_md5
 	unsigned char	table[16][4];
 }					t_md5;
 
-typedef struct		s_sha
+typedef struct		s_sha32bit
 {
-	unsigned int	hash[8];
-	unsigned int	multiples;
-	unsigned int	a;
-	unsigned int	b;
-	unsigned int	c;
-	unsigned int	d;
-	unsigned int	e;
-	unsigned int	f;
-	unsigned int	g;
-	unsigned int	h;
-	unsigned char	*message;
-	unsigned int	array[64];
-}					t_sha;
+	uint32_t		hash[8];
+	int				multiples;
+	uint32_t		a;
+	uint32_t		b;
+	uint32_t		c;
+	uint32_t		d;
+	uint32_t		e;
+	uint32_t		f;
+	uint32_t		g;
+	uint32_t		h;
+	uint32_t		**message;
+}					t_sha32bit;
 
-typedef struct		s_sha512
+typedef struct		s_sha64bit
 {
 	uint64_t		hash[8];
 	int				multiples;
@@ -91,7 +96,7 @@ typedef struct		s_sha512
 	uint64_t		g;
 	uint64_t		h;
 	uint64_t		**message;
-}					t_sha512;
+}					t_sha64bit;
 
 /*
 **	--------------------------------
@@ -103,12 +108,24 @@ int					ft_error(int err, char *ex);
 int					get_stdin(char **line, char *str, int x, int i);
 int					valid_hashable(char *input);
 void				mask_hashable(char *input, short *mask);
+void				free_message(int count, uint64_t **ptr);
 short				loopdown(short mask, int i);
 int					hash(char *input, char *to_hash, int fd, short mask);
 char				*md5(char *buf, char *to_hash);
-char				*custom(char *buf, char *to_hash);
+void				sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i);
+void				sha32_set(char *to_hash, t_sha32bit *s);
+char				*sha224(char *buf, char *to_hash);
 char				*sha256(char *buf, char *to_hash);
+void				sha64_cycle(int count, t_sha64bit *s, uint64_t *w, int i);
+void				sha64_start(char *to_hash, t_sha64bit *s);
+char				*sha384(char *buf, char *to_hash);
 char				*sha512(char *buf, char *to_hash);
+
+/*
+**	--------------------------------
+**	    	HASH CONSTANTS
+**	--------------------------------
+*/
 
 /*
 **	(COLORS)

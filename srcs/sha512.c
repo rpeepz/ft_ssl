@@ -12,7 +12,7 @@
 
 #include "../ft_ssl.h"
 
-u_int64_t	g_sha512_k[80] =
+static uint64_t	g_sha64bit_k[80] =
 {
 	0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f,
 	0xe9b5dba58189dbbc, 0x3956c25bf348b538, 0x59f111f1b605d019,
@@ -43,7 +43,7 @@ u_int64_t	g_sha512_k[80] =
 	0x5fcb6fab3ad6faec, 0x6c44198c4a475817
 };
 
-static void		sha512_loop(t_sha512 *s, int i, uint64_t *w)
+static void		sha512_loop(t_sha64bit *s, int i, uint64_t *w)
 {
 	uint64_t	t1;
 	uint64_t	t2;
@@ -52,7 +52,7 @@ static void		sha512_loop(t_sha512 *s, int i, uint64_t *w)
 
 	ch = (s->e & s->f) ^ ((~s->e) & s->g);
 	maj = (s->a & s->b) ^ (s->a & s->c) ^ (s->b & s->c);
-	t1 = s->h + E1(s->e) + ch + g_sha512_k[i] + w[i];
+	t1 = s->h + E1(s->e) + ch + g_sha64bit_k[i] + w[i];
 	t2 = E0(s->a) + maj;
 	s->h = s->g;
 	s->g = s->f;
@@ -64,7 +64,7 @@ static void		sha512_loop(t_sha512 *s, int i, uint64_t *w)
 	s->a = t1 + t2;
 }
 
-static void		sha_cycle(int count, t_sha512 *s, uint64_t *w, int i)
+void			sha64_cycle(int count, t_sha64bit *s, uint64_t *w, int i)
 {
 	while (++i < 16)
 		w[i] = s->message[count][i];
@@ -92,7 +92,7 @@ static void		sha_cycle(int count, t_sha512 *s, uint64_t *w, int i)
 	s->hash[7] += s->h;
 }
 
-static void		sha_pad(char *to_hash, t_sha512 *s, uint64_t len)
+static void		sha_pad(char *to_hash, t_sha64bit *s, uint64_t len)
 {
 	int			i;
 	int			u;
@@ -114,7 +114,7 @@ static void		sha_pad(char *to_hash, t_sha512 *s, uint64_t len)
 	s->message[s->multiples - 1][15] = ((uint64_t)len * 8) & 0xffffffffffffffff;
 }
 
-static void		sha_start(char *to_hash, t_sha512 *s)
+void			sha64_start(char *to_hash, t_sha64bit *s)
 {
 	int			i;
 	uint64_t	len;
@@ -138,13 +138,13 @@ static void		sha_start(char *to_hash, t_sha512 *s)
 
 char			*sha512(char *buf, char *to_hash)
 {
-	t_sha512	s;
+	t_sha64bit	s;
 	uint64_t	w[80];
 	int			i;
 
 	i = -1;
-	ft_bzero(&s, sizeof(t_sha512));
-	sha_start(to_hash, &s);
+	ft_bzero(&s, sizeof(t_sha64bit));
+	sha64_start(to_hash, &s);
 	s.hash[0] = 0x6a09e667f3bcc908;
 	s.hash[1] = 0xbb67ae8584caa73b;
 	s.hash[2] = 0x3c6ef372fe94f82b;
@@ -154,12 +154,13 @@ char			*sha512(char *buf, char *to_hash)
 	s.hash[6] = 0x1f83d9abfb41bd6b;
 	s.hash[7] = 0x5be0cd19137e2179;
 	while (++i < (s.multiples))
-		sha_cycle(i, &s, w, -1);
+		sha64_cycle(i, &s, w, -1);
 	to_hash = buf;
 	ft_sprintf(to_hash,
 		"%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx",
 		s.hash[0], s.hash[1], s.hash[2], s.hash[3],
 		s.hash[4], s.hash[5], s.hash[6], s.hash[7]);
+	free_message(s.multiples, s.message);
 	free(s.message);
 	return (to_hash);
 }

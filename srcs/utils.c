@@ -16,11 +16,13 @@ int				valid_hashable(char *input)
 {
 	if (!ft_strcmp(input, "md5"))
 		return (0);
+	else if (!ft_strcmp(input, "sha224"))
+		return (0);
 	else if (!ft_strcmp(input, "sha256"))
 		return (0);
-	else if (!ft_strcmp(input, "sha512"))
+	else if (!ft_strcmp(input, "sha384"))
 		return (0);
-	else if (!ft_strcmp(input, "none"))
+	else if (!ft_strcmp(input, "sha512"))
 		return (0);
 	return (1);
 }
@@ -31,12 +33,14 @@ void			mask_hashable(char *input, short *mask)
 		return ;
 	if (!ft_strcmp(input, "md5"))
 		*mask |= 0x100;
-	else if (!ft_strcmp(input, "sha256"))
+	else if (!ft_strcmp(input, "sha224"))
 		*mask |= 0x200;
-	else if (!ft_strcmp(input, "sha512"))
+	else if (!ft_strcmp(input, "sha256"))
+		*mask |= 0x300;
+	else if (!ft_strcmp(input, "sha384"))
 		*mask |= 0x400;
-	else if (!ft_strcmp(input, "none"))
-		*mask |= 0x800;
+	else if (!ft_strcmp(input, "sha512"))
+		*mask |= 0x500;
 }
 
 short			loopdown(short mask, int i)
@@ -75,19 +79,13 @@ int				get_stdin(char **line, char *str, int x, int i)
 	return (x);
 }
 
-int				ft_error(int err, char *ex)
+void			free_message(int count, uint64_t **ptr)
 {
-	if (err == 1)
-		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n%s\n",
-		ex, MC);
-	if (err == 2)
-		ft_printf("%s%s", ex, SFLAG);
-	if (err == 3 && ex[0] == 'm')
-		ft_printf("%s", USAGEMD5);
-	else
+	int		i;
+
+	i = -1;
+	while (++i < count)
 	{
-		if (err == 3)
-			ft_printf("options are\n%s%s%s%s", O_P, O_Q, O_R, O_S);
+		free(ptr[i]);
 	}
-	return (err);
 }

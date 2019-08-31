@@ -43,9 +43,11 @@ char			*get_hash(char *to_hash, char *input, short mask, int fd)
 		close(fd);
 	}
 	mask_hashable(ft_strtolower(input), &mask);
-	IF_RETURN(mask & 0x100, md5(buf, to_hash));
-	IF_RETURN(mask & 0x200, sha256(buf, to_hash));
-	IF_RETURN(mask & 0x400, sha512(buf, to_hash));
+	IF_RETURN((mask & 0xF00) == 0x100, md5(buf, to_hash));
+	IF_RETURN((mask & 0xF00) == 0x200, sha224(buf, to_hash));
+	IF_RETURN((mask & 0xF00) == 0x300, sha256(buf, to_hash));
+	IF_RETURN((mask & 0xF00) == 0x400, sha384(buf, to_hash));
+	IF_RETURN((mask & 0xF00) == 0x500, sha512(buf, to_hash));
 	return ("----No hash specified----");
 }
 
