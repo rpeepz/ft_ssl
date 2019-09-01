@@ -132,7 +132,7 @@ void			sha64_start(char *to_hash, t_sha64bit *s)
 		s->message[i] = (uint64_t*)malloc(sizeof(uint64_t) * 16);
 		ft_bzero(s->message[i], sizeof(uint64_t) * 16);
 	}
-	sha_pad(cpy, s, LEN(cpy));
+	sha_pad(to_hash, s, LEN(to_hash));
 	free(cpy);
 }
 

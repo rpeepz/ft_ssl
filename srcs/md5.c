@@ -96,19 +96,24 @@ static void		md5_cycle(int count, t_md5 *b)
 
 static void		md5_set(char *to_hash, t_md5 *b, int i, uint64_t len)
 {
-	b->hash[0] = 0x67452301;
-	b->hash[1] = 0xefcdab89;
-	b->hash[2] = 0x98badcfe;
-	b->hash[3] = 0x10325476;
+	char		*cpy;
+
+	cpy = ft_strdup(to_hash);
 	len = ft_strlen(to_hash);
 	b->multiples = len ? ((len + 8) / 64) + 1 : 1;
 	b->message = malloc(64 * b->multiples);
-	ft_bzero(b->message, (int)(64 * b->multiples));
+	ft_bzero(b->message, (uint32_t)(64 * b->multiples));
 	ft_strcpy((char *)b->message, to_hash);
-	b->message[len ? len : 0] = 1 << 7;
+	b->message[len ? len : 0] = 0x80;
 	len = len << 3;
+	i = -1;
 	while (++i < 8)
+	{
+		if (!(len >> (i * 8)))
+			break ;
 		b->message[((64 * b->multiples) - 8) + i] = len >> (i * 8);
+	}
+	free(cpy);
 }
 
 static void		endian_rev(unsigned int *c)
@@ -138,6 +143,10 @@ char			*md5(char *buf, char *to_hash)
 	i = -1;
 	ft_bzero(&b, sizeof(t_md5));
 	md5_set(to_hash, &b, (int)-1, (uint64_t)0);
+	b.hash[0] = 0x67452301;
+	b.hash[1] = 0xefcdab89;
+	b.hash[2] = 0x98badcfe;
+	b.hash[3] = 0x10325476;
 	while (++i < (int)b.multiples)
 		md5_cycle(i, &b);
 	endian_rev(&b.hash[0]);

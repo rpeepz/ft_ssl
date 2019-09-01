@@ -112,7 +112,7 @@ void			sha32_set(char *to_hash, t_sha32bit *s)
 		s->message[i] = (uint32_t*)malloc(sizeof(uint32_t) * 16);
 		ft_bzero(s->message[i], sizeof(uint32_t) * 16);
 	}
-	sha_pad(cpy, s, LEN(cpy));
+	sha_pad(to_hash, s, LEN(to_hash));
 	free(cpy);
 }
 
