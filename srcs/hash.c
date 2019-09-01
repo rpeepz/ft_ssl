@@ -12,7 +12,7 @@
 
 #include "../ft_ssl.h"
 
-void			do_this_thing(char *buf, char **contents, char **tmp)
+void			copy_free(char *buf, char **contents, char **tmp)
 {
 	buf[PAGESIZE] = 0;
 	*tmp = ft_strjoin(*contents, buf);
@@ -24,40 +24,42 @@ void			do_this_thing(char *buf, char **contents, char **tmp)
 
 char			*get_hash(char *to_hash, char *input, short mask, int fd)
 {
-	char	buf[PAGESIZE + 1];
-	char	*tmp;
-	char	*contents;
+	char		buf[PAGESIZE + 1];
+	char		*tmp;
+	char		*contents;
+	int			i;
+	static char	*(*hasher[5])(char *, char *) = {
+				md5, sha224, sha256, sha384, sha512};
 
 	ft_bzero(buf, PAGESIZE);
-	contents = "";
 	if (fd > 2)
 	{
+		contents = "";
 		while (read(fd, buf, PAGESIZE) > 0)
 		{
-			do_this_thing((char *)buf, &contents, &tmp);
+			copy_free((char *)buf, &contents, &tmp);
 			ft_bzero(buf, PAGESIZE);
 		}
-		do_this_thing((char*)buf, &contents, &tmp);
+		copy_free((char*)buf, &contents, &tmp);
 		to_hash = contents;
 		free(contents);
 		close(fd);
 	}
 	mask_hashable(ft_strtolower(input), &mask);
-	IF_RETURN((mask & 0xF00) == 0x100, md5(buf, to_hash));
-	IF_RETURN((mask & 0xF00) == 0x200, sha224(buf, to_hash));
-	IF_RETURN((mask & 0xF00) == 0x300, sha256(buf, to_hash));
-	IF_RETURN((mask & 0xF00) == 0x400, sha384(buf, to_hash));
-	IF_RETURN((mask & 0xF00) == 0x500, sha512(buf, to_hash));
-	return ("----No hash specified----");
+	i = ((mask & 0xF00) >> 8) - 1;
+	return ((*hasher[i])(buf, to_hash));
 }
 
-int				hash(char *input, char *to_hash, int fd, short mask)
+void			hash(char *input, char *to_hash, int fd, short mask)
 {
 	mask_hashable(input, &mask);
 	if ((!(mask & 0x3000) && (mask & 0x8000 || fd) && !(mask & 0x4000)))
 	{
-		ft_printf("%s (%c%s%c) = ", ft_strtoupper(input),
-		fd < 1 ? '\"' : 0, to_hash, fd < 1 ? '\"' : 0);
+		ft_printf("%s (", ft_strtoupper(input));
+		IF_THEN(fd < 1, ft_putchar('\"'));
+		ft_printf("%s", to_hash);
+		IF_THEN(fd < 1, ft_putchar('\"'));
+		ft_printf(") = ");
 	}
 	if (!(mask & 0x8000) && mask & 0x1000 && !fd)
 		ft_printf("%s", to_hash);
@@ -66,8 +68,11 @@ int				hash(char *input, char *to_hash, int fd, short mask)
 		(mask & 0x4000 && !(mask & 0x2000) && (mask & 0x1000)) ? '\n' : ' '));
 	mask_hashable(input, &mask);
 	if (!(mask & 0x8000) && mask & 0x4000 && !(mask & 0x3000))
-		ft_printf("%c%s%c\n", fd < 1 ? '\"' : 0,
-		(fd || mask & 0x4000) ? to_hash : "\0", fd < 1 ? '\"' : 0);
-	ft_putchar(mask & 0x1000 && fd ? '\n' : 0);
-	return (0);
+	{
+		IF_THEN(fd < 1, ft_putchar('\"'));
+		IF_THEN((fd || mask & 0x4000), ft_printf("%s", to_hash));
+		IF_THEN(fd < 1, ft_putchar('\"'));
+		ft_putchar('\n');
+	}
+	IF_THEN(mask & 0x1000 && fd, ft_putchar('\n'));
 }

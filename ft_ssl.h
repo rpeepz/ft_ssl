@@ -91,6 +91,11 @@ typedef struct		s_sha64bit
 	uint64_t		**message;
 }					t_sha64bit;
 
+typedef struct		s_dispatch
+{
+	char			*(*hasher)(char *, char *);
+}					t_dispatch;
+
 /*
 **	--------------------------------
 **	    		FUNCTIONS
@@ -103,14 +108,14 @@ int					valid_hashable(char *input);
 void				mask_hashable(char *input, short *mask);
 void				free_message(int count, uint64_t **ptr);
 short				loopdown(short mask, int i);
-int					hash(char *input, char *to_hash, int fd, short mask);
-char				*md5(char *buf, char *to_hash);
+void				hash(char *input, char *to_hash, int fd, short mask);
 void				sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i);
 void				sha32_set(char *to_hash, t_sha32bit *s);
-char				*sha224(char *buf, char *to_hash);
-char				*sha256(char *buf, char *to_hash);
 void				sha64_cycle(int count, t_sha64bit *s, uint64_t *w, int i);
 void				sha64_start(char *to_hash, t_sha64bit *s);
+char				*md5(char *buf, char *to_hash);
+char				*sha224(char *buf, char *to_hash);
+char				*sha256(char *buf, char *to_hash);
 char				*sha384(char *buf, char *to_hash);
 char				*sha512(char *buf, char *to_hash);
 
