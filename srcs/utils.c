@@ -52,10 +52,10 @@ short			loopdown(short mask, int i)
 
 int				get_stdin(char **line, char *str, int x, int i)
 {
-	char	buf[16];
+	char	buf[PAGESIZE + 1];
 	char	*tmp;
 
-	while (((i = read(0, buf, 15))))
+	while (((i = read(0, buf, PAGESIZE))))
 	{
 		IF_THEN(!str, (str = ft_strdup("")));
 		if (buf[0] == 10)

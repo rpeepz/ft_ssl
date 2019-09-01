@@ -36,3 +36,31 @@ int				ft_error(int err, char *ex)
 		ft_printf("unknown option '-%c'\n", *ex);
 	return (err);
 }
+
+int				check_for_spaces(char **input, char ***av, int *ac)
+{
+	char		**replace;
+	char		**split;
+	int			i;
+
+	if (ft_countwords(input[1], ' ') > 1)
+	{
+		*ac += (ft_countwords(input[1], ' ') - 1);
+		replace = malloc(sizeof(*replace) * *ac + 1);
+		split = ft_strsplit(input[1], ' ');
+		replace[0] = ft_strdup(input[0]);
+		ft_pipewrench("-s-s", input[0], input[1]);
+		free(input);
+		i = -1;
+		while (++i < (*ac) - 1)
+		{
+			replace[i + 1] = ft_strdup(split[i]);
+			free(split[i]);
+		}
+		free(split);
+		replace[*ac] = 0;
+		*av = replace;
+		return (1);
+	}
+	return (0);
+}

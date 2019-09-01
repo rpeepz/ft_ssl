@@ -103,6 +103,7 @@ typedef struct		s_dispatch
 */
 
 int					ft_error(int err, char *ex);
+int					check_for_spaces(char **replace, char ***av, int *ac);
 int					get_stdin(char **line, char *str, int x, int i);
 int					valid_hashable(char *input);
 void				mask_hashable(char *input, short *mask);

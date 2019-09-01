@@ -91,7 +91,7 @@ static int		inputs(int *ac, char ***av)
 	*ac += 1;
 	replace = malloc(sizeof(*replace) * *ac + 1);
 	replace[0] = ft_strdup(**av);
-	replace[1] = ft_strdup("\n");
+	replace[1] = ft_strdup("\0");
 	while (replace[1][0] == '\n' || replace[1][0] == '\0')
 	{
 		ft_printf("ft_ssl> ");
@@ -103,6 +103,8 @@ static int		inputs(int *ac, char ***av)
 			free(replace);
 			return (1);
 		}
+		if (check_for_spaces(replace, av, ac))
+			return (0);
 	}
 	replace[*ac] = 0;
 	*av = replace;
