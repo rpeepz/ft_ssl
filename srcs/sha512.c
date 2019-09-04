@@ -118,9 +118,7 @@ void			sha64_start(char *to_hash, t_sha64bit *s)
 {
 	int			i;
 	uint64_t	len;
-	char		*cpy;
 
-	cpy = ft_strdup(to_hash);
 	i = -1;
 	len = (ft_strlen(to_hash) * 8) + 1;
 	while (len % 1024 != 896)
@@ -133,7 +131,6 @@ void			sha64_start(char *to_hash, t_sha64bit *s)
 		ft_bzero(s->message[i], sizeof(uint64_t) * 16);
 	}
 	sha_pad(to_hash, s, LEN(to_hash));
-	free(cpy);
 }
 
 char			*sha512(char *buf, char *to_hash)

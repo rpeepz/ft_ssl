@@ -96,9 +96,6 @@ static void		md5_cycle(int count, t_md5 *b)
 
 static void		md5_set(char *to_hash, t_md5 *b, int i, uint64_t len)
 {
-	char		*cpy;
-
-	cpy = ft_strdup(to_hash);
 	len = ft_strlen(to_hash);
 	b->multiples = len ? ((len + 8) / 64) + 1 : 1;
 	b->message = malloc(64 * b->multiples);
@@ -113,7 +110,6 @@ static void		md5_set(char *to_hash, t_md5 *b, int i, uint64_t len)
 			break ;
 		b->message[((64 * b->multiples) - 8) + i] = len >> (i * 8);
 	}
-	free(cpy);
 }
 
 static void		endian_rev(unsigned int *c)

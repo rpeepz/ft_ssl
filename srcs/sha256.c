@@ -98,9 +98,7 @@ void			sha32_set(char *to_hash, t_sha32bit *s)
 {
 	int			i;
 	uint64_t	len;
-	char		*cpy;
 
-	cpy = ft_strdup(to_hash);
 	i = -1;
 	len = (ft_strlen(to_hash) * 8) + 1;
 	while (len % 512 != 448)
@@ -113,7 +111,6 @@ void			sha32_set(char *to_hash, t_sha32bit *s)
 		ft_bzero(s->message[i], sizeof(uint32_t) * 16);
 	}
 	sha_pad(to_hash, s, LEN(to_hash));
-	free(cpy);
 }
 
 char			*sha256(char *buf, char *to_hash)
