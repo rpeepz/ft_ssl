@@ -22,12 +22,11 @@ void			copy_free(char *buf, char **contents, char **tmp)
 	ft_strdel(tmp);
 }
 
-char			*get_hash(char *to_hash, char *input, short mask, int fd)
+char			*get_hash(char **to_hash, char *input, short mask, int fd)
 {
 	char		buf[PAGESIZE + 1];
 	char		*tmp;
 	char		*contents;
-	int			i;
 	static char	*(*hasher[5])(char *, char *) = {
 				md5, sha224, sha256, sha384, sha512};
 
@@ -41,13 +40,14 @@ char			*get_hash(char *to_hash, char *input, short mask, int fd)
 			ft_bzero(buf, PAGESIZE);
 		}
 		copy_free((char*)buf, &contents, &tmp);
-		to_hash = contents;
+		*to_hash = ft_strdup(contents);
 		free(contents);
 		close(fd);
 	}
+	else
+		*to_hash = ft_strdup(*to_hash);
 	mask_hashable(ft_strtolower(input), &mask);
-	i = ((mask & 0xF00) >> 8) - 1;
-	return ((*hasher[i])(buf, to_hash));
+	return ((*hasher[((mask & 0xF00) >> 8) - 1])(buf, *to_hash));
 }
 
 void			hash(char *input, char *to_hash, int fd, short mask)
@@ -63,7 +63,7 @@ void			hash(char *input, char *to_hash, int fd, short mask)
 	}
 	if (!(mask & 0x8000) && mask & 0x1000 && !fd)
 		ft_printf("%s", to_hash);
-	ft_printf("%s%c", get_hash(to_hash, input, mask, fd),
+	ft_printf("%s%c", get_hash(&to_hash, input, mask, fd),
 		((!(mask & 0x4000) || mask & 0x2000 || mask & 0x8000) ||
 		(mask & 0x4000 && !(mask & 0x2000) && (mask & 0x1000)) ? '\n' : ' '));
 	mask_hashable(input, &mask);
@@ -75,4 +75,5 @@ void			hash(char *input, char *to_hash, int fd, short mask)
 		ft_putchar('\n');
 	}
 	IF_THEN(mask & 0x1000 && fd, ft_putchar('\n'));
+	ft_strdel(&to_hash);
 }
