@@ -46,7 +46,7 @@ int				check_for_spaces(char **input, char ***av, int *ac)
 	if (ft_countwords(input[1], ' ') > 1)
 	{
 		*ac += (ft_countwords(input[1], ' ') - 1);
-		replace = malloc(sizeof(*replace) * *ac + 1);
+		replace = (char **)malloc(sizeof(*replace) * (*ac + 1));
 		split = ft_strsplit(input[1], ' ');
 		replace[0] = ft_strdup(input[0]);
 		ft_pipewrench("-s-s", input[0], input[1]);

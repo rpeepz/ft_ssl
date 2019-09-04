@@ -89,7 +89,7 @@ static int		inputs(int *ac, char ***av)
 	char	**replace;
 
 	*ac += 1;
-	replace = malloc(sizeof(*replace) * *ac + 1);
+	replace = malloc(sizeof(*replace) * (*ac + 1));
 	replace[0] = ft_strdup(**av);
 	replace[1] = ft_strdup("\0");
 	while (replace[1][0] == '\n' || replace[1][0] == '\0')
