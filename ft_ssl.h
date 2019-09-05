@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/28 05:31:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ typedef struct		s_sha64bit
 	uint64_t		**message;
 }					t_sha64bit;
 
+typedef struct		s_ssl
+{
+	int				flag;
+	int				type;
+	int				fd[255];
+	int				file_index;
+}					t_ssl;
+
 typedef struct		s_dispatch
 {
 	char			*(*hasher)(char *, char *);
@@ -102,23 +110,31 @@ typedef struct		s_dispatch
 **	--------------------------------
 */
 
-int					ft_error(int err, char *ex);
-int					check_for_spaces(char **replace, char ***av, int *ac);
-int					get_stdin(char **line, char *str, int x, int i);
-int					valid_hashable(char *input);
-void				mask_hashable(char *input, short *mask);
+void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
+void				des(char *input, char *to_hash, t_ssl *ssl, int i);
+int					dash_p_or_k(char c);
+void				ssl_des(char **av, t_ssl *ssl);
+
 void				free_message(int count, uint64_t **ptr);
-short				loopdown(short mask, int i);
-void				hash(char *input, char *to_hash, int fd, short mask);
-void				sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i);
-void				sha32_set(char *to_hash, t_sha32bit *s);
 void				sha64_cycle(int count, t_sha64bit *s, uint64_t *w, int i);
 void				sha64_start(char *to_hash, t_sha64bit *s);
-char				*md5(char *buf, char *to_hash);
-char				*sha224(char *buf, char *to_hash);
-char				*sha256(char *buf, char *to_hash);
-char				*sha384(char *buf, char *to_hash);
+void				sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i);
+void				sha32_set(char *to_hash, t_sha32bit *s);
 char				*sha512(char *buf, char *to_hash);
+char				*sha384(char *buf, char *to_hash);
+char				*sha256(char *buf, char *to_hash);
+char				*sha224(char *buf, char *to_hash);
+char				*md5(char *buf, char *to_hash);
+void				hash(char *input, char *to_hash, t_ssl *ssl, int i);
+char				dash_s(char **input, int *i, int *j, t_ssl *ssl);
+void				ssl_md5(char **av, t_ssl *ssl);
+
+int					get_stdin(char **line, char *str, int x, int i);
+int					read_files(char **av, t_ssl *ssl, int i, int j);
+int					valid_flags(t_ssl *ssl, char c);
+int					valid_command(char *input, t_ssl *ssl);
+int					handle_inputs(int *ac, char ***av, t_ssl *ssl);
+int					ft_error(int err, char *ex);
 
 /*
 **	(COLORS)
