@@ -6,48 +6,27 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:47:06 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/28 05:30:57 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_ssl.h"
 
-int				valid_hashable(char *input)
+int				read_files(char **av, t_ssl *ssl, int i, int j)
 {
-	if (!ft_strcmp(input, "md5"))
+	if (!i)
 		return (0);
-	else if (!ft_strcmp(input, "sha224"))
-		return (0);
-	else if (!ft_strcmp(input, "sha256"))
-		return (0);
-	else if (!ft_strcmp(input, "sha384"))
-		return (0);
-	else if (!ft_strcmp(input, "sha512"))
-		return (0);
-	return (1);
-}
-
-void			mask_hashable(char *input, short *mask)
-{
-	if (!input)
-		return ;
-	if (!ft_strcmp(input, "md5"))
-		*mask |= 0x100;
-	else if (!ft_strcmp(input, "sha224"))
-		*mask |= 0x200;
-	else if (!ft_strcmp(input, "sha256"))
-		*mask |= 0x300;
-	else if (!ft_strcmp(input, "sha384"))
-		*mask |= 0x400;
-	else if (!ft_strcmp(input, "sha512"))
-		*mask |= 0x500;
-}
-
-short			loopdown(short mask, int i)
-{
-	while (i < 16)
-		mask &= ~(1 << i++);
-	return (mask);
+	while (av[i])
+	{
+		opendir(av[i]);
+		if (!(ft_strncmp(strerror(errno), "No such file or directory", 26)))
+			ft_printf("%s: %s: %s\n", av[1], av[i],
+			strerror(errno));
+		else
+			ssl->fd[j++] = open(av[i], O_RDONLY);
+		i++;
+	}
+	return (j ? j : j);
 }
 
 int				get_stdin(char **line, char *str, int x, int i)
@@ -75,7 +54,7 @@ int				get_stdin(char **line, char *str, int x, int i)
 	}
 	*line = i == 1 ? ft_strjoin(str, "\n") : ft_strdup(str);
 	ft_strdel(&str);
-	IF_THEN(!x, ft_strdel(&tmp));
+	IF_THEN(!x && *tmp != -49, ft_strdel(&tmp));
 	return (x);
 }
 
