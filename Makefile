@@ -30,16 +30,17 @@ SRCS 	=main.c\
 		inputs.c\
 		choose.c\
 		utils.c\
-		hash.c\
 		error.c\
+		des.c
+HASH	=hash.c\
 		md5.c\
 		sha224.c\
 		sha256.c\
 		sha384.c\
-		sha512.c\
-		des.c
+		sha512.c
 
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
+OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
 
 .PHONY: clean debug
 
@@ -68,6 +69,8 @@ $(OBJ_PATH):
 		@mkdir -p $@
 
 $(OBJ_PATH)/%.o: srcs/%.c | $(OBJ_PATH)
+		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/hash/%.c | $(OBJ_PATH)
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 
 1mo:

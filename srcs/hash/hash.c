@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ssl.h"
+#include "../../ft_ssl.h"
 
 void			copy_free(char *buf, char **contents, char **tmp)
 {
@@ -78,11 +78,10 @@ void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 	ft_strdel(&to_hash);
 }
 
-char			dash_s(char **av, int *i, int *j, t_ssl *ssl)
+char			string_input(char **av, int *i, int *j, t_ssl *ssl)
 {
 	char	p_flag;
 
-//	read_files(av, ssl, *i + 1, 0);
 	p_flag = 0;
 	if (ssl->flag & 0x8000)
 		p_flag = 1;
