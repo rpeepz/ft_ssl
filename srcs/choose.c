@@ -19,8 +19,11 @@ void			ssl_md5(char **av, t_ssl *ssl)
 
 	i = -1;
 	line = NULL;
-	if (((!ssl->flag && !*(ssl->fd)) || ssl->flag & 0x8000 ||
-	(!*(ssl->fd) && ssl->flag & 0x20000)) && get_stdin(&line, 0, 1, 0))
+	if (!(ssl->flag & 0x38000) && !ssl->flag && ssl->file_index)
+		;
+	else if ((((!ssl->flag && !*(ssl->fd)) || ssl->flag & 0x8000 ||
+	(!*(ssl->fd) && ssl->flag & 0x20000)) || (ssl->type && !ssl->flag)) &&
+	get_stdin(&line, 0, 1, 0))
 	{
 		if (!line)
 			line = ft_strdup("");
