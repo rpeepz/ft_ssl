@@ -19,3 +19,11 @@ void	ft_memdel(void **ap)
 	free(*ap);
 	*ap = NULL;
 }
+
+void	ft_strdel(char **as)
+{
+	if (!as || !*as)
+		return ;
+	free(*as);
+	*as = 0;
+}

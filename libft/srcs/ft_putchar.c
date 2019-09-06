@@ -12,7 +12,30 @@
 
 #include "../includes/libft.h"
 
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char const *s, int fd)
+{
+	if (s)
+		write(fd, s, ft_strlen(s));
+}
+
 void	ft_putchar(char c)
 {
-	ft_putchar_fd(c, 1);
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char const *s)
+{
+	if (s)
+		write(1, s, ft_strlen(s));
+}
+
+void	ft_putnstr(char const *s, size_t len)
+{
+	if (s && len > 0)
+		write(1, s, len);
 }

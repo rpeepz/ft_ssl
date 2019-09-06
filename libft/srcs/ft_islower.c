@@ -16,3 +16,25 @@ int		ft_islower(int c)
 {
 	return (c <= 'z' && c >= 'a');
 }
+
+int		ft_tolower(int c)
+{
+	if (ft_isupper(c))
+		return (c + 32);
+	return (c);
+}
+
+char	*ft_strtolower(char *str)
+{
+	int		i;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		str[i] = ft_tolower(str[i]);
+		i++;
+	}
+	return (str);
+}

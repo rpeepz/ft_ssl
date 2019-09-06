@@ -22,3 +22,27 @@ char	*ft_strcpy(char *dst, const char *src)
 	dst[i] = '\0';
 	return (dst);
 }
+
+char	*ft_strncpy(char *dst, const char *src, size_t len)
+{
+	size_t	i;
+
+	i = -1;
+	while (++i < len)
+	{
+		if (src[i])
+			dst[i] = src[i];
+		else
+		{
+			while (i < len)
+				dst[i++] = '\0';
+		}
+	}
+	return (dst);
+}
+
+void	ft_strclr(char *s)
+{
+	if (s)
+		ft_bzero(s, ft_strlen(s));
+}
