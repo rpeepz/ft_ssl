@@ -70,26 +70,23 @@ int				get_inputs(int *ac, char ***av)
 int				parse_av(char **av, t_ssl *ssl, int i, int j)
 {
 	if ((ssl->type > 10 && ssl->type < 20) && !av[2])
-		return (ft_error(5, "base64"));
-	while ((av[++i]) && av[i][0] == '-' && (j = 1))
+		return (ft_error(5, "base64", ssl));
+	while ((av[++i]) && av[i][0] == '-' && !(j = 0))
 	{
-		while (av[i][j])
+		while (av[i][++j])
 		{
 			if (valid_flags(ssl, av[i][j]))
-				return (1);
-			if (ssl->type < 10 && av[i][j] == 's')
+				return (av[i][j] == HELP_KEY ? (ssl->flag = 1) : 1);
+			if ((ssl->type < 10 && av[i][j] == 's') || (ssl->type > 20 &&
+			(av[i][j] == 'p' || av[i][j] == 'k' || av[i][j] == 's' ||
+			av[i][j] == 'v' || av[i][j] == 'i' || av[i][j] == 'o')))
 			{
-				if (dash_s(av, &i, &j, ssl))
+				if ((ssl->type < 10 && string_input(av, &i, &j, ssl)) ||
+				(ssl->type > 20 && p_k_s_v(av, &i, &j, ssl)))
 					break ;
-				return (ft_error(2, av[1]));
+				ssl->flag = 0;
+				return (ft_error(2, ft_strtolower(av[1]), ssl));
 			}
-			if (ssl->type > 20 && (av[i][j] == 'p' || av[i][j] == 'k'))
-			{//-p, password in ascii is the next argument//-k, key in hex is the next arguement.
-				if (dash_p_or_k(av[i][j]))
-					break ;
-				return (ft_error(2, av[1]));
-			}
-			j++;
 		}
 	}
 	av[i] ? ssl->file_index += i : 0;
@@ -107,11 +104,11 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 			return (1);
 	pv = *av;
 	if (valid_command(pv[1], ssl))
-		return (ft_error(1, pv[1]));
+		return (ft_error(1, pv[1], ssl));
 	if (parse_av(*(av), ssl, 1, 0))
-		return (ft_error(3, pv[1]));
+		return (ft_error(3, pv[1], ssl));
 	if (!read_files(pv, ssl, ssl->file_index, 0))
-		if (!(ssl->flag & 0x38000))
+		if (!(ssl->flag & 0x38000) && ssl->flag && !ssl->file_index)
 			return (1);
 	choose[ssl->type < 10 ? 0 : 1](pv, ssl);
 	return (1);
