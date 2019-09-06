@@ -36,10 +36,25 @@
 # define S0(x) (RR(x, 1) ^ RR(x, 8) ^ ((x) >> 7))
 # define S1(x) (RR(x, 19) ^ RR(x, 61) ^ ((x) >> 6))
 
-# define O_P "-p\techo STDIN to STDOUT and append the checksum to STDOUT\n"
-# define O_Q "-q\tquiet mode\n"
-# define O_R "-r\treverse the format of the output\n"
-# define O_S "-s\tprint the sum of the given string\n"
+# define VERBOSE 0
+# define HELP_KEY 'h'
+# define H_1 "-p\techo STDIN to STDOUT and append the checksum to STDOUT\n"
+# define H_2 "-q\tquiet mode\n"
+# define H_3 "-r\treverse the format of the output\n"
+# define H_4 "-s\tprint the sum of the given string\n"
+# define B_1 "-d\tdecode incoming Base64 stream to binary data\n"
+# define B_2 "-r\twrites encoded data as a continuous block to stdout\n"
+# define B_3 "-i input_file\tRead input from input_file\n"
+# define B_4 "-o output_file\tWrite output to output_file\n"
+# define D_1 "-a\tdecode/encode the input/output in base64\n"
+# define D_2 "-d\tdecrypt mode\n"
+# define D_3 "-e\tencrypt mode\n"
+# define D_4 "-p\tpassword in ascii is the next argument\n"
+# define D_5 "-k\tkey in hex is the next arguement\n"
+# define D_6 "-s\tthe salt in hex is the next argument\n"
+# define D_7 "-v\tinitialization vector in hex is the next argument\n"
+# define D_8 "-i input_file\tWrite input to input_file\n"
+# define D_9 "-o output_file\tWrite output to output_file\n"
 
 /*
 **	--------------------------------
@@ -112,7 +127,7 @@ typedef struct		s_dispatch
 
 void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
 void				des(char *input, char *to_hash, t_ssl *ssl, int i);
-int					dash_p_or_k(char c);
+int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl);
 void				ssl_des(char **av, t_ssl *ssl);
 
 void				free_message(int count, uint64_t **ptr);
@@ -126,7 +141,7 @@ char				*sha256(char *buf, char *to_hash);
 char				*sha224(char *buf, char *to_hash);
 char				*md5(char *buf, char *to_hash);
 void				hash(char *input, char *to_hash, t_ssl *ssl, int i);
-char				dash_s(char **input, int *i, int *j, t_ssl *ssl);
+char				string_input(char **input, int *i, int *j, t_ssl *ssl);
 void				ssl_md5(char **av, t_ssl *ssl);
 
 int					get_stdin(char **line, char *str, int x, int i);
@@ -134,7 +149,7 @@ int					read_files(char **av, t_ssl *ssl, int i, int j);
 int					valid_flags(t_ssl *ssl, char c);
 int					valid_command(char *input, t_ssl *ssl);
 int					handle_inputs(int *ac, char ***av, t_ssl *ssl);
-int					ft_error(int err, char *ex);
+int					ft_error(int err, char *ex, t_ssl *ssl);
 
 /*
 **	(COLORS)

@@ -35,7 +35,7 @@ int				valid_flags(t_ssl *ssl, char c)
 			break ;
 		return (0);
 	}
-	ft_error(4, &c);
+	ft_error(4, &c, ssl);
 	return (1);
 }
 
