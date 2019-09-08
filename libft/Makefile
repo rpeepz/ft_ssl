@@ -29,28 +29,15 @@ PRNTF_PATH	=$(LIB_PATH)/ft_printf
 SPRNTF_PATH	=$(LIB_PATH)/ft_sprintf
 
 SRCS	= ft_atoi.c \
-		ft_bzero.c \
-		ft_countwords.c \
-		ft_intlen.c \
 		ft_itoa_base.c \
-		ft_itoa.c \
 		ft_islower.c \
 		ft_isupper.c \
 		ft_isvariants.c \
 		ft_lstadd.c \
-		ft_lstdel.c \
-		ft_lstdelone.c \
-		ft_lstiter.c \
-		ft_lstmap.c \
 		ft_lstnew.c \
 		ft_memalloc.c \
-		ft_memccpy.c \
 		ft_memchr.c \
-		ft_memcmp.c \
 		ft_memcpy.c \
-		ft_memdel.c \
-		ft_memmove.c \
-		ft_memset.c \
 		ft_pipewrench.c \
 		ft_printf.c \
 		ft_putchar.c \
@@ -61,7 +48,6 @@ SRCS	= ft_atoi.c \
 		ft_strchr.c \
 		ft_strcmp.c \
 		ft_strcpy.c \
-		ft_striter.c \
 		ft_strjoin.c \
 		ft_strlen.c \
 		ft_strmap.c \
@@ -69,7 +55,6 @@ SRCS	= ft_atoi.c \
 		ft_strpop.c \
 		ft_strsplit.c \
 		ft_strstr.c \
-		ft_strtrim.c \
 		get_next_line.c
 PRINTF	= finders.c \
 		do_things.c \
