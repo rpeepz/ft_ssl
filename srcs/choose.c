@@ -19,7 +19,7 @@ void			ssl_md5(char **av, t_ssl *ssl)
 
 	i = -1;
 	line = NULL;
-	if (!(ssl->flag & 0x38000) && !ssl->flag && ssl->file_index)
+	if (!(ssl->flag & 0x38000) && !ssl->flag && ssl->file_index[0])
 		;
 	else if ((((!ssl->flag && !*(ssl->fd)) || ssl->flag & 0x8000 ||
 	(!*(ssl->fd) && ssl->flag & 0x20000)) || (ssl->type && !ssl->flag)) &&
@@ -36,13 +36,13 @@ void			ssl_md5(char **av, t_ssl *ssl)
 	while (ssl->fd[++i])
 	{
 		ssl->flag &= ~0x40000;
-		hash(av[1], av[ssl->file_index + i], ssl, i);
+		hash(av[1], av[ssl->file_index[i]], ssl, i);
 	}
 }
 
 void			ssl_des(char **av, t_ssl *ssl)
 {
-	ft_printf("[%s]you made it to the part where you decide how to hash this\n",
+	ft_printf("[%s] you made it to the part where you decide how to dispatch\n",
 	av[1]);
 	ssl = 0;
 }

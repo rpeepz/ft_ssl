@@ -38,23 +38,21 @@
 
 # define VERBOSE 0
 # define HELP_KEY 'h'
-# define H_1 "-p\techo STDIN to STDOUT and append the checksum to STDOUT\n"
-# define H_2 "-q\tquiet mode\n"
-# define H_3 "-r\treverse the format of the output\n"
-# define H_4 "-s\tprint the sum of the given string\n"
-# define B_1 "-d\tdecode incoming Base64 stream to binary data\n"
-# define B_2 "-r\twrites encoded data as a continuous block to stdout\n"
-# define B_3 "-i input_file\tRead input from input_file\n"
-# define B_4 "-o output_file\tWrite output to output_file\n"
-# define D_1 "-a\tdecode/encode the input/output in base64\n"
-# define D_2 "-d\tdecrypt mode\n"
-# define D_3 "-e\tencrypt mode\n"
-# define D_4 "-p\tpassword in ascii is the next argument\n"
-# define D_5 "-k\tkey in hex is the next arguement\n"
-# define D_6 "-s\tthe salt in hex is the next argument\n"
-# define D_7 "-v\tinitialization vector in hex is the next argument\n"
-# define D_8 "-i input_file\tWrite input to input_file\n"
-# define D_9 "-o output_file\tWrite output to output_file\n"
+# define H_P "-p\techo STDIN to STDOUT and append the checksum to STDOUT\n"
+# define H_Q "-q\tquiet mode\n"
+# define H_R "-r\treverse the format of the output\n"
+# define H_S "-s\tprint the sum of the given string\n"
+# define B_D "-d\tdecode incoming Base64 stream to binary data\n"
+# define B_R "-r\twrites encoded data as a continuous block to stdout\n"
+# define D_A "-a\tdecode/encode the input/output in base64\n"
+# define D_D "-d\tdecrypt mode\n"
+# define D_E "-e\tencrypt mode\n"
+# define D_P "-p\tpassword in ascii is the next argument\n"
+# define D_K "-k\tkey in hex is the next arguement\n"
+# define D_S "-s\tthe salt in hex is the next argument\n"
+# define D_V "-v\tinitialization vector in hex is the next argument\n"
+# define D_I "-i input_file\tWrite input to input_file\n"
+# define D_O "-o output_file\tWrite output to output_file\n"
 
 /*
 **	--------------------------------
@@ -111,13 +109,8 @@ typedef struct		s_ssl
 	int				flag;
 	int				type;
 	int				fd[255];
-	int				file_index;
+	int				file_index[255];
 }					t_ssl;
-
-typedef struct		s_dispatch
-{
-	char			*(*hasher)(char *, char *);
-}					t_dispatch;
 
 /*
 **	--------------------------------

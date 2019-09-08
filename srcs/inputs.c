@@ -67,29 +67,41 @@ int				get_inputs(int *ac, char ***av)
 	return (0);
 }
 
+static int		default_mode(t_ssl *ssl)
+{
+	if (ssl->type < 20)
+		return (ft_error(5, "base64", ssl));
+	else
+		ssl->flag |= 0x10;
+	return (0);
+}
+
 int				parse_av(char **av, t_ssl *ssl, int i, int j)
 {
-	if ((ssl->type > 10 && ssl->type < 20) && !av[2])
-		return (ft_error(5, "base64", ssl));
+	if (ssl->type > 10 && !av[2])
+		return (default_mode(ssl));
 	while ((av[++i]) && av[i][0] == '-' && !(j = 0))
 	{
-		while (av[i][++j])
-		{
-			if (valid_flags(ssl, av[i][j]))
-				return (av[i][j] == HELP_KEY ? (ssl->flag = 1) : 1);
-			if ((ssl->type < 10 && av[i][j] == 's') || (ssl->type > 20 &&
-			(av[i][j] == 'p' || av[i][j] == 'k' || av[i][j] == 's' ||
-			av[i][j] == 'v' || av[i][j] == 'i' || av[i][j] == 'o')))
+		if (av[i][1])
+			while (av[i][++j])
 			{
-				if ((ssl->type < 10 && string_input(av, &i, &j, ssl)) ||
-				(ssl->type > 20 && p_k_s_v(av, &i, &j, ssl)))
-					break ;
-				ssl->flag = 0;
-				return (ft_error(2, ft_strtolower(av[1]), ssl));
+				if (valid_flags(ssl, av[i][j]))
+					return (av[i][j] == HELP_KEY ? (ssl->flag = 1) : 1);
+				if ((ssl->type < 10 && av[i][j] == 's') || (ssl->type > 20 &&
+				(av[i][j] == 'p' || av[i][j] == 'k' || av[i][j] == 's' ||
+				av[i][j] == 'v' || av[i][j] == 'i' || av[i][j] == 'o')))
+				{
+					if ((ssl->type < 10 && string_input(av, &i, &j, ssl)) ||
+					(ssl->type > 20 && p_k_s_v(av, &i, &j, ssl)))
+						break ;
+					ssl->flag = av[--i][--j] ? av[i][j] : 0;
+					return (ft_error(2, ft_strtolower(av[1]), ssl));
+				}
 			}
-		}
+		else
+			break ;
 	}
-	av[i] ? ssl->file_index += i : 0;
+	av[i] ? ssl->file_index[0] += i : 0;
 	return (0);
 }
 
@@ -107,8 +119,9 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 		return (ft_error(1, pv[1], ssl));
 	if (parse_av(*(av), ssl, 1, 0))
 		return (ft_error(3, pv[1], ssl));
-	if (!read_files(pv, ssl, ssl->file_index, 0))
-		if (!(ssl->flag & 0x38000) && ssl->flag && !ssl->file_index)
+	if (!read_files(pv, ssl, ssl->file_index[0], 0))
+		if ((ssl->type < 10) &&
+		!(ssl->flag & 0x38000) && ssl->flag && !ssl->file_index[0])
 			return (1);
 	choose[ssl->type < 10 ? 0 : 1](pv, ssl);
 	return (1);

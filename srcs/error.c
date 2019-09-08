@@ -15,15 +15,15 @@
 void			opt_desciption(int type)
 {
 	if (type < 10)
-		ft_printf("\n%s%s%s%s", H_1, H_2, H_3, H_4);
+		ft_printf("\n%s%s%s%s", H_P, H_Q, H_R, H_S);
 	else if (type == 11)
 	{
-		ft_printf("\n%s%s%s%s", B_1, B_2, B_3, B_4);
+		ft_printf("\n%s%s%s%s", B_D, B_R, D_I, D_O);
 	}
 	else if (type < 30)
 	{
-		ft_printf("\n%s%s%s%s%s", D_1, D_2, D_3, D_4, D_5);
-		ft_printf("%s%s%s%s", D_6, D_7, D_8, D_9);
+		ft_printf("\n%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K);
+		ft_printf("%s%s%s%s", D_S, D_V, D_I, D_O);
 	}
 }
 
@@ -64,7 +64,11 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 		show_supported();
 	}
 	if (err == 2)
-		ft_printf("Error: %s: option requires an argument\n", ex);
+	{
+		ft_printf("Error: %s: option requires an argument -- %c\n",
+		ex, ssl->flag);
+		ssl->flag = 0;
+	}
 	if (err == 3)
 	{
 		full_usage(ex, ssl->type);

@@ -20,10 +20,13 @@ int				read_files(char **av, t_ssl *ssl, int i, int j)
 	{
 		opendir(av[i]);
 		if (!(ft_strncmp(strerror(errno), "No such file or directory", 26)))
-			ft_printf("%s: %s: %s\n", av[1], av[i],
-			strerror(errno));
+			ft_printf("%s: %s: %s\n", av[1], av[i], strerror(errno));
 		else
-			ssl->fd[j++] = open(av[i], O_RDONLY);
+		{
+			ssl->fd[j] = open(av[i], O_RDONLY);
+			ssl->file_index[j] = i;
+			j++;
+		}
 		i++;
 	}
 	return (j ? j : j);
@@ -54,7 +57,7 @@ int				get_stdin(char **line, char *str, int x, int i)
 	}
 	*line = i == 1 ? ft_strjoin(str, "\n") : ft_strdup(str);
 	ft_strdel(&str);
-	IF_THEN(!x && *tmp != -49, ft_strdel(&tmp));
+	IF_THEN(!x && tmp && *line && *line[0] != '\n', ft_strdel(&tmp));
 	return (x);
 }
 

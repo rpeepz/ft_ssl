@@ -23,6 +23,5 @@ int				main(int ac, char **av)
 	ft_bzero(&ssl, (sizeof(t_ssl)));
 	if (handle_inputs(&ac, &av, &ssl))
 		;
-	system("leaks ft_ssl");
 	return (0);
 }

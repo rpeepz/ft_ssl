@@ -77,12 +77,12 @@ $(OBJ_PATH)/%.o: srcs/hash/%.c | $(OBJ_PATH)
 		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(ARCHIVE) -o $(NAME)
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
 
 debug:
 		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(ARCHIVE) -o $(NAME) -fsanitize=address
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(ARCHIVE) -o $(NAME) -fsanitize=address
 		@printf "[$(GREEN)$(NAME)$(NC)] [$(YELLOW)debug$(NC)] [$(MAG)OK!$(NC)]\n" #PRINT
