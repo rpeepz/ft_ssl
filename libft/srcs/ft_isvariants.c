@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 06:55:46 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/02/20 06:55:58 by rpapagna         ###   ########.fr       */
+/*   Created: 2019/02/19 22:27:42 by rpapagna          #+#    #+#             */
+/*   Updated: 2019/02/19 22:27:45 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-void	ft_bzero(void *s, size_t n)
+int		ft_isdigit(int c)
 {
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	str = (char *)s;
-	while (i < n)
-		*(str + i++) = 0;
+	return (c <= '9' && c >= '0');
 }
 
-void	*ft_memalloc(size_t size)
+int		ft_isalpha(int c)
 {
-	void	*m;
+	return (ft_islower(c) || ft_isupper(c));
+}
 
-	if (!(m = malloc(size)))
-		return (NULL);
-	ft_bzero(m, size);
-	return (m);
+int		ft_isalnum(int c)
+{
+	return (ft_isdigit(c) || ft_isalpha(c));
+}
+
+int		ft_isprint(int c)
+{
+	return (c <= 126 && c >= 32);
+}
+
+int		ft_isascii(int c)
+{
+	return (c <= 127 && c >= 0);
 }

@@ -46,3 +46,19 @@ void	ft_strclr(char *s)
 	if (s)
 		ft_bzero(s, ft_strlen(s));
 }
+
+void	ft_memdel(void **ap)
+{
+	if (!ap || !*ap)
+		return ;
+	free(*ap);
+	*ap = NULL;
+}
+
+void	ft_strdel(char **as)
+{
+	if (!as || !*as)
+		return ;
+	free(*as);
+	*as = 0;
+}

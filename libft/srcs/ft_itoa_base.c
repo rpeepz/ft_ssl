@@ -60,3 +60,30 @@ char	*ft_uitoa_base(unsigned int n, int base)
 	}
 	return (str);
 }
+
+char	*ft_itoa(int n)
+{
+	int		tmp;
+	int		len;
+	char	*str;
+
+	IF_RETURN((n == -2147483648), ft_strdup("-2147483648"));
+	tmp = n;
+	len = 0;
+	if (n < 0)
+	{
+		tmp *= -1;
+		len = 1;
+	}
+	len += ft_intlen(n);
+	if (!(str = ft_strnew(len)))
+		return (NULL);
+	while (len--)
+	{
+		str[len] = tmp % 10 + '0';
+		tmp = tmp / 10;
+	}
+	if (n < 0)
+		str[0] = '-';
+	return (str);
+}

@@ -22,7 +22,7 @@ char	*ft_strnew(size_t size)
 	return (str);
 }
 
-char			*ft_strcnew(size_t len, char c)
+char	*ft_strcnew(size_t len, char c)
 {
 	char	*new;
 	size_t	i;
