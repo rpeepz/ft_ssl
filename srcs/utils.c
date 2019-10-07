@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:47:06 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/06 14:32:26 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int				get_stdin(char **line, char *str, int x, int i)
 	while (((i = read(0, buf, PAGESIZE))))
 	{
 		IF_THEN(!str, (str = ft_strdup("")));
-		if (buf[0] == 10)
-			break ;
 		buf[i] = 0;
 		tmp = ft_strjoin(str, buf);
 		ft_strdel(&str);

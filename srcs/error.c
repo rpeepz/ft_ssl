@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/05 18:49:46 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 		if (ssl->flag || VERBOSE)
 			opt_desciption(ssl->type);
 	}
-	if (err == 4)
+	if (err == 4 && *ex != 'h')
 		ft_printf("unknown option '-%c'\n", *ex);
 	if (err == 5)
 		ft_printf("ft_ssl: Error: %s need a flag\n", ex);

@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 21:28:37 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/06 17:10:36 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char			*get_hash(char **to_hash, char **input, t_ssl *ssl, int i)
 
 void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 {
-	if ((!(ssl->flag & 0x18000) && (ssl->flag & 0x40000 || ssl->fd[i])
-		&& !(ssl->flag & 0x20000)))
+	if (ssl->flag && ((!(ssl->flag & 0x18000) &&
+	(ssl->flag & S_FLAG || ssl->fd[i]) && !(ssl->flag & R_FLAG))))
 	{
 		ft_printf("%s (", ft_strtoupper(input));
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
@@ -61,20 +61,22 @@ void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
 		ft_printf(") = ");
 	}
-	if (!(ssl->flag & 0x40000) && ssl->flag & 0x8000 && ssl->fd[i])
+	if (!(ssl->flag & 0x60000) &&
+	(ssl->flag & P_FLAG || (ssl->fd[i] && ssl->flag)))
 		ft_printf("%s", to_hash);
 	ft_printf("%s%c", get_hash(&to_hash, &input, ssl, i),
-	((!(ssl->flag & 0x20000) || ssl->flag & 0x10000 || ssl->flag & 0x40000)
-	|| (ssl->flag & 0x20000 && !(ssl->flag & 0x10000) &&
-	(ssl->flag & 0x8000)) ? '\n' : ' '));
-	if (!(ssl->flag & 0x40000) && ssl->flag & 0x20000 && !(ssl->flag & 0x18000))
+	((!(ssl->flag & R_FLAG) || ssl->flag & Q_FLAG)
+	|| (ssl->flag & R_FLAG && !(ssl->flag & Q_FLAG) && (ssl->flag & P_FLAG))
+	? '\n' : ' '));
+	if (ssl->flag & R_FLAG && !(ssl->flag & 0x18000))
 	{
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
-		IF_THEN((ssl->fd[i] || ssl->flag & 0x20000), ft_printf("%s", input));
+		IF_THEN((ssl->fd[i] || ssl->flag & R_FLAG), ft_printf("%s", input));
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
+		// IF_THEN(!(ssl->flag & S_FLAG), 
 		ft_putchar('\n');
 	}
-	IF_THEN(ssl->flag & 0x8000 && ssl->fd[i], ft_putchar('\n'));
+	IF_THEN(!ssl->fd[i] && !(ssl->flag & S_FLAG), ft_putchar('\n'));
 	ft_strdel(&to_hash);
 }
 
@@ -83,24 +85,24 @@ char			string_input(char **av, int *i, int *j, t_ssl *ssl)
 	char	p_flag;
 
 	p_flag = 0;
-	if (ssl->flag & 0x8000)
+	if (ssl->flag & P_FLAG)
 		p_flag = 1;
-	if (!(ssl->flag & 0x20000))
-		ssl->flag |= 0x40000;
+	if (!(ssl->flag & R_FLAG))
+		ssl->flag |= S_FLAG;
 	if (av[*i][++(*j)])
 	{
-		ssl->flag &= ~0x8000;
+		ssl->flag &= ~P_FLAG;
 		hash(av[1], &av[*i][*j], ssl, 0);
 		if (p_flag)
-			ssl->flag |= 0x8000;
+			ssl->flag |= P_FLAG;
 		return (1);
 	}
 	if (av[++(*i)] && av[*i][0])
 	{
-		ssl->flag &= ~0x8000;
+		ssl->flag &= ~P_FLAG;
 		hash(av[1], &av[*i][0], ssl, 0);
 		if (p_flag)
-			ssl->flag |= 0x8000;
+			ssl->flag |= P_FLAG;
 		return (1);
 	}
 	return (0);

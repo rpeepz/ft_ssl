@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/10/05 18:45:06 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ARCHIVE = libft/libft.a
 AUTHOR	= rpapagna
 
 CFLAGS	= -Wall -Wextra -Werror
-INCL	= -I /
+INCL	= -I ./
 OBJ_PATH= obj
 
 #COLOR OUTPUT OPIONS
@@ -68,9 +68,9 @@ $(NAME):$(OBJ)
 $(OBJ_PATH):
 		@mkdir -p $@
 
-$(OBJ_PATH)/%.o: srcs/%.c | $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h| $(OBJ_PATH)
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
-$(OBJ_PATH)/%.o: srcs/hash/%.c | $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 
 1mo:

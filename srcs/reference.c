@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reference.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:50:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/04 22:50:52 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/09 18:41:46 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int				valid_command(char *input, t_ssl *ssl)
 		ssl->type = 5;
 	else if (!ft_strcmp(input, "base64"))
 		ssl->type = 11;
-	ssl->type = scan_des(input);
+	if (!ssl->type)
+		ssl->type = scan_des(input);
 	if (ssl->type)
 		return (0);
 	return (1);

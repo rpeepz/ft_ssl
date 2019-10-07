@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inputs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 21:05:23 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/06 14:54:54 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,14 @@ static int		default_mode(t_ssl *ssl)
 
 int				parse_av(char **av, t_ssl *ssl, int i, int j)
 {
-	if (ssl->type > 10 && !av[2])
-		return (default_mode(ssl));
+	IF_RETURN(ssl->type > 10 && !av[2], default_mode(ssl));
 	while ((av[++i]) && av[i][0] == '-' && !(j = 0))
 	{
 		if (av[i][1])
 			while (av[i][++j])
 			{
 				if (valid_flags(ssl, av[i][j]))
-					return (av[i][j] == HELP_KEY ? (ssl->flag = 1) : 1);
+					return ((ssl->flag = av[i][j] == HELP_KEY ? 1 : 0) + 1);
 				if ((ssl->type < 10 && av[i][j] == 's') || (ssl->type > 20 &&
 				(av[i][j] == 'p' || av[i][j] == 'k' || av[i][j] == 's' ||
 				av[i][j] == 'v' || av[i][j] == 'i' || av[i][j] == 'o')))

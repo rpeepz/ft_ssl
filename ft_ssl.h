@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/05 01:40:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:58:24 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@
 # define E1(x) (RR(x, 14) ^ RR(x, 18) ^ RR(x, 41))
 # define S0(x) (RR(x, 1) ^ RR(x, 8) ^ ((x) >> 7))
 # define S1(x) (RR(x, 19) ^ RR(x, 61) ^ ((x) >> 6))
+
+# define A_FLAG 0x1
+# define D_FLAG 0x8
+# define E_FLAG 0x10
+# define I_FLAG 0x100
+# define K_FLAG 0x400
+# define O_FLAG 0x4000
+# define P_FLAG 0x8000
+# define Q_FLAG 0x10000
+# define R_FLAG 0x20000
+# define S_FLAG 0x40000
+# define V_FLAG 0x200000
 
 # define VERBOSE 0
 # define HELP_KEY 'h'
