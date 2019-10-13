@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 19:58:24 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 19:05:20 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,33 +88,41 @@ typedef struct		s_md5
 
 typedef struct		s_sha32bit
 {
-	uint32_t		hash[8];
+	__uint32_t		hash[8];
 	int				multiples;
-	uint32_t		a;
-	uint32_t		b;
-	uint32_t		c;
-	uint32_t		d;
-	uint32_t		e;
-	uint32_t		f;
-	uint32_t		g;
-	uint32_t		h;
-	uint32_t		**message;
+	__uint32_t		a;
+	__uint32_t		b;
+	__uint32_t		c;
+	__uint32_t		d;
+	__uint32_t		e;
+	__uint32_t		f;
+	__uint32_t		g;
+	__uint32_t		h;
+	__uint32_t		**message;
 }					t_sha32bit;
 
 typedef struct		s_sha64bit
 {
-	uint64_t		hash[8];
+	__uint64_t		hash[8];
 	int				multiples;
-	uint64_t		a;
-	uint64_t		b;
-	uint64_t		c;
-	uint64_t		d;
-	uint64_t		e;
-	uint64_t		f;
-	uint64_t		g;
-	uint64_t		h;
-	uint64_t		**message;
+	__uint64_t		a;
+	__uint64_t		b;
+	__uint64_t		c;
+	__uint64_t		d;
+	__uint64_t		e;
+	__uint64_t		f;
+	__uint64_t		g;
+	__uint64_t		h;
+	__uint64_t		**message;
 }					t_sha64bit;
+
+typedef struct		s_primary
+{
+	__uint64_t		d;
+	__uint64_t		r;
+	__uint64_t		x;
+	__uint64_t		*a;
+}					t_primary;
 
 typedef struct		s_ssl
 {
@@ -130,15 +138,18 @@ typedef struct		s_ssl
 **	--------------------------------
 */
 
+int					ft_is_primary(__uint64_t number, float probability);
+void				ssl_rsa(char **av, t_ssl *ssl);
+
 void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
 void				des(char *input, char *to_hash, t_ssl *ssl, int i);
 int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl);
 void				ssl_des(char **av, t_ssl *ssl);
 
-void				free_message(int count, uint64_t **ptr);
-void				sha64_cycle(int count, t_sha64bit *s, uint64_t *w, int i);
+void				free_message(int count, __uint64_t **ptr);
+void				sha64_cycle(int count, t_sha64bit *s, __uint64_t *w, int i);
 void				sha64_start(char *to_hash, t_sha64bit *s);
-void				sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i);
+void				sha32_cycle(int count, t_sha32bit *s, __uint32_t *w, int i);
 void				sha32_set(char *to_hash, t_sha32bit *s);
 char				*sha512(char *buf, char *to_hash);
 char				*sha384(char *buf, char *to_hash);

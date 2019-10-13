@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/10/05 18:45:06 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/10/12 19:02:56 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,9 +38,12 @@ HASH	=hash.c\
 		sha256.c\
 		sha384.c\
 		sha512.c
+RSA		=rsa.c\
+		is_primary.c
 
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
+OBJ		+= $(addprefix $(OBJ_PATH)/,$(RSA:.c=.o))
 
 .PHONY: clean debug
 
@@ -72,17 +75,26 @@ $(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h| $(OBJ_PATH)
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/rsa/%.c ft_ssl.h | $(OBJ_PATH)
+		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 
-1mo:
+q:
 		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(ARCHIVE) -o $(NAME)
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
 
 debug:
 		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(ARCHIVE) -o $(NAME) -fsanitize=address
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@printf "[$(GREEN)$(NAME)$(NC)] [$(YELLOW)debug$(NC)] [$(MAG)OK!$(NC)]\n" #PRINT
+
+sanitize:
+		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
+		@rm -rf $(NAME)
+		@rm -rf $(NAME).dSYM
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME) -fsanitize=address
 		@printf "[$(GREEN)$(NAME)$(NC)] [$(YELLOW)debug$(NC)] [$(MAG)OK!$(NC)]\n" #PRINT
