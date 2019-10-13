@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 21:28:37 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/10 15:14:33 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:39:37 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
 		IF_THEN((ssl->fd[i] || ssl->flag & R_FLAG), ft_printf("%s", input));
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
-		// IF_THEN(!(ssl->flag & S_FLAG), 
+		// IF_THEN(!(ssl->flag & S_FLAG),
 		ft_putchar('\n');
 	}
 	IF_THEN(!ssl->fd[i] && !(ssl->flag & S_FLAG), ft_putchar('\n'));

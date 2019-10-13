@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 18:49:46 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 19:15:40 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void			opt_desciption(int type)
 
 void			show_supported(void)
 {
-	ft_printf("Standard commands:\n\n");
+	ft_printf("%sStandard commands%s:\n", UWHT, NOCOL);
+	ft_printf("check-prime\tgenrsa\n\n");
 	ft_printf("%sMessage Digest Commands%s:\n", UWHT, NOCOL);
 	ft_printf("md5\nsha224\t\tsha256\nsha384\t\tsha512\n\n");
 	ft_printf("%sCipher Commands%s:\n", UWHT, NOCOL);
@@ -59,8 +60,7 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 {
 	if (err == 1)
 	{
-		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n", ex);
-		ft_printf("usage: ft_ssl command [command opts] [command args]\n\n");
+		ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n", ex);
 		show_supported();
 	}
 	if (err == 2)

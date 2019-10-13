@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 21:05:23 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/06 14:54:54 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 19:07:45 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ int				parse_av(char **av, t_ssl *ssl, int i, int j)
 
 int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 {
-	static void	(*choose[2])(char **, t_ssl *) = {
-				ssl_md5, ssl_des};
+	static void	(*choose[3])(char **, t_ssl *) = {
+				ssl_md5, ssl_des, ssl_rsa};
 	char		**pv;
 
 	if (*ac < 2)
@@ -116,6 +116,11 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 	pv = *av;
 	if (valid_command(pv[1], ssl))
 		return (ft_error(1, pv[1], ssl));
+	if (ssl->type > 30)
+	{
+		choose[2](pv, ssl);
+		return (0);
+	}
 	if (parse_av(*(av), ssl, 1, 0))
 		return (ft_error(3, pv[1], ssl));
 	if (!read_files(pv, ssl, ssl->file_index[0], 0))
