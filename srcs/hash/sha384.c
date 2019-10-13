@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:50:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/12 12:12:14 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:36:41 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char			*sha384(char *buf, char *to_hash)
 {
 	t_sha64bit	s;
-	uint64_t	w[80];
+	__uint64_t	w[80];
 	int			i;
 
 	i = -1;

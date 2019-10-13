@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 21:28:37 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/06 17:10:36 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:14:33 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char			*get_hash(char **to_hash, char **input, t_ssl *ssl, int i)
 
 void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 {
-	if (ssl->flag && ((!(ssl->flag & 0x18000) &&
-	(ssl->flag & S_FLAG || ssl->fd[i]) && !(ssl->flag & R_FLAG))))
+	if ((!(ssl->flag & 0x18000) &&
+	(ssl->flag & S_FLAG || ssl->fd[i]) && !(ssl->flag & R_FLAG)))
 	{
 		ft_printf("%s (", ft_strtoupper(input));
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
@@ -61,7 +61,7 @@ void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
 		ft_printf(") = ");
 	}
-	if (!(ssl->flag & 0x60000) &&
+	if (!(ssl->flag & 0x70000) &&
 	(ssl->flag & P_FLAG || (ssl->fd[i] && ssl->flag)))
 		ft_printf("%s", to_hash);
 	ft_printf("%s%c", get_hash(&to_hash, &input, ssl, i),

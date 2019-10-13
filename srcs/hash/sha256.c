@@ -6,13 +6,13 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:50:26 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/12 12:12:05 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:36:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../ft_ssl.h"
 
-static uint32_t	g_sha32bit_k[64] =
+static __uint32_t	g_sha32bit_k[64] =
 {
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
 	0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -27,12 +27,12 @@ static uint32_t	g_sha32bit_k[64] =
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
-static void		sha256_loop(int i, t_sha32bit *s, uint32_t *w)
+static void		sha256_loop(int i, t_sha32bit *s, __uint32_t *w)
 {
-	uint32_t	t1;
-	uint32_t	t2;
-	uint32_t	ch;
-	uint32_t	maj;
+	__uint32_t	t1;
+	__uint32_t	t2;
+	__uint32_t	ch;
+	__uint32_t	maj;
 
 	ch = (s->e & s->f) ^ ((~s->e) & s->g);
 	maj = (s->a & s->b) ^ (s->a & s->c) ^ (s->b & s->c);
@@ -48,7 +48,7 @@ static void		sha256_loop(int i, t_sha32bit *s, uint32_t *w)
 	s->a = t1 + t2;
 }
 
-void			sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i)
+void			sha32_cycle(int count, t_sha32bit *s, __uint32_t *w, int i)
 {
 	while (++i < 16)
 		w[i] = s->message[count][i];
@@ -76,10 +76,10 @@ void			sha32_cycle(int count, t_sha32bit *s, uint32_t *w, int i)
 	s->hash[7] += s->h;
 }
 
-static void		sha_pad(char *to_hash, t_sha32bit *s, uint64_t len)
+static void		sha_pad(char *to_hash, t_sha32bit *s, __uint64_t len)
 {
 	int			i;
-	uint64_t	n;
+	__uint64_t	n;
 
 	n = 0;
 	i = 0;
@@ -90,25 +90,25 @@ static void		sha_pad(char *to_hash, t_sha32bit *s, uint64_t len)
 		(((++n) % 64)) == 0 ? i++ : 0;
 	}
 	s->message[i][(n) % 64 / 4] |= 0x80 << (3 - ((n) % 4)) * 8;
-	s->message[s->multiples - 1][14] = (uint32_t)((len * 8) >> 32);
-	s->message[s->multiples - 1][15] = (uint32_t)((len * 8) & 0xffffffff);
+	s->message[s->multiples - 1][14] = (__uint32_t)((len * 8) >> 32);
+	s->message[s->multiples - 1][15] = (__uint32_t)((len * 8) & 0xffffffff);
 }
 
 void			sha32_set(char *to_hash, t_sha32bit *s)
 {
 	int			i;
-	uint64_t	len;
+	__uint64_t	len;
 
 	i = -1;
 	len = (ft_strlen(to_hash) * 8) + 1;
 	while (len % 512 != 448)
 		len++;
 	s->multiples = (len += 64) / 512;
-	s->message = (uint32_t**)malloc(sizeof(uint32_t*) * s->multiples);
+	s->message = (__uint32_t**)malloc(sizeof(__uint32_t*) * s->multiples);
 	while (++i < s->multiples)
 	{
-		s->message[i] = (uint32_t*)malloc(sizeof(uint32_t) * 16);
-		ft_bzero(s->message[i], sizeof(uint32_t) * 16);
+		s->message[i] = (__uint32_t*)malloc(sizeof(__uint32_t) * 16);
+		ft_bzero(s->message[i], sizeof(__uint32_t) * 16);
 	}
 	sha_pad(to_hash, s, LEN(to_hash));
 }
@@ -116,7 +116,7 @@ void			sha32_set(char *to_hash, t_sha32bit *s)
 char			*sha256(char *buf, char *to_hash)
 {
 	t_sha32bit	s;
-	uint32_t	w[64];
+	__uint32_t	w[64];
 	int			i;
 
 	i = -1;
@@ -136,7 +136,7 @@ char			*sha256(char *buf, char *to_hash)
 	ft_sprintf(to_hash, "%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x",
 		s.hash[0], s.hash[1], s.hash[2], s.hash[3],
 		s.hash[4], s.hash[5], s.hash[6], s.hash[7]);
-	free_message(s.multiples, (uint64_t **)s.message);
+	free_message(s.multiples, (__uint64_t **)s.message);
 	free(s.message);
 	return (to_hash);
 }

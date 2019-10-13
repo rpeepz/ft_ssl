@@ -6,13 +6,13 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:50:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/08/12 12:12:14 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:36:50 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../ft_ssl.h"
 
-static uint64_t	g_sha64bit_k[80] =
+static __uint64_t	g_sha64bit_k[80] =
 {
 	0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f,
 	0xe9b5dba58189dbbc, 0x3956c25bf348b538, 0x59f111f1b605d019,
@@ -43,12 +43,12 @@ static uint64_t	g_sha64bit_k[80] =
 	0x5fcb6fab3ad6faec, 0x6c44198c4a475817
 };
 
-static void		sha512_loop(t_sha64bit *s, int i, uint64_t *w)
+static void		sha512_loop(t_sha64bit *s, int i, __uint64_t *w)
 {
-	uint64_t	t1;
-	uint64_t	t2;
-	uint64_t	ch;
-	uint64_t	maj;
+	__uint64_t	t1;
+	__uint64_t	t2;
+	__uint64_t	ch;
+	__uint64_t	maj;
 
 	ch = (s->e & s->f) ^ ((~s->e) & s->g);
 	maj = (s->a & s->b) ^ (s->a & s->c) ^ (s->b & s->c);
@@ -64,7 +64,7 @@ static void		sha512_loop(t_sha64bit *s, int i, uint64_t *w)
 	s->a = t1 + t2;
 }
 
-void			sha64_cycle(int count, t_sha64bit *s, uint64_t *w, int i)
+void			sha64_cycle(int count, t_sha64bit *s, __uint64_t *w, int i)
 {
 	while (++i < 16)
 		w[i] = s->message[count][i];
@@ -92,11 +92,11 @@ void			sha64_cycle(int count, t_sha64bit *s, uint64_t *w, int i)
 	s->hash[7] += s->h;
 }
 
-static void		sha_pad(char *to_hash, t_sha64bit *s, uint64_t len)
+static void		sha_pad(char *to_hash, t_sha64bit *s, __uint64_t len)
 {
 	int			i;
 	int			u;
-	uint64_t	n;
+	__uint64_t	n;
 
 	n = 0;
 	i = 0;
@@ -105,30 +105,30 @@ static void		sha_pad(char *to_hash, t_sha64bit *s, uint64_t len)
 	{
 		u = (n % 8 ? u - 8 : 56);
 		s->message[i][(n % 128) / 8] |=
-		(((uint64_t)to_hash[n] << u) & (0xffffffffffffffff >> (((n) % 8)) * 8));
+		(((__uint64_t)to_hash[n] << u) & (0xffffffffffffffff >> (((n) % 8)) * 8));
 		((++n) % 128) ? 0 : i++;
 	}
 	u = (n % 8) ? u - 8 : 56;
-	s->message[i][(n) % 128 / 8] |= (uint64_t)0x80 << u;
-	s->message[s->multiples - 1][14] = ((uint64_t)len * 8) >> 56;
-	s->message[s->multiples - 1][15] = ((uint64_t)len * 8) & 0xffffffffffffffff;
+	s->message[i][(n) % 128 / 8] |= (__uint64_t)0x80 << u;
+	s->message[s->multiples - 1][14] = ((__uint64_t)len * 8) >> 56;
+	s->message[s->multiples - 1][15] = ((__uint64_t)len * 8) & 0xffffffffffffffff;
 }
 
 void			sha64_start(char *to_hash, t_sha64bit *s)
 {
 	int			i;
-	uint64_t	len;
+	__uint64_t	len;
 
 	i = -1;
 	len = (ft_strlen(to_hash) * 8) + 1;
 	while (len % 1024 != 896)
 		len++;
 	s->multiples = (len += 128) / 1024;
-	s->message = (uint64_t**)malloc(sizeof(uint64_t*) * s->multiples);
+	s->message = (__uint64_t**)malloc(sizeof(__uint64_t*) * s->multiples);
 	while (++i < s->multiples)
 	{
-		s->message[i] = (uint64_t*)malloc(sizeof(uint64_t) * 16);
-		ft_bzero(s->message[i], sizeof(uint64_t) * 16);
+		s->message[i] = (__uint64_t*)malloc(sizeof(__uint64_t) * 16);
+		ft_bzero(s->message[i], sizeof(__uint64_t) * 16);
 	}
 	sha_pad(to_hash, s, LEN(to_hash));
 }
@@ -136,7 +136,7 @@ void			sha64_start(char *to_hash, t_sha64bit *s)
 char			*sha512(char *buf, char *to_hash)
 {
 	t_sha64bit	s;
-	uint64_t	w[80];
+	__uint64_t	w[80];
 	int			i;
 
 	i = -1;
