@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:50:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/12 18:36:50 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:40:55 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,13 @@ static void		sha_pad(char *to_hash, t_sha64bit *s, __uint64_t len)
 	{
 		u = (n % 8 ? u - 8 : 56);
 		s->message[i][(n % 128) / 8] |=
-		(((__uint64_t)to_hash[n] << u) & (0xffffffffffffffff >> (((n) % 8)) * 8));
+		(((uint64_t)to_hash[n] << u) & (0xffffffffffffffff >> (((n) % 8)) * 8));
 		((++n) % 128) ? 0 : i++;
 	}
 	u = (n % 8) ? u - 8 : 56;
 	s->message[i][(n) % 128 / 8] |= (__uint64_t)0x80 << u;
 	s->message[s->multiples - 1][14] = ((__uint64_t)len * 8) >> 56;
-	s->message[s->multiples - 1][15] = ((__uint64_t)len * 8) & 0xffffffffffffffff;
+	s->message[s->multiples - 1][15] = ((uint64_t)len * 8) & 0xffffffffffffffff;
 }
 
 void			sha64_start(char *to_hash, t_sha64bit *s)

@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:50:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/09 18:41:46 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/12 18:53:21 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ int				valid_flags(t_ssl *ssl, char c)
 	return (1);
 }
 
+int				scan_rsa(char *input)
+{
+	if (!ft_strcmp(input, "genrsa"))
+		return (31);
+	else if (!ft_strcmp(input, "check-prime"))
+		return (32);
+	return (0);
+}
+
 int				scan_des(char *input)
 {
 	if (!ft_strcmp(input, "des3-ecb"))
@@ -57,7 +66,7 @@ int				scan_des(char *input)
 		return (22);
 	else if (!ft_strcmp(input, "des"))
 		return (21);
-	return (0);
+	return (scan_rsa(input));
 }
 
 int				valid_command(char *input, t_ssl *ssl)
