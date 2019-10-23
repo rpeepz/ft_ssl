@@ -58,16 +58,31 @@ __uint64_t		*get_a(__uint64_t n)
 	return (array_make(12, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37));
 }
 
-__uint64_t		powmod(__uint64_t n, t_primary checks, int i)
+__uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
 {
 	__uint64_t	x;
 
-	if (checks.d == 1)
-		return (checks.a[i] % n);
-	x = (checks.a[i] * checks.a[i]) % n;
-	checks.d--;
-	while (--checks.d)
-		x = (x * checks.a[i]) % n;
+	if (mod < 2 || num == 0)
+	{
+		if (mod == 0)
+			write(2, "Cannot take modpow with modulus 0\n", 34); 
+		return (0);
+	}
+	if (exp == 0)
+		return (1);
+/*	x = (num * num) % mod;
+	--exp;
+	while (--exp)
+		x = (x * num) % mod;
+ */
+//jmbomeyo implement
+	while (exp > 0)
+	{
+		if (exp & 0x1)
+			x = (x * num) % mod;
+		x = (x * x) % mod;
+		exp /= 2;
+	}
 	return (x);
 }
 
@@ -81,7 +96,7 @@ static int		witness(__uint64_t n, t_primary *checks)
 	while (checks->a[++i] != 0)
 	{
 		checks->r = tmp;
-		checks->x = powmod(n, *checks, i);
+		checks->x = modpow(checks->a[i], checks->d, n);
 		if (checks->x == 1 || checks->x == n - 1)
 			continue ;
 		while (checks->r - 1)
