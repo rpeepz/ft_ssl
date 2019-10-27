@@ -19,7 +19,7 @@ __uint64_t		*array_make(int len, ...)
 	__uint64_t	*a;
 	int			i;
 
-	a = malloc(sizeof(int) * len + 1);
+	a = malloc(sizeof(__uint64_t) * (len + 1));
 	i = 0;
 	va_start(ap, len);
 	while (i < len)
@@ -28,6 +28,7 @@ __uint64_t		*array_make(int len, ...)
 		i++;
 	}
 	a[len] = 0;
+	va_end(ap);
 	return (a);
 }
 
@@ -58,6 +59,15 @@ __uint64_t		*get_a(__uint64_t n)
 	return (array_make(12, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37));
 }
 
+/*
+**	x = (num * num) % mod;
+**	--exp;
+**	while (--exp)
+**		x = (x * num) % mod;
+**
+**	jmbomeyo implement below
+*/
+
 __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
 {
 	__uint64_t	x;
@@ -65,17 +75,11 @@ __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
 	if (mod < 2 || num == 0)
 	{
 		if (mod == 0)
-			write(2, "Cannot take modpow with modulus 0\n", 34); 
+			write(2, "Cannot take modpow with modulus 0\n", 34);
 		return (0);
 	}
 	if (exp == 0)
 		return (1);
-/*	x = (num * num) % mod;
-	--exp;
-	while (--exp)
-		x = (x * num) % mod;
- */
-//jmbomeyo implement
 	while (exp > 0)
 	{
 		if (exp & 0x1)
@@ -128,12 +132,6 @@ int				ft_is_primary(__uint64_t number, float probability)
 		return (1);
 	if (number == 1 || !(number & 0x1))
 		return (0);
-	for (uint64_t i = 2; i < number; i++) {
-		if (number % i == 0) {
-			return (0);
-		}
-	}
-	return (1);
 	checks.d = number - 1;
 	checks.r = 0;
 	while (!(checks.d & 0x1) && ++checks.r)
