@@ -13,6 +13,23 @@
 #include "../../ft_ssl.h"
 #include <stdio.h>
 
+/*
+**	int				lazy_prime(__uint64_t n, t_primary checks)
+**	{
+**		uint64_t	i;
+**
+**		ft_printf("d= %llu\n", checks.d);
+**		i = 2;
+**		while (i < n)
+**		{
+**			if (n % i == 0)
+**				return (0);
+**			i++;
+**		}
+**		return (1);
+**	}
+*/
+
 void			ssl_rsa(char **av, t_ssl *ssl)
 {
 	__uint64_t	num;
