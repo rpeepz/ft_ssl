@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 21:14:12 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/06/20 04:24:58 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/01 03:18:08 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@
 **	STRUCTS
 **	----- ----- -----
 */
+
+typedef struct		s_point
+{
+	size_t			x;
+	size_t			y;
+}					t_point;
 
 typedef struct		s_list
 {
@@ -205,6 +211,12 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 **	UTILS
 **	----- ----- -----
 */
+
+double				map_zero(double in, double max, double start, double end);
+
+int					ft_abs(int value);
+double				abs_double(double value);
+
 int					ft_countwords(char const *s, char c);
 int					ft_intlen(int num);
 int					ft_atoi(const char *s);

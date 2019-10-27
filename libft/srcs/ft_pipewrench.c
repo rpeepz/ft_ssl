@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:27:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/26 16:31:14 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/05 17:44:54 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,16 @@
 static int		teflon_tape(va_list ap)
 {
 	char	**p_string;
-	int		i;
 	int		freed;
 
-	i = 0;
 	freed = 0;
 	p_string = va_arg(ap, char **);
-	while (p_string[i])
-		i++;
-	while (freed < i && p_string[freed])
-	{
-		free(p_string[freed++]);
-	}
-	free(p_string);
-	return (i + 1);
+	if (!p_string)
+		return (freed);
+	while (p_string[freed])
+		ft_strdel(&(p_string[freed++]));
+	ft_memdel((void **)&p_string);
+	return (freed + 1);
 }
 
 static int		screwdriver(va_list ap)
@@ -44,9 +40,9 @@ static int		screwdriver(va_list ap)
 		i++;
 	while (freed < i && p_ints[freed])
 	{
-		free(p_ints[freed++]);
+		ft_memdel((void **)&p_ints[freed++]);
 	}
-	free(p_ints);
+	ft_memdel((void **)&p_ints);
 	return (i + 1);
 }
 
