@@ -53,6 +53,7 @@ int				get_stdin(char **line, char *str, int x, int i)
 		str = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
+	ft_strdel(&tmp);
 	*line = i == 1 ? ft_strjoin(str, "\n") : ft_strdup(str);
 	ft_strdel(&str);
 	IF_THEN(!x && tmp && *line && *line[0] != '\n', ft_strdel(&tmp));
