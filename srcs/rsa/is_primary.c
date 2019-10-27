@@ -60,12 +60,14 @@ __uint64_t		*get_a(__uint64_t n)
 }
 
 /*
-**	x = (num * num) % mod;
-**	--exp;
-**	while (--exp)
-**		x = (x * num) % mod;
-**
-**	jmbomeyo implement below
+**	jmbomeyo implement
+**	while (exp > 0)
+**	{
+**		if (exp & 0x1)
+**			x = (x * num) % mod;
+**		x = (x * x) % mod;
+**		exp /= 2;
+**	}
 */
 
 __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
@@ -80,13 +82,10 @@ __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
 	}
 	if (exp == 0)
 		return (1);
-	while (exp > 0)
-	{
-		if (exp & 0x1)
-			x = (x * num) % mod;
-		x = (x * x) % mod;
-		exp /= 2;
-	}
+	x = (num * num) % mod;
+	--exp;
+	while (exp && --exp)
+		x = (x * num) % mod;
 	return (x);
 }
 
@@ -126,6 +125,7 @@ static int		witness(__uint64_t n, t_primary *checks)
 int				ft_is_primary(__uint64_t number, float probability)
 {
 	t_primary	checks;
+	int			ret;
 
 	(void)probability;
 	if (number == 2 || number == 3)
@@ -137,5 +137,7 @@ int				ft_is_primary(__uint64_t number, float probability)
 	while (!(checks.d & 0x1) && ++checks.r)
 		checks.d /= 2;
 	checks.a = get_a(number);
-	return (witness(number, &checks));
+	ret = witness(number, &checks);
+	free(checks.a);
+	return (ret);
 }
