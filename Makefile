@@ -50,51 +50,60 @@ OBJ		+= $(addprefix $(OBJ_PATH)/,$(RSA:.c=.o))
 all:	$(NAME)
 
 clean:
+		@printf "[$(RED)clean   obj$(NC)]\t[:#         :]\r"
 		@make -C libft clean
-		@rm -rf obj
+		@printf "[$(RED)clean   obj$(NC)]\t[:#######   :]\r"
+		@rm -f $(OBJ)
+		@printf "[$(RED)clean   obj$(NC)]\t[:##########:]\n"
 
 fclean: clean
-		@printf "[$(RED)$(NAME)$(NC)]\tRm binary\n" #PRINT
 		@make -C libft fclean
+		@printf "[$(RED)full  clean$(NC)]\t[:######    :]\r"
+		@rm -rf $(OBJ_PATH)
 		@rm -rf $(NAME).dSYM
-		@rm -rf $(NAME)
 		@rm -rf $(NAME).h.gch
+		@rm -rf $(NAME)
+		@printf "[$(RED)full  clean$(NC)]\t[:##########:]\n"
 
 re: fclean all
 
-$(NAME):$(OBJ)
+$(NAME): $(OBJ)
 		@make -C libft
-		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)...$(NC)]\r" #PRINT
+		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##        :]\r"
 		@gcc $(CFLAGS) $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
-		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
-
-$(OBJ_PATH):
-		@mkdir -p $@
-
-$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h| $(OBJ_PATH)
-		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
-$(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
-		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
-$(OBJ_PATH)/%.o: srcs/rsa/%.c ft_ssl.h | $(OBJ_PATH)
-		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
+		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##########:]\n"
 
 q:
-		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
 		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
 
 debug:
-		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
 		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
-		@printf "[$(GREEN)$(NAME)$(NC)] [$(YELLOW)debug$(NC)] [$(MAG)OK!$(NC)]\n" #PRINT
+		@printf "[$(YELLOW)debug$(NC)]\t\t[:##########:]\n"
 
 sanitize:
-		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):#         :$(NC)]\r"
 		@rm -rf $(NAME)
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##        :$(NC)]\r"
 		@rm -rf $(NAME).dSYM
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):###       :$(NC)]\r"
 		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME) -fsanitize=address
-		@printf "[$(GREEN)$(NAME)$(NC)] [$(YELLOW)debug$(NC)] [$(MAG)OK!$(NC)]\n" #PRINT
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##########:$(NC)]\n"
+
+$(OBJ_PATH):
+		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##        :]\r"
+		@mkdir -p $@
+
+$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h| $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:##        :]\r"
+		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:##        :]\r"
+		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/rsa/%.c ft_ssl.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:##        :]\r"
+		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
