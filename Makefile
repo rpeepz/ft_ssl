@@ -12,6 +12,7 @@
 
 NAME	= ft_ssl
 ARCHIVE = libft/libft.a
+BIGINT	= big_int/libftbi.a
 AUTHOR	= rpapagna
 
 CFLAGS	= -Wall -Wextra -Werror
@@ -69,20 +70,21 @@ re: fclean all
 
 $(NAME): $(OBJ)
 		@make -C libft
+		@make -C big_int
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##        :]\r"
-		@gcc $(CFLAGS) $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
+		@gcc $(CFLAGS) $(OBJ_PATH)/*.o $(ARCHIVE) $(BIGINT) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##########:]\n"
 
 q:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) $(BIGINT) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
 
 debug:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) $(BIGINT) -o $(NAME)
 		@printf "[$(YELLOW)debug$(NC)]\t\t[:##########:]\n"
 
 sanitize:
@@ -91,7 +93,7 @@ sanitize:
 		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##        :$(NC)]\r"
 		@rm -rf $(NAME).dSYM
 		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):###       :$(NC)]\r"
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME) -fsanitize=address
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) $(BIGINT) -o $(NAME) -fsanitize=address
 		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##########:$(NC)]\n"
 
 $(OBJ_PATH):

@@ -60,56 +60,71 @@ __uint64_t		*get_a(__uint64_t n)
 }
 
 /*
-**	jmbomeyo implement
-**	while (exp > 0)
-**	{
-**		if (exp & 0x1)
-**			x = (x * num) % mod;
-**		x = (x * x) % mod;
-**		exp /= 2;
-**	}
+**	x = (num * num) % mod;
+**	--exp;
+**	while (exp && --exp)
+**		x = (x * num) % mod;
+**	
+**	jmbomeyo implement below
 */
 
-__uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
-{
-	__uint64_t	x;
+	t_ftbi *zero;
+	t_ftbi *one;
+	t_ftbi *two;
+	t_ftbi *three;
 
-	if (mod < 2 || num == 0)
+t_ftbi			*modpow(t_ftbi* num, t_ftbi *exp, t_ftbi *mod)
+{
+	t_ftbi	*x;
+	t_ftbi	*d;
+
+	d = ftbi_copy(exp);
+	if (ftbi_lt(mod, two) || ftbi_is_zero(num))
 	{
-		if (mod == 0)
+		if (ftbi_is_zero(mod))
 			write(2, "Cannot take modpow with modulus 0\n", 34);
-		return (0);
+		return (zero);
 	}
-	if (exp == 0)
-		return (1);
-	x = (num * num) % mod;
-	--exp;
-	while (exp && --exp)
-		x = (x * num) % mod;
+	if (ftbi_is_zero(d))
+		return (one);
+	x = ftbi_copy(one);
+	num = ftbi_mod(num, mod);
+	while (ftbi_gt(d, zero))
+	{
+		ft_printf("x = %s\n", ftbi_tostr(x));
+		if (d->a[0] & 0x1){
+			
+		}
+		ftbi_repl(&d, ftbi_div2(d));
+		ft_printf("exp = %s\n", ftbi_tostr(d));
+		ftbi_repl(&num, ftbi_mod(ftbi_mul(num, num), mod));
+		ft_printf("num = %s\n", ftbi_tostr(num));
+	}
 	return (x);
 }
 
-static int		witness(__uint64_t n, t_primary *checks)
+static int		witness(t_ftbi *n, t_ftbi *d, t_ftbi *r, __uint64_t *a)
 {
-	__uint64_t	tmp;
+	t_ftbi		*tmp;
+	t_ftbi		*x;
 	int			i;
 
-	tmp = checks->r;
+	tmp = ftbi_copy(r);
 	i = -1;
-	while (checks->a[++i] != 0)
+	while (a[++i] != 0)
 	{
-		checks->r = tmp;
-		checks->x = modpow(checks->a[i], checks->d, n);
-		if (checks->x == 1 || checks->x == n - 1)
+		r = tmp;
+		x = modpow(ftbi_new_ullong(a[i]), d, n);
+		if (ftbi_eq(x, ftbi_new_str("1")) || ftbi_eq(x, ftbi_sub(n, ftbi_new_str("1"))))
 			continue ;
-		while (checks->r - 1)
+		while (!(ftbi_is_zero(ftbi_sub(r, ftbi_new_str("1")))))
 		{
-			checks->x = (checks->x * checks->x) % n;
-			if (checks->x == n - 1)
+			x = ftbi_mod(ftbi_mul(x, x), n);
+			if (ftbi_eq(x, ftbi_sub(n, ftbi_new_str("1"))))
 				break ;
-			--checks->r;
+			r = ftbi_sub(r, ftbi_new_str("1"));
 		}
-		if (!(checks->r - 1))
+		if (ftbi_is_zero(ftbi_sub(r, ftbi_new_str("1"))))
 			return (0);
 	}
 	return (1);
@@ -122,22 +137,50 @@ static int		witness(__uint64_t n, t_primary *checks)
 ** w * a % n = w <<-- repeat d - 1
 */
 
-int				ft_is_primary(__uint64_t number, float probability)
-{
-	t_primary	checks;
-	int			ret;
+// int				ft_is_primary(__uint64_t number, float probability)
+// {
+// 	t_primary	checks;
+// 	int			ret;
+// 	(void)probability;
+// 	if (number == 2 || number == 3)
+// 		return (1);
+// 	if (number == 1 || !(number & 0x1))
+// 		return (0);
+// 	checks.d = number - 1;
+// 	checks.r = 0;
+// 	while (!(checks.d & 0x1) && ++checks.r)
+// 		checks.d /= 2;
+// 	checks.a = get_a(number);
+// 	ret = witness(number, &checks);
+// 	free(checks.a);
+// 	return (ret);
+// }
 
+int				ft_is_primary(t_ftbi *number, float probability)
+{
+	int			ret;
+	t_ftbi		*d;
+	t_ftbi		*r;
+	__uint64_t	*a;
+
+	zero = ftbi_new_str("0");
+	one = ftbi_new_str("1");
+	two = ftbi_new_str("2");
+	three = ftbi_new_str("3");
 	(void)probability;
-	if (number == 2 || number == 3)
+	if (ftbi_eq(number, two) || ftbi_eq(number, three))
 		return (1);
-	if (number == 1 || !(number & 0x1))
+	if (ftbi_eq(number, one) || !(number->a[0] & 0x1))
 		return (0);
-	checks.d = number - 1;
-	checks.r = 0;
-	while (!(checks.d & 0x1) && ++checks.r)
-		checks.d /= 2;
-	checks.a = get_a(number);
-	ret = witness(number, &checks);
-	free(checks.a);
+	d = ftbi_sub(number, one);
+	r = ftbi_copy(zero);
+	while (!(d->a[0] & 0x1))
+	{
+		ftbi_repl(&r, ftbi_add(r, one));
+		ftbi_repl(&d, ftbi_div2(d));
+	}
+	a = get_a(strtoull(ftbi_tostr(number), 0x0, 10));
+	ret = witness(number, d, r, a);
+	ft_memdel((void **)&a);
 	return (ret);
 }

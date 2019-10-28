@@ -32,7 +32,8 @@
 
 void			ssl_rsa(char **av, t_ssl *ssl)
 {
-	__uint64_t	num;
+	t_ftbi		*num;
+	// __uint64_t	num;
 	float		prob;
 
 	if (ssl->type == 31)
@@ -46,10 +47,13 @@ void			ssl_rsa(char **av, t_ssl *ssl)
 		ft_error(2, av[1], ssl);
 		return ;
 	}
-	num = strtoull(av[2], 0x0, 10);
+	// num = strtoull(av[2], 0x0, 10);
+	num = ftbi_new_str(av[2]);
 	prob = 0.99;
 	if (ft_is_primary(num, prob))
-		ft_printf("%llu is prime at %.0f%% probability.\n", num, prob * 100);
+		ft_printf("%s is prime at %.0f%% probability.\n", ftbi_tostr(num), prob * 100);
 	else
-		ft_printf("%llu is composite\n", num);
+		ft_printf("%s is composite.\n", ftbi_tostr(num));
+		// ft_printf("%llu is prime at %.0f%% probability.\n", num, prob * 100);
+		// ft_printf("%llu is composite\n", num);
 }

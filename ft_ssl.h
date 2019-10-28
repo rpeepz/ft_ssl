@@ -14,6 +14,7 @@
 # define FT_SSL_H
 
 # include "libft/includes/libft.h"
+# include "big_int/inc/libftbi.h"
 # include <dirent.h>
 # include <errno.h>
 # include <math.h>
@@ -138,7 +139,8 @@ typedef struct		s_ssl
 **	--------------------------------
 */
 
-int					ft_is_primary(__uint64_t number, float probability);
+int					ft_is_primary(t_ftbi *number, float probability);
+// int					ft_is_primary(__uint64_t number, float probability);
 void				ssl_rsa(char **av, t_ssl *ssl);
 
 void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
