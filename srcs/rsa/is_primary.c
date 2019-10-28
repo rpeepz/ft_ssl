@@ -32,31 +32,34 @@ __uint64_t		*array_make(int len, ...)
 	return (a);
 }
 
-__uint64_t		*get_a(__uint64_t n)
+__uint64_t		*get_a(t_ftbi *n)
 {
-	if (n < 2047)
+	if (ftbi_lt(n, ftbi_new_str("2047")))
 		return (array_make(1, 2));
-	if (n < 1373653)
+	if (ftbi_lt(n, ftbi_new_str("1373653")))
 		return (array_make(2, 2, 3));
-	if (n < 9080191)
+	if (ftbi_lt(n, ftbi_new_str("9080191")))
 		return (array_make(2, 31, 73));
-	if (n < 25326001)
+	if (ftbi_lt(n, ftbi_new_str("25326001")))
 		return (array_make(3, 2, 3, 5));
-	if (n < 3215031751)
+	if (ftbi_lt(n, ftbi_new_str("3215031751")))
 		return (array_make(4, 2, 3, 5, 7));
-	if (n < 4759123141)
+	if (ftbi_lt(n, ftbi_new_str("4759123141")))
 		return (array_make(3, 2, 7, 61));
-	if (n < 1122004669633)
+	if (ftbi_lt(n, ftbi_new_str("1122004669633")))
 		return (array_make(4, 2, 13, 23, 1662803));
-	if (n < 2152302898747)
+	if (ftbi_lt(n, ftbi_new_str("2152302898747")))
 		return (array_make(5, 2, 3, 5, 7, 11));
-	if (n < 3474749660383)
+	if (ftbi_lt(n, ftbi_new_str("3474749660383")))
 		return (array_make(6, 2, 3, 5, 7, 11, 13));
-	if (n < 341550071728321)
+	if (ftbi_lt(n, ftbi_new_str("341550071728321")))
 		return (array_make(7, 2, 3, 5, 7, 11, 13, 17));
-	if (n < 3825123056546413051)
+	if (ftbi_lt(n, ftbi_new_str("3825123056546413051")))
 		return (array_make(9, 2, 3, 5, 7, 11, 13, 17, 19, 23));
-	return (array_make(12, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37));
+	if (ftbi_lt(n, ftbi_new_str("318665857834031151167461")))
+		return (array_make(12, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37));
+	// if (ftbi_lt(n, ftbi_new_str("3317044064679887385961981")))
+		return (array_make(13, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41));
 }
 
 /*
@@ -72,6 +75,7 @@ __uint64_t		*get_a(__uint64_t n)
 	t_ftbi *one;
 	t_ftbi *two;
 	t_ftbi *three;
+	t_ftbi *tmp;
 
 t_ftbi			*modpow(t_ftbi* num, t_ftbi *exp, t_ftbi *mod)
 {
@@ -91,14 +95,20 @@ t_ftbi			*modpow(t_ftbi* num, t_ftbi *exp, t_ftbi *mod)
 	num = ftbi_mod(num, mod);
 	while (ftbi_gt(d, zero))
 	{
-		ft_printf("x = %s\n", ftbi_tostr(x));
 		if (d->a[0] & 0x1){
-			
+			// write(1, "here1\n", 6);
+			// x = ftbi_mod(ftbi_mul(x, num), mod);
+			// ftbi_repl(&x, ftbi_mod(ftbi_mul(x, num), mod));
+			ftbi_divmod(ftbi_mul(x, num), mod, &x);
+			ft_printf("x %s\n", ftbi_tostr(x));
 		}
 		ftbi_repl(&d, ftbi_div2(d));
 		ft_printf("exp = %s\n", ftbi_tostr(d));
-		ftbi_repl(&num, ftbi_mod(ftbi_mul(num, num), mod));
-		ft_printf("num = %s\n", ftbi_tostr(num));
+		// write(1, "here2\n", 6);
+		// num = ftbi_mod(ftbi_mul(num, num), mod);
+		// ftbi_repl(&num, ftbi_mod(ftbi_mul(num, num), mod));
+		ftbi_divmod(ftbi_mul(num, num), mod, &num);
+		ft_printf("mod %s\n", ftbi_tostr(num));
 	}
 	return (x);
 }
@@ -179,7 +189,7 @@ int				ft_is_primary(t_ftbi *number, float probability)
 		ftbi_repl(&r, ftbi_add(r, one));
 		ftbi_repl(&d, ftbi_div2(d));
 	}
-	a = get_a(strtoull(ftbi_tostr(number), 0x0, 10));
+	a = get_a(number);
 	ret = witness(number, d, r, a);
 	ft_memdel((void **)&a);
 	return (ret);
