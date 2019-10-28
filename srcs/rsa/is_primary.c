@@ -59,17 +59,6 @@ __uint64_t		*get_a(__uint64_t n)
 	return (array_make(12, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37));
 }
 
-/*
-**	jmbomeyo implement
-**	while (exp > 0)
-**	{
-**		if (exp & 0x1)
-**			x = (x * num) % mod;
-**		x = (x * x) % mod;
-**		exp /= 2;
-**	}
-*/
-
 __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
 {
 	__uint64_t	x;
@@ -82,10 +71,15 @@ __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
 	}
 	if (exp == 0)
 		return (1);
-	x = (num * num) % mod;
-	--exp;
-	while (exp && --exp)
-		x = (x * num) % mod;
+	x = 1;
+	num = num % mod;
+	while (exp > 0)
+	{
+		if (exp & 0x1)
+			x = (x * num) % mod;
+		exp /= 2;
+		num = (num * num) % mod;
+	}
 	return (x);
 }
 
