@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 21:14:12 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/01 03:18:08 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/31 18:22:34 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,7 @@ double				abs_double(double value);
 int					ft_countwords(char const *s, char c);
 int					ft_intlen(int num);
 int					ft_atoi(const char *s);
+unsigned long long	ft_atoull(const char *str);
 char				*ft_itoa(int n);
 char				*ft_itoa_base(int n, int base);
 char				*ft_uitoa_base(unsigned int n, int base);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 21:59:42 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/02/19 22:07:21 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/31 18:22:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-int		ft_atoi(const char *str)
+int					ft_atoi(const char *str)
 {
 	int		i;
 	int		res;
@@ -35,4 +35,21 @@ int		ft_atoi(const char *str)
 		i++;
 	}
 	return (res * neg);
+}
+
+unsigned long long	ft_atoull(const char *str)
+{
+	int					i;
+	unsigned long long	n;
+
+	i = 0;
+	n = 0;
+	while (IS_SPACE(str[i]) || str[i] == '\n' || str[i] == '\v')
+		i++;
+	while (ft_isdigit(str[i]))
+	{
+		n = (n * 10) + (str[i] - '0');
+		i++;
+	}
+	return (n);
 }
