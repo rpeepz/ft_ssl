@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/10/12 19:02:56 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/10/31 22:56:33 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ HASH	=hash.c\
 		sha384.c\
 		sha512.c
 RSA		=rsa.c\
+		genrsa.c \
 		is_primary.c
 
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/12 19:05:20 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/10/31 23:37:17 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,23 @@ typedef struct		s_ssl
 	int				file_index[255];
 }					t_ssl;
 
+typedef struct		s_rsa
+{
+	__uint64_t		p;
+	__uint64_t		q;
+	__uint64_t		n;
+	__uint64_t		phi;
+	__uint64_t		e;
+	__uint64_t		d;
+}					t_rsa;
+
 /*
 **	--------------------------------
 **	    		FUNCTIONS
 **	--------------------------------
 */
 
+__uint64_t			genrsa(t_ssl *ssl, int bits);
 int					ft_is_primary(__uint64_t number, float probability);
 void				ssl_rsa(char **av, t_ssl *ssl);
 
