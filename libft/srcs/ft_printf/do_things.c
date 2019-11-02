@@ -12,7 +12,7 @@
 
 #include "../../includes/ft_printf.h"
 
-const static char	g_base[] = "0123456789ABCDEF";
+static const char	g_base[] = "0123456789ABCDEF";
 
 void		print_one(char **str)
 {
