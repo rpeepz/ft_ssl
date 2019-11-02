@@ -121,11 +121,9 @@ int				convert_b(t_mods modifiers, va_list ap, int i)
 {
 	uint64_t	num;
 	int			nbyte;
-	int			len;
 	char		*str;
 
 	nbyte = 0;
-	len = -1;
 	num = convert_length(modifiers.length, ap);
 	if (modifiers.length == 'l' || modifiers.length / 2 == 'l' ||
 		modifiers.length == 'z')
