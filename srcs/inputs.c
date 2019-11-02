@@ -24,7 +24,7 @@ static int		check_for_spaces(char **input, char ***av, int *ac)
 		replace = (char **)malloc(sizeof(*replace) * (*ac + 1));
 		split = ft_strsplit(input[1], ' ');
 		replace[0] = ft_strdup(input[0]);
-		ft_pipewrench("-s-s", input[0], input[1]);
+		ft_pipewrench("-s-s", &input[0], &input[1]);
 		free(input);
 		i = -1;
 		while (++i < (*ac) - 1)
