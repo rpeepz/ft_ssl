@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/10/05 18:45:06 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/11/01 23:36:05 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= ft_ssl
 ARCHIVE = libft/libft.a
 AUTHOR	= rpapagna
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra
 INCL	= -I ./
 OBJ_PATH= obj
 
@@ -39,8 +39,10 @@ HASH	=hash.c\
 		sha384.c\
 		sha512.c
 
+RU_DEB	=_DEBUG_RULE_
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
+
 
 .PHONY: clean debug
 
@@ -59,30 +61,39 @@ fclean: clean
 
 re: fclean all
 
-$(NAME):$(OBJ)
-		@make -C libft
-		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)...$(NC)]\r" #PRINT
-		@gcc $(CFLAGS) $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
+$(NAME): $(ARCHIVE) $(OBJ)
+		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##        :]\r"
+		@gcc $(CFLAGS) -Werror $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
+		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##########:]\n"
+
+q:
+		@rm -rf $(NAME)
+		@rm -rf $(NAME).dSYM
+		@gcc $(CFLAGS) -g $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
+
+debug:
+		@rm -rf $(NAME)
+		@rm -rf $(NAME).dSYM
+		@gcc -D$(RU_DEB) $(CFLAGS) -g $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@printf "[$(YELLOW)debug$(NC)]\t\t[:##########:]\n"
+
+sanitize:
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):#         :$(NC)]\r"
+		@rm -rf $(NAME)
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##        :$(NC)]\r"
+		@rm -rf $(NAME).dSYM
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):###       :$(NC)]\r"
+		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME) -fsanitize=address
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##########:$(NC)]\n"
 
 $(OBJ_PATH):
 		@mkdir -p $@
 
-$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h| $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:##        :]\r"
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
-
-1mo:
-		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
-		@rm -rf $(NAME)
-		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(ARCHIVE) -o $(NAME)
-		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
-
-debug:
-		@printf "[$(GREEN)ft_ssl$(NC)]\r" #PRINT
-		@rm -rf $(NAME)
-		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(ARCHIVE) -o $(NAME) -fsanitize=address
-		@printf "[$(GREEN)$(NAME)$(NC)] [$(YELLOW)debug$(NC)] [$(MAG)OK!$(NC)]\n" #PRINT
+$(ARCHIVE):
+		@make -C libft
