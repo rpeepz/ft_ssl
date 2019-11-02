@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 23:12:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/06/18 02:56:51 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:14:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../includes/ft_sprintf.h"
 
 static void		pos_justify(char *buf, t_mod mod, int len)
 {

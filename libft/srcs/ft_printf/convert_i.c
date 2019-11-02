@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 20:58:07 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/26 16:35:36 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 23:23:17 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../includes/ft_printf.h"
 
 /*
 **	d, i	The int (or variant) argument is converted to signed decimal.
@@ -138,5 +138,5 @@ int				convert_i(t_mods modifiers, va_list ap)
 		nbyte += left_justify(modifiers, str, nbyte, neg);
 	else
 		nbyte += right_justify(modifiers, str, nbyte, neg);
-	IF_RETURN(1, (ft_pipewrench("-s", str) + nbyte) - 1);
+	IF_RETURN(1, (ft_pipewrench("-s", &str) + nbyte) - 1);
 }

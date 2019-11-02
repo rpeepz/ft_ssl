@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/25 23:49:35 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/26 16:33:54 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:14:10 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../includes/ft_sprintf.h"
 
 static t_fl		get_flags(char **str)
 {
