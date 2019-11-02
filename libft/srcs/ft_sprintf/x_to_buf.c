@@ -29,9 +29,7 @@ static void		pos_justify(char *buf, t_mod mod, int len)
 static void		right_justify(char *buf, char *num, t_mod mod, int capital)
 {
 	int		len;
-	int		nbyte;
 
-	nbyte = 0;
 	if ((len = LEN(num)) && mod.fl.pound && num[0] != '0' && num[0] != '\0')
 	{
 		if (mod.fl.fzero && mod.prcsn == -1)
