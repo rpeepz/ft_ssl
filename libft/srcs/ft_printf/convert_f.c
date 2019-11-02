@@ -127,9 +127,9 @@ static char		**num_string_modld(long double num, t_mods mod, int add_zeros)
 	{
 		zeros = ft_strcnew(add_zeros, '0');
 		zeros = ft_strncpy(zeros + (add_zeros - len), str[1], len);
-		IF_THEN(ft_pipewrench("-s", &str[1]),
-		(str[1] = ft_strdup(zeros - (add_zeros - len))) &&
-		ft_pipewrench("-s", &zeros - (add_zeros - len)));
+		if (ft_pipewrench("-s", &str[1]))
+			if ((str[1] = ft_strdup(zeros - (add_zeros - len))))
+				ft_pipewrench("-s", &zeros - (add_zeros - len));
 	}
 	return (str);
 }
