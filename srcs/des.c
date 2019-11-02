@@ -33,17 +33,17 @@ int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl)
 void				des(char *input, char *to_hash, t_ssl *ssl, int i)
 {
 	ft_printf("des area\n");
-	input = 0;
-	to_hash = 0;
-	ssl = 0;
-	i = 0;
+	(void)input;
+	(void)to_hash;
+	(void)ssl;
+	(void)i;
 }
 
 void				des3(char *input, char *to_hash, t_ssl *ssl, int i)
 {
 	ft_printf("des3 area\n");
-	input = 0;
-	to_hash = 0;
-	ssl = 0;
-	i = 0;
+	(void)input;
+	(void)to_hash;
+	(void)ssl;
+	(void)i;
 }
