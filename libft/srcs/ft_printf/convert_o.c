@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:59:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/26 16:35:36 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 23:23:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../includes/ft_printf.h"
 
 /*
 **	o, O	The int (or variant) argument is converted to unsigned octal.
@@ -125,5 +125,5 @@ int				convert_o(t_mods modifiers, va_list ap, int i)
 		nbyte += left_justify(modifiers, str, nbyte);
 	else
 		nbyte += right_justify(modifiers, str, nbyte);
-	IF_RETURN(1, (ft_pipewrench("-s", str) + nbyte) - 1);
+	IF_RETURN(1, (ft_pipewrench("-s", &str) + nbyte) - 1);
 }

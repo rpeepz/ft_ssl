@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:59:06 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/26 16:35:36 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 23:23:13 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../includes/ft_printf.h"
 
 /*
 **	s	The char* argument is expected to be a pointer to an array of character
@@ -72,11 +72,11 @@ int			convert_s(t_mods modifiers, va_list ap)
 			nbyte += (int)write(1, s2, len);
 		else
 			nbyte += left_justify(modifiers, s2, len);
-		IF_RETURN(1, (ft_pipewrench("-s", s2) + nbyte) - 1);
+		IF_RETURN(1, (ft_pipewrench("-s", &s2) + nbyte) - 1);
 	}
 	if (modifiers.width > len)
 		nbyte += right_justify(modifiers, s2, len);
 	else
 		nbyte += (int)write(1, s2, len);
-	IF_RETURN(1, (ft_pipewrench("-s", s2) + nbyte) - 1);
+	IF_RETURN(1, (ft_pipewrench("-s", &s2) + nbyte) - 1);
 }

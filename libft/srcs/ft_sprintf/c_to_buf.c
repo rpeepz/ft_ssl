@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/26 01:39:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/26 16:33:35 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:13:57 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../includes/ft_sprintf.h"
 
 static int		left_justify(char *buf, char c, int width)
 {

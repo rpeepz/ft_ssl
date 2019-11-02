@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 19:04:29 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/26 16:35:36 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 23:23:19 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "../../includes/ft_printf.h"
 
 /*
 **  f, F    The double argument is rounded and converted to decimal notation in
@@ -127,9 +127,9 @@ static char		**num_string_modld(long double num, t_mods mod, int add_zeros)
 	{
 		zeros = ft_strcnew(add_zeros, '0');
 		zeros = ft_strncpy(zeros + (add_zeros - len), str[1], len);
-		IF_THEN(ft_pipewrench("-s", str[1]),
+		IF_THEN(ft_pipewrench("-s", &str[1]),
 		(str[1] = ft_strdup(zeros - (add_zeros - len))) &&
-		ft_pipewrench("-s", zeros - (add_zeros - len)));
+		ft_pipewrench("-s", &zeros - (add_zeros - len)));
 	}
 	return (str);
 }
@@ -157,6 +157,6 @@ int				convert_f(t_mods modifiers, va_list ap, int i)
 		nbyte = left_justify(modifiers, to_print, nbyte, neg);
 	else
 		nbyte = right_justify(modifiers, to_print, nbyte, neg);
-	ft_pipewrench("--s-s", str, to_print);
+	ft_pipewrench("--s-s", &str, &to_print);
 	return (nbyte);
 }
