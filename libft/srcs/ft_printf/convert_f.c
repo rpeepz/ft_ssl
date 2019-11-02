@@ -157,6 +157,6 @@ int				convert_f(t_mods modifiers, va_list ap, int i)
 		nbyte = left_justify(modifiers, to_print, nbyte, neg);
 	else
 		nbyte = right_justify(modifiers, to_print, nbyte, neg);
-	ft_pipewrench("--s-s", &str, &to_print);
+	ft_pipewrench("--s-s", str, &to_print);
 	return (nbyte);
 }
