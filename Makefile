@@ -44,6 +44,7 @@ OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
 
 
+
 .PHONY: clean debug
 
 all:	$(NAME)
