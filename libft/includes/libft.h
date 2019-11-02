@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 21:14:12 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/31 18:22:34 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:17:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define LIBFT_H
 
 # include <stdlib.h>
-# include <stdarg.h>
 # include <string.h>
 # include <unistd.h>
 # include <stdint.h>
@@ -28,15 +27,11 @@
 
 # define MAX_FD 4096
 # define PAGESIZE 4096
-# define GNL_BUFF_SIZE 2
 
-# define ADD_ONE_TO_BUFF(buf, c, n) ft_strncpy(buf, c, 1); buf++; n++;
-# define ADD_TO_BUFF(buf, src, n, ln) ft_strncpy(buf, src, ln); buf+=ln; n+=ln;
 # define LEN(X) (int)ft_strlen(X)
 # define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\r' || x == '\f')
 # define IF_THEN(X, Y) if(X) {(Y);}
 # define IF_RETURN(X, Y) if(X) {return (Y);}
-# define PIPE_KEY '-'
 
 /*
 **	----- ----- -----
@@ -56,41 +51,6 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
-
-typedef struct		s_flag
-{
-	int				space;
-	int				pound;
-	int				minus;
-	int				fplus;
-	int				fzero;
-}					t_flag;
-
-typedef struct		s_mods
-{
-	t_flag			fl;
-	int				width;
-	int				prcsn;
-	int				length;
-}					t_mods;
-
-typedef struct		s_fl
-{
-	int				space;
-	int				pound;
-	int				minus;
-	int				fplus;
-	int				fzero;
-}					t_fl;
-
-typedef struct		s_mod
-{
-	t_fl			fl;
-	int				width;
-	int				prcsn;
-	int				length;
-	int				neg;
-}					t_mod;
 
 /*
 **	----- ----- -----
@@ -226,35 +186,8 @@ char				*ft_itoa_base(int n, int base);
 char				*ft_uitoa_base(unsigned int n, int base);
 char				*ft_strpop(char *str, size_t id);
 
-void				set_flags(t_flag *fl, char c);
 
 char				*num_string_base(long long num, int base);
 char				*num_string_u_base(unsigned long long num, int base);
-void				print_one(char **str);
-int					ft_padding(char *buf, int len, t_mod mod, int nbyte);
-void				left_jut(char *buf, char *num, t_mod mod, int nbyte);
-
-t_mods				get_mods(char **str, va_list ap);
-t_mod				get_mod(char **str, va_list ap);
-
-int					get_type_specifier(char x);
-int					get_pre_float(long double number, int ret);
-int					get_undef_length(char x);
-
-int					convert_percent(t_mods modifiers);
-int					convert_i(t_mods modifiers, va_list ap);
-int					convert_c(t_mods modifiers, va_list ap);
-int					convert_s(t_mods modifiers, va_list ap);
-int					convert_p(t_mods modifiers, va_list ap);
-int					convert_o(t_mods modifiers, va_list ap, int i);
-int					convert_u(t_mods modifiers, va_list ap, int i);
-int					convert_x(t_mods modifiers, va_list ap, int i);
-int					convert_f(t_mods modifiers, va_list ap, int i);
-int					convert_b(t_mods modifiers, va_list ap, int i);
-
-int					c_to_buf(char *buf, t_mod modifiers, va_list ap);
-int					i_to_buf(char *buf, t_mod modifiers, va_list ap);
-int					s_to_buf(char *buf, t_mod modifiers, va_list ap);
-int					x_to_buf(char *buf, t_mod modifiers, va_list ap, int i);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 18:27:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/05 17:44:54 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:30:37 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/ft_pipewrench.h"
 
 static int		teflon_tape(va_list ap)
 {
@@ -19,7 +19,7 @@ static int		teflon_tape(va_list ap)
 
 	freed = 0;
 	p_string = va_arg(ap, char **);
-	if (!p_string)
+	if (!p_string || !*p_string)
 		return (freed);
 	while (p_string[freed])
 		ft_strdel(&(p_string[freed++]));
@@ -48,21 +48,28 @@ static int		screwdriver(va_list ap)
 
 static int		plunger(va_list ap, int depth, char sig)
 {
-	if (depth > 2)
-		return (1);
+	char	*s;
+	int		*i;
+
 	if (sig == 's')
 	{
-		if (depth > 1)
+		if (depth == 2)
 			return (teflon_tape(ap));
 		else
-			free(va_arg(ap, char*));
+		{
+			s = va_arg(ap, char*);
+			ft_memdel((void **)s);
+		}
 	}
-	if (sig == 'i')
+	else if (sig == 'i')
 	{
-		if (depth > 1)
+		if (depth == 2)
 			return (screwdriver(ap));
 		else
-			free(va_arg(ap, int*));
+		{
+			i = va_arg(ap, int*);
+			ft_memdel((void **)i);
+		}
 	}
 	return (depth);
 }
@@ -88,7 +95,10 @@ static int		pipe_cutter(char **str, va_list ap)
 	freed = 0;
 	if (**str)
 	{
-		freed += plunger(ap, pointer_depth, **str);
+		if (pointer_depth > 2)
+			ft_putendl_fd("Unsupported Input", 2);
+		else
+			freed += plunger(ap, pointer_depth, **str);
 		(*str)++;
 	}
 	return (freed);
@@ -113,9 +123,7 @@ int				ft_pipewrench(char *str, ...)
 			freed += pipe_cutter(&str, ap);
 			if (freed == 0)
 			{
-				write(1, "\nusage: ft_pipewren", 19);
-				write(1, "ch(const char * res", 19);
-				write(1, "trict format, ...)\n", 19);
+				ft_putendl_fd("No valid pointers were freed", 2);
 			}
 		}
 	}
