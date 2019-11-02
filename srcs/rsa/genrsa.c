@@ -79,6 +79,66 @@ __uint64_t		lcm(__uint64_t a, __uint64_t b)
 	return (a * b);
 }
 
+// __uint64_t		gcd_extended(__uint64_t a, __uint64_t b, __uint64_t *x, __uint64_t *y)
+// {
+// 	__uint64_t	x1;
+// 	__uint64_t	y1;
+// 	__uint64_t	gcd;
+// 	if (a == 0)
+// 	{
+// 		*x = 0, *y = 1;
+// 		return b;
+// 	}
+// 	gcd = gcd_extended(b % a, a, &x1, &y1);
+// 	*x = y1 - (b / a) * x1;
+// 	*y = x1;
+// 	return gcd;
+// }
+
+// __uint64_t		mod_inverse(__uint64_t a, __uint64_t m)
+// {
+// 	__uint64_t	x;
+// 	__uint64_t	y;
+// 	__uint64_t	g;
+// 	__uint64_t	res;
+// 	g = gcd_extended(a, m, &x, &y);
+// 	if (g != 1)
+// 	{
+// 		ft_putendl_fd("Inverse doesn't exist", 2);
+// 		return (1);
+// 	}
+// 	else
+// 	{
+// 		res = ((x % m) + m) % m; 
+//     }
+// 	return (res);
+// }
+
+__uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
+{
+	__uint64_t	b0;
+	__int64_t	t;
+	__uint64_t	q;
+	__int64_t	x0;
+	__int64_t	x1;
+	b0 = b;
+	x0 = 0;
+	x1 = 1;
+	while (a > 1)
+	{
+		q = a / b;
+		t = b;
+		b = a % b;
+		a = t;
+		t = x0;
+		x0 = x1 - q * x0;
+		x1 = t;
+	}
+	if (x1 < 0)
+		x1 += b0;
+	return (x1);
+}
+
 __uint64_t		genrsa(t_ssl *ssl, int bits)
 {
 	t_rsa		gg;
@@ -87,10 +147,23 @@ __uint64_t		genrsa(t_ssl *ssl, int bits)
 	gg.p = genprime(bits);
 	gg.q = genprime(bits);
 	gg.n = gg.p * gg.q;
-	gg.phi = lcm(gg.p - 1, gg.q - 1);
-	// gg.phi = (gg.p - 1 * gg.q - 1);
 	gg.e = 65537;
+
+	gg.phi = lcm(gg.p - 1, gg.q - 1);
+	ft_printf("\n-----1-- phi = %llu -------\n", gg.phi);
 	gg.d = (1 + (2 * gg.phi)) / gg.e;
+	ft_printf("\n-----1-- d = %llu -------\n", gg.d);
+	gg.d = mod_inverse(gg.e, gg.phi);
+	ft_printf("\n-----2-- d = %llu -------\n", gg.d);
+	
+	gg.phi = (gg.p - 1 * gg.q - 1);
+	ft_printf("\n-----2-- phi = %llu -------\n", gg.phi);
+	gg.d = (1 + (2 * gg.phi)) / gg.e;
+	ft_printf("\n-----1-- d = %llu -------\n", gg.d);
+	gg.d = mod_inverse(gg.e, gg.phi);
+	ft_printf("\n-----2-- d = %llu -------\n", gg.d);
+	
+	ft_printf("\n~~~~~~~~~~~~~~~~~\n");
 	ft_printf("\n------- p = %llu -------\n", gg.p);
 	ft_printf("\n------- q = %llu -------\n", gg.q);
 	ft_printf("\n------- n = %llu -------\n", gg.n);
