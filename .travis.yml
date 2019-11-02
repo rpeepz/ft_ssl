@@ -9,7 +9,7 @@ script: make
 # Matrix
 os:
   - osx
-  - linux
+  # - linux
 
 complier:
   -clang

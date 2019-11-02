@@ -14,7 +14,7 @@ NAME	= ft_ssl
 ARCHIVE = libft/libft.a
 AUTHOR	= rpapagna
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra
 INCL	= -I ./
 OBJ_PATH= obj
 
@@ -42,9 +42,11 @@ RSA		=rsa.c\
 		genrsa.c \
 		is_primary.c
 
+RU_DEB	=_DEBUG_RULE_
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(RSA:.c=.o))
+
 
 .PHONY: clean debug
 
@@ -68,22 +70,21 @@ fclean: clean
 
 re: fclean all
 
-$(NAME): $(OBJ)
-		@make -C libft
+$(NAME): $(ARCHIVE) $(OBJ)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##        :]\r"
-		@gcc $(CFLAGS) $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
+		@gcc $(CFLAGS) -Werror $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##########:]\n"
 
 q:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@gcc $(CFLAGS) -g $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
 
 debug:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@gcc -D$(RU_DEB) $(CFLAGS) -g $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
 		@printf "[$(YELLOW)debug$(NC)]\t\t[:##########:]\n"
 
 sanitize:
@@ -99,7 +100,7 @@ $(OBJ_PATH):
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##        :]\r"
 		@mkdir -p $@
 
-$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h| $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:##        :]\r"
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
@@ -108,3 +109,5 @@ $(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
 $(OBJ_PATH)/%.o: srcs/rsa/%.c ft_ssl.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:##        :]\r"
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
+$(ARCHIVE):
+		@make -C libft
