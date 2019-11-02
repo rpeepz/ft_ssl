@@ -44,5 +44,5 @@ void			ssl_des(char **av, t_ssl *ssl)
 {
 	ft_printf("[%s] you made it to the part where you decide how to dispatch\n",
 	av[1]);
-	ssl = 0;
+	(void)ssl;
 }
