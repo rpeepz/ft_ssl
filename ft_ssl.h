@@ -65,6 +65,25 @@
 # define D_V "-v\tinitialization vector in hex is the next argument\n"
 # define D_I "-i input_file\tWrite input to input_file\n"
 # define D_O "-o output_file\tWrite output to output_file\n"
+# define R_UI "-in file\t\tInput file\n"
+# define R_UO "-out file\t\tOutput file\n"
+# define R_UIK "-inkey file\t\tInput key\n"
+# define R_UPI "-pubin\t\t\tInput is an RSA public\n"
+# define R_UE "-encrypt\t\tEncrypt with public key\n"
+# define R_UD "-decrypt\t\tDecrypt with private key\n"
+# define R_UH "-hexdump\t\tHex dump output\n"
+# define R_M "-modulus\t\tPrint the RSA key modulus\n"
+# define R_N "-noout\t\t\tDo not print encoded version of the key\n"
+# define R_PI "-pubin\t\t\tExpect a public key (default private key)\n"
+# define R_PO "-pubout\t\t\tOutput a public key (default private key)\n"
+# define R_T "-text\t\t\tPrint in plain text in addition to encoded\n"
+
+# ifdef _DEBUG_RULE_
+#  define DEBUG 1
+# else
+#  define DEBUG 0
+# endif
+# define MAX_BIT_PRIME 32
 
 /*
 **	--------------------------------
