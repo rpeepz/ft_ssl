@@ -100,6 +100,7 @@ src/
 
 ```
 ft_ssl.h
+│
 └── libft
     └── includes
         ├── ft_get_next_line.h
@@ -141,7 +142,7 @@ WolframAlpha.com
 Tom Scott @ [Computerphile](https://www.youtube.com/user/Computerphile)  
 [RSA cryptosystem](https://en.wikipedia.org/wiki/RSA_(cryptosystem))  
 [RSA algorithm](https://simple.wikipedia.org/wiki/RSA_algorithm)  
-https://sahandsaba.com/cryptography-rsa-part-1.html
+https://sahandsaba.com/cryptography-rsa-part-1.html  
 https://www.nku.edu/~christensen/section%2026%20RSA.pdf  
 [Gaurav Sen](https://www.youtube.com/channel/UCRPMAqdtSgd0Ipeef7iFsKw)  
 [Leandro Junes](https://www.youtube.com/channel/UC4qyGwNwWA3kg4AyD61y82A/playlists)  
