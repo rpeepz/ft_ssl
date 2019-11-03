@@ -95,8 +95,10 @@ static int		witness(__uint64_t n, t_primary *checks)
 		checks->r = tmp;
 		checks->x = modpow(checks->a[i], checks->d, n);
 		if (checks->x == 1 || checks->x == n - 1)
+		{
+			ft_putchar('+');
 			continue ;
-		ft_putchar('+');
+		}
 		while (checks->r - 1)
 		{
 			checks->x = (checks->x * checks->x) % n;
@@ -104,8 +106,8 @@ static int		witness(__uint64_t n, t_primary *checks)
 				break ;
 			--checks->r;
 		}
-		if (!(checks->r - 1))
-			return (0);
+		IF_RETURN(!(checks->r - 1), 0);
+		ft_putchar('+');
 	}
 	return (1);
 }

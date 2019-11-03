@@ -45,8 +45,6 @@ __uint64_t		genprime(int bits)
 	__uint64_t			max;
 	unsigned int		i;
 
-	if (bits <= 0 || bits > MAX_BIT_PRIME)
-		bits = MAX_BIT_PRIME;
 	min = 1L << (abs(bits / 2 - 1));
 	max = (1L << (bits / 2)) - 1;
 	i = 0;
@@ -56,10 +54,10 @@ __uint64_t		genprime(int bits)
 		{
 			p = (genrand(min, max) | 1) * (genrand(min, max) | 1);
 			p |= 1UL << (bits - 1);
-			ft_putchar('.');
 		}
 		if (ft_is_primary(p, 9.0F))
 			break ;
+		ft_putchar('.');
 		p += 2;
 		i++;
 	}
@@ -80,6 +78,8 @@ __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 	x1 = 1;
 	while (a > 1)
 	{
+		!b ? ft_putendl_fd("Error divide by 0", 2) : 0;
+		IF_THEN(!b, exit(0));
 		q = a / b;
 		t = b;
 		b = a % b;
@@ -93,13 +93,14 @@ __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 	return (x1);
 }
 
-__uint64_t		genrsa(t_ssl *ssl, int bits)
+#include <stdio.h>
+__uint64_t		genrsa(t_rsa_out rsa)
 {
 	t_rsa		gg;
 
-	(void)ssl;
-	gg.p = genprime(bits);
-	gg.q = genprime(bits);
+	ft_printf("Generating RSA private key, %d bit long modulus\n", rsa.bits);
+	gg.p = genprime(rsa.bits);
+	gg.q = genprime(rsa.bits);
 	gg.n = gg.p * gg.q;
 	gg.e = 65537;
 	gg.phi = (gg.p - 1) * (gg.q - 1);
@@ -107,14 +108,26 @@ __uint64_t		genrsa(t_ssl *ssl, int bits)
 	gg.dmp1 = gg.d % (gg.p - 1);
 	gg.dmq1 = gg.d % (gg.q - 1);
 	gg.iqmp = mod_inverse(gg.q, gg.p);
-	ft_printf("Private-Key: (%d bit)\n", bits);
-	ft_printf("modulus: %llu (%#x)\n", gg.n, gg.n);
-	ft_printf("publicExponent: %llu (%#x)\n", gg.e, gg.e);
-	ft_printf("privateExponent: %llu (%#x)\n", gg.d, gg.d);
-	ft_printf("prime1: %llu (%#x)\n", gg.p, gg.p);
-	ft_printf("prime2: %llu (%#x)\n", gg.q, gg.q);
-	ft_printf("exponent1: %llu (%#x)\n", gg.dmp1);
-	ft_printf("exponent2: %llu (%#x)\n", gg.dmq1);
-	ft_printf("coefficient: %llu (%#x)\n", gg.iqmp);
+	ft_printf("e is %llu (%#x)\n", gg.e, gg.e);
+	
+	// ft_printf("Private-Key: (%d bit)\n", rsa.bits);
+	// ft_printf("modulus: %llu (%#llx)\n", gg.n, gg.n);
+	// ft_printf("publicExponent: %llu (%#llx)\n", gg.e, gg.e);
+	// ft_printf("privateExponent: %llu (%#llx)\n", gg.d, gg.d);
+	// ft_printf("prime1: %llu (%#llx)\n", gg.p, gg.p);
+	// ft_printf("prime2: %llu (%#llx)\n", gg.q, gg.q);
+	// ft_printf("exponent1: %llu (%#llx)\n", gg.dmp1, gg.dmp1);
+	// ft_printf("exponent2: %llu (%#llx)\n", gg.dmq1, gg.dmq1);
+	// ft_printf("coefficient: %llu (%#llx)\n", gg.iqmp, gg.iqmp);
+	
+	dprintf(rsa.fd_out, "Private-Key: (%d bit)\n", rsa.bits);
+	dprintf(rsa.fd_out, "modulus: %llu (%#llx)\n", gg.n, gg.n);
+	dprintf(rsa.fd_out, "publicExponent: %llu (%#llx)\n", gg.e, gg.e);
+	dprintf(rsa.fd_out, "privateExponent: %llu (%#llx)\n", gg.d, gg.d);
+	dprintf(rsa.fd_out, "prime1: %llu (%#llx)\n", gg.p, gg.p);
+	dprintf(rsa.fd_out, "prime2: %llu (%#llx)\n", gg.q, gg.q);
+	dprintf(rsa.fd_out, "exponent1: %llu (%#llx)\n", gg.dmp1, gg.dmp1);
+	dprintf(rsa.fd_out, "exponent2: %llu (%#llx)\n", gg.dmq1, gg.dmq1);
+	dprintf(rsa.fd_out, "coefficient: %llu (%#llx)\n", gg.iqmp, gg.iqmp);
 	return (gg.n);
 }
