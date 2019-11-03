@@ -96,6 +96,7 @@ static int		witness(__uint64_t n, t_primary *checks)
 		checks->x = modpow(checks->a[i], checks->d, n);
 		if (checks->x == 1 || checks->x == n - 1)
 			continue ;
+		ft_putchar('+');
 		while (checks->r - 1)
 		{
 			checks->x = (checks->x * checks->x) % n;

@@ -45,8 +45,8 @@ __uint64_t		genprime(int bits)
 	__uint64_t			max;
 	unsigned int		i;
 
-	if (bits <= 0 || bits > 64)
-		bits = 64;
+	if (bits <= 0 || bits > MAX_BIT_PRIME)
+		bits = MAX_BIT_PRIME;
 	min = 1L << (abs(bits / 2 - 1));
 	max = (1L << (bits / 2)) - 1;
 	i = 0;
@@ -54,65 +54,18 @@ __uint64_t		genprime(int bits)
 	{
 		if (i % (bits * 2) == 0)
 		{
-			ft_printf("Generating %d-bit prime:\n", bits);
 			p = (genrand(min, max) | 1) * (genrand(min, max) | 1);
 			p |= 1UL << (bits - 1);
+			ft_putchar('.');
 		}
-		ft_printf("generated potential --> [%llb] ", p);
 		if (ft_is_primary(p, 9.0F))
 			break ;
-		ft_printf("FAILED...\n");
 		p += 2;
 		i++;
 	}
-	ft_printf("SUCCESS\n");
+	DEBUG ? ft_printf("\nSUCCESS\tprime --> [%llb]\n", p) : ft_putchar('\n');
 	return (p);
 }
-
-__uint64_t		lcm(__uint64_t a, __uint64_t b)
-{
-	while (!(a & 0x1) && !(b & 0x1))
-	{
-		a /= 2;
-		b /= 2;
-	}
-	return (a * b);
-}
-
-// __uint64_t		gcd_extended(__uint64_t a, __uint64_t b, __uint64_t *x, __uint64_t *y)
-// {
-// 	__uint64_t	x1;
-// 	__uint64_t	y1;
-// 	__uint64_t	gcd;
-// 	if (a == 0)
-// 	{
-// 		*x = 0, *y = 1;
-// 		return b;
-// 	}
-// 	gcd = gcd_extended(b % a, a, &x1, &y1);
-// 	*x = y1 - (b / a) * x1;
-// 	*y = x1;
-// 	return gcd;
-// }
-
-// __uint64_t		mod_inverse(__uint64_t a, __uint64_t m)
-// {
-// 	__uint64_t	x;
-// 	__uint64_t	y;
-// 	__uint64_t	g;
-// 	__uint64_t	res;
-// 	g = gcd_extended(a, m, &x, &y);
-// 	if (g != 1)
-// 	{
-// 		ft_putendl_fd("Inverse doesn't exist", 2);
-// 		return (1);
-// 	}
-// 	else
-// 	{
-// 		res = ((x % m) + m) % m; 
-//     }
-// 	return (res);
-// }
 
 __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 {
@@ -121,6 +74,7 @@ __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 	__uint64_t	q;
 	__int64_t	x0;
 	__int64_t	x1;
+
 	b0 = b;
 	x0 = 0;
 	x1 = 1;
@@ -148,27 +102,19 @@ __uint64_t		genrsa(t_ssl *ssl, int bits)
 	gg.q = genprime(bits);
 	gg.n = gg.p * gg.q;
 	gg.e = 65537;
-
-	gg.phi = lcm(gg.p - 1, gg.q - 1);
-	ft_printf("\n-----1-- phi = %llu -------\n", gg.phi);
-	gg.d = (1 + (2 * gg.phi)) / gg.e;
-	ft_printf("\n-----1-- d = %llu -------\n", gg.d);
+	gg.phi = (gg.p - 1) * (gg.q - 1);
 	gg.d = mod_inverse(gg.e, gg.phi);
-	ft_printf("\n-----2-- d = %llu -------\n", gg.d);
-	
-	gg.phi = (gg.p - 1 * gg.q - 1);
-	ft_printf("\n-----2-- phi = %llu -------\n", gg.phi);
-	gg.d = (1 + (2 * gg.phi)) / gg.e;
-	ft_printf("\n-----1-- d = %llu -------\n", gg.d);
-	gg.d = mod_inverse(gg.e, gg.phi);
-	ft_printf("\n-----2-- d = %llu -------\n", gg.d);
-	
-	ft_printf("\n~~~~~~~~~~~~~~~~~\n");
-	ft_printf("\n------- p = %llu -------\n", gg.p);
-	ft_printf("\n------- q = %llu -------\n", gg.q);
-	ft_printf("\n------- n = %llu -------\n", gg.n);
-	ft_printf("\n------- phi = %llu -------\n", gg.phi);
-	ft_printf("\n------- e = %llu -------\n", gg.e);
-	ft_printf("\n------- d = %llu -------\n", gg.d);
+	gg.dmp1 = gg.d % (gg.p - 1);
+	gg.dmq1 = gg.d % (gg.q - 1);
+	gg.iqmp = mod_inverse(gg.q, gg.p);
+	ft_printf("Private-Key: (%d bit)\n", bits);
+	ft_printf("modulus: %llu (%#x)\n", gg.n, gg.n);
+	ft_printf("publicExponent: %llu (%#x)\n", gg.e, gg.e);
+	ft_printf("privateExponent: %llu (%#x)\n", gg.d, gg.d);
+	ft_printf("prime1: %llu (%#x)\n", gg.p, gg.p);
+	ft_printf("prime2: %llu (%#x)\n", gg.q, gg.q);
+	ft_printf("exponent1: %llu (%#x)\n", gg.dmp1);
+	ft_printf("exponent2: %llu (%#x)\n", gg.dmq1);
+	ft_printf("coefficient: %llu (%#x)\n", gg.iqmp);
 	return (gg.n);
 }

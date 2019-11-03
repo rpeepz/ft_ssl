@@ -44,7 +44,7 @@ void			ssl_rsa(char **av, t_ssl *ssl)
 	parse_rsa(av, ssl);
 	if (ssl->type == 31)
 	{
-		num = genrsa(ssl, av[2] ? ft_atoi(av[2]) : 0);
+		num = genrsa(ssl, av[2] ? ft_atoi(av[2]) : MAX_BIT_PRIME);
 		return ;
 	}
 	if (!av[2])
