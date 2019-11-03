@@ -43,8 +43,12 @@ int				scan_rsa(char *input)
 {
 	if (!ft_strcmp(input, "genrsa"))
 		return (31);
-	else if (!ft_strcmp(input, "check-prime"))
+	else if (!ft_strcmp(input, "rsautl"))
 		return (32);
+	else if (!ft_strcmp(input, "rsa"))
+		return (33);
+	else if (!ft_strcmp(input, "check-prime"))
+		return (36);
 	return (0);
 }
 

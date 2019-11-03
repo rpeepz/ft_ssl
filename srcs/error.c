@@ -25,12 +25,19 @@ void			opt_desciption(int type)
 		ft_printf("\n%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K);
 		ft_printf("%s%s%s%s", D_S, D_V, D_I, D_O);
 	}
+	else if (type == 31)
+		ft_printf("%s", R_UO);
+	else if (type == 32)
+		ft_printf("%s%s%s%s%s%s%s", R_UI, R_UO, R_UIK,
+		R_UPI, R_UE, R_UD, R_UH);
+	else if (type == 33)
+		ft_printf("%s%s%s%s%s%s%s", R_UI, R_M, R_N, R_UO, R_PI, R_PO, R_T);
 }
 
 void			show_supported(void)
 {
 	ft_printf("%sStandard commands%s:\n", UWHT, NOCOL);
-	ft_printf("check-prime\tgenrsa\n\n");
+	ft_printf("genrsa\nrsa\trsautl\n\n");
 	ft_printf("%sMessage Digest Commands%s:\n", UWHT, NOCOL);
 	ft_printf("md5\nsha224\t\tsha256\nsha384\t\tsha512\n\n");
 	ft_printf("%sCipher Commands%s:\n", UWHT, NOCOL);
@@ -56,6 +63,19 @@ void			full_usage(char *ex, int type)
 	}
 }
 
+void			err_6(t_ssl *ssl)
+{
+	if (ssl->flag == 'Z' && ssl->type == 33)
+		ft_printf("ft_ssl: Error: rsa: option requires an argument\n");
+	else if (ssl->type == 31)
+		ft_printf("Usage: genrsa [args] [numbits]\n");
+	else if (ssl->type == 32)
+		ft_printf("Usage: rsautl [options]\n");
+	else if (ssl->type == 33)
+		ft_printf("Usage: rsa [options]\n");
+	opt_desciption(ssl->type);
+}
+
 int				ft_error(int err, char *ex, t_ssl *ssl)
 {
 	if (err == 1)
@@ -79,5 +99,7 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 		ft_printf("unknown option '-%c'\n", *ex);
 	if (err == 5)
 		ft_printf("ft_ssl: Error: %s need a flag\n", ex);
+	if (err == 6)
+		err_6(ssl);
 	return (err);
 }
