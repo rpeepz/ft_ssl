@@ -143,11 +143,39 @@ typedef struct		s_ssl
 	int				file_index[255];
 }					t_ssl;
 
+typedef struct		s_rsa_out
+{
+	int				flag;
+	int				type;
+	int				bits;
+	int				fd_out;
+	int				fd_in;
+	int				fd_inkey;
+}					t_rsa_out;
+
+
+typedef struct		s_rsa
+{
+	__uint64_t		p;
+	__uint64_t		q;
+	__uint64_t		n;
+	__uint64_t		phi;
+	__uint64_t		dmp1;
+	__uint64_t		dmq1;
+	__uint64_t		iqmp;
+	__uint64_t		e;
+	__uint64_t		d;
+}					t_rsa;
+
 /*
 **	--------------------------------
 **	    		FUNCTIONS
 **	--------------------------------
 */
+
+__uint64_t			genrsa(t_rsa_out rsa);
+int					ft_is_primary(__uint64_t number, float probability);
+void				ssl_rsa(char **av, t_ssl *ssl);
 
 void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
 void				des(char *input, char *to_hash, t_ssl *ssl, int i);
