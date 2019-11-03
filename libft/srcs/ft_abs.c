@@ -12,7 +12,7 @@
 
 #include "../includes/libft.h"
 
-int		abs(int value)
+int		ft_abs(int value)
 {
 	return (value < 0 ? -value : value);
 }
