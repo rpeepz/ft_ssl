@@ -40,3 +40,8 @@ void			rsa_text_out(t_rsa_out rsa, t_rsa gg)
 	ft_sprintf(&buf[LEN(buf)], "coefficient: %llu (%#llx)\n", gg.iqmp, gg.iqmp);
 	ft_putstr_fd(buf, rsa.fd_out);
 }
+
+void			rsa_encode_out(t_rsa_out rsa, t_rsa gg)
+{
+	rsa_text_out(rsa, gg);
+}
