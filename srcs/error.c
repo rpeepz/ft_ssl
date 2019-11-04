@@ -31,13 +31,13 @@ void			opt_desciption(int type)
 		ft_printf("%s%s%s%s%s%s%s", R_UI, R_UO, R_UIK,
 		R_UPI, R_UE, R_UD, R_UH);
 	else if (type == 33)
-		ft_printf("%s%s%s%s%s%s%s", R_UI, R_M, R_N, R_UO, R_PI, R_PO, R_T);
+		ft_printf("%s%s%s%s%s%s", R_UI, R_N, R_UO, R_PI, R_PO, R_T);
 }
 
 void			show_supported(void)
 {
 	ft_printf("%sStandard commands%s:\n", UWHT, NOCOL);
-	ft_printf("genrsa\nrsa\trsautl\n\n");
+	ft_printf("genrsa\t\trsa\trsautl\n\n");
 	ft_printf("%sMessage Digest Commands%s:\n", UWHT, NOCOL);
 	ft_printf("md5\nsha224\t\tsha256\nsha384\t\tsha512\n\n");
 	ft_printf("%sCipher Commands%s:\n", UWHT, NOCOL);
