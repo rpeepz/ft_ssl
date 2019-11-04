@@ -93,14 +93,13 @@ __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 	return (x1);
 }
 
-#include <stdio.h>
 __uint64_t		genrsa(t_rsa_out rsa)
 {
 	t_rsa		gg;
 
 	ft_printf("Generating RSA private key, %d bit long modulus\n", rsa.bits);
-	gg.p = genprime(rsa.bits);
-	gg.q = genprime(rsa.bits);
+	gg.p = genprime(rsa.bits / 2);
+	gg.q = genprime(rsa.bits / 2);
 	gg.n = gg.p * gg.q;
 	gg.e = 65537;
 	gg.phi = (gg.p - 1) * (gg.q - 1);
@@ -109,25 +108,6 @@ __uint64_t		genrsa(t_rsa_out rsa)
 	gg.dmq1 = gg.d % (gg.q - 1);
 	gg.iqmp = mod_inverse(gg.q, gg.p);
 	ft_printf("e is %llu (%#x)\n", gg.e, gg.e);
-	
-	// ft_printf("Private-Key: (%d bit)\n", rsa.bits);
-	// ft_printf("modulus: %llu (%#llx)\n", gg.n, gg.n);
-	// ft_printf("publicExponent: %llu (%#llx)\n", gg.e, gg.e);
-	// ft_printf("privateExponent: %llu (%#llx)\n", gg.d, gg.d);
-	// ft_printf("prime1: %llu (%#llx)\n", gg.p, gg.p);
-	// ft_printf("prime2: %llu (%#llx)\n", gg.q, gg.q);
-	// ft_printf("exponent1: %llu (%#llx)\n", gg.dmp1, gg.dmp1);
-	// ft_printf("exponent2: %llu (%#llx)\n", gg.dmq1, gg.dmq1);
-	// ft_printf("coefficient: %llu (%#llx)\n", gg.iqmp, gg.iqmp);
-	
-	dprintf(rsa.fd_out, "Private-Key: (%d bit)\n", rsa.bits);
-	dprintf(rsa.fd_out, "modulus: %llu (%#llx)\n", gg.n, gg.n);
-	dprintf(rsa.fd_out, "publicExponent: %llu (%#llx)\n", gg.e, gg.e);
-	dprintf(rsa.fd_out, "privateExponent: %llu (%#llx)\n", gg.d, gg.d);
-	dprintf(rsa.fd_out, "prime1: %llu (%#llx)\n", gg.p, gg.p);
-	dprintf(rsa.fd_out, "prime2: %llu (%#llx)\n", gg.q, gg.q);
-	dprintf(rsa.fd_out, "exponent1: %llu (%#llx)\n", gg.dmp1, gg.dmp1);
-	dprintf(rsa.fd_out, "exponent2: %llu (%#llx)\n", gg.dmq1, gg.dmq1);
-	dprintf(rsa.fd_out, "coefficient: %llu (%#llx)\n", gg.iqmp, gg.iqmp);
+	rsa_encode_out(rsa, gg);
 	return (gg.n);
 }

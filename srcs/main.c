@@ -14,16 +14,13 @@
 
 int				main(int ac, char **av)
 {
-	// int		i;
-	// char	*line;
 	t_ssl	ssl;
 
-	// i = -1;
-	// line = "";
 	ft_bzero(&ssl, (sizeof(t_ssl)));
 	if (handle_inputs(&ac, &av, &ssl))
 	{
 		;
 	}
+	DEBUG ? system("leaks ft_ssl") : 0;
 	return (0);
 }
