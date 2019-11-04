@@ -173,6 +173,13 @@ typedef struct		s_rsa
 **	--------------------------------
 */
 
+<<<<<<< HEAD
+=======
+void				debug_output(t_ssl *ssl, t_rsa_out rsa);
+void				rsa_encode_out(t_rsa_out rsa, t_rsa gg);
+void				rsa_text_out(t_rsa_out rsa, t_rsa gg);
+void				rsa_command(t_rsa_out rsa);
+>>>>>>> be51d63... outlines
 __uint64_t			genrsa(t_rsa_out rsa);
 int					ft_is_primary(__uint64_t number, float probability);
 void				ssl_rsa(char **av, t_ssl *ssl);
