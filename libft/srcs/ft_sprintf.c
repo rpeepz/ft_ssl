@@ -37,6 +37,7 @@ static int		parse_string(char *buf, char **str, va_list ap)
 	IF_RETURN((i == 2 || i == 12) && (*str)++, i_to_buf(buf, modifier, ap));
 	IF_RETURN(i == 3 && (*str)++, c_to_buf(buf, modifier, ap));
 	IF_RETURN(i == 4 && (*str)++, s_to_buf(buf, modifier, ap));
+	IF_RETURN((i == 7 || i == 17) && (*str)++, u_to_buf(buf, modifier, ap, i));
 	IF_RETURN((i == 8 || i == 18) && (*str)++, x_to_buf(buf, modifier, ap, i));
 	return (42);
 }

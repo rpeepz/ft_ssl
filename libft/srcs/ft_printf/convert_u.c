@@ -89,7 +89,7 @@ static uint64_t	convert_length(int length, va_list ap)
 	else if (length / 2 == 'l' || length == 'z')
 		u = va_arg(ap, unsigned long long);
 	else
-		u = va_arg(ap, int);
+		u = va_arg(ap, unsigned int);
 	return (u);
 }
 
