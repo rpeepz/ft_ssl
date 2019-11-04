@@ -72,7 +72,6 @@
 # define R_UE "-encrypt\t\tEncrypt with public key\n"
 # define R_UD "-decrypt\t\tDecrypt with private key\n"
 # define R_UH "-hexdump\t\tHex dump output\n"
-# define R_M "-modulus\t\tPrint the RSA key modulus\n"
 # define R_N "-noout\t\t\tDo not print encoded version of the key\n"
 # define R_PI "-pubin\t\t\tExpect a public key (default private key)\n"
 # define R_PO "-pubout\t\t\tOutput a public key (default private key)\n"
@@ -83,7 +82,7 @@
 # else
 #  define DEBUG 0
 # endif
-# define MAX_BIT_PRIME 32
+# define MAX_BIT_KEY 64
 
 /*
 **	--------------------------------
@@ -181,6 +180,8 @@ typedef struct		s_rsa
 **	--------------------------------
 */
 
+void				debug_output(t_ssl *ssl, t_rsa_out rsa);
+void				rsa_text_out(t_rsa_out rsa, t_rsa gg);
 __uint64_t			genrsa(t_rsa_out rsa);
 int					ft_is_primary(__uint64_t number, float probability);
 void				ssl_rsa(char **av, t_ssl *ssl);
