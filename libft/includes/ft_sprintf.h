@@ -53,6 +53,7 @@ t_mod				get_mod(char **str, va_list ap);
 int					c_to_buf(char *buf, t_mod modifiers, va_list ap);
 int					i_to_buf(char *buf, t_mod modifiers, va_list ap);
 int					s_to_buf(char *buf, t_mod modifiers, va_list ap);
+int					u_to_buf(char *buf, t_mod modifiers, va_list ap, int i);
 int					x_to_buf(char *buf, t_mod modifiers, va_list ap, int i);
 
 
