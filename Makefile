@@ -38,14 +38,11 @@ HASH	=hash.c\
 		sha256.c\
 		sha384.c\
 		sha512.c
-<<<<<<< HEAD
-=======
 RSA		=ssl_rsa.c\
 		genrsa.c \
 		is_primary.c \
 		rsa.c \
 		rsa_out.c
->>>>>>> be51d63... outlines
 
 RU_DEB	=_DEBUG_RULE_
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
