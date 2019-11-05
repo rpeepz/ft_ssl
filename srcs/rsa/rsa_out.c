@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rsa_out.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 18:41:24 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/03 18:41:25 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/05 02:11:59 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_ssl.h"
+#include "rsa.h"
+#include "encode.h"
 
 void			debug_output(t_ssl *ssl, t_rsa_out rsa)
 {
@@ -41,7 +42,22 @@ void			rsa_text_out(t_rsa_out rsa, t_rsa gg)
 	ft_putstr_fd(buf, rsa.fd_out);
 }
 
+// void			base64_llu_fd(__uint64_t n, int fd)
+// {
+// 	__uint64_t	edata;
+
+	
+// 	ft_printf("[%llx/%llb]\n", n, n);
+
+// }
+
 void			rsa_encode_out(t_rsa_out rsa, t_rsa gg)
 {
+	ft_putstr_fd("-----BEGIN RSA PRIVATE KEY-----\n", rsa.fd_out);
+	//put base64
+	base64_str_fd("any carnal pleasure.", rsa.fd_out);
+	ft_putstr_fd("\n", rsa.fd_out);
+	// base64_llu_fd(gg.e, rsa.fd_out);
+	ft_putstr_fd("-----END RSA PRIVATE KEY-----\n", rsa.fd_out);
 	rsa_text_out(rsa, gg);
 }

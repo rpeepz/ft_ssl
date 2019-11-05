@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_ssl.h"
+#include "rsa.h"
 
 void				decode(t_rsa_out rsa, t_rsa *gg, int mode)
 {

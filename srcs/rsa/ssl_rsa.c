@@ -6,12 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 18:59:43 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/31 23:37:25 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/04 20:54:31 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_ssl.h"
-#include <stdio.h>
+#include "rsa.h"
 
 int				check_utl_arg(t_rsa_out *rsa, char *arg)
 {
@@ -78,11 +77,11 @@ int				parse_rsa(char **av, t_ssl *ssl, t_rsa_out *rsa, int i)
 {
 	while ((av[++i]))
 	{
-		if (ssl->type == 31 && ft_isdigit(av[i][0]))
+		if ((ssl->type == 31 || ssl->type == 36) && ft_isdigit(av[i][0]))
 		{
 			if ((rsa->bits = ft_atoi(av[i])) > MAX_BIT_KEY)
 				rsa->bits = MAX_BIT_KEY;
-			else if (rsa->bits < 16)
+			else if (ssl->type == 31 && rsa->bits < 16)
 				return ((rsa->bits = -1));
 			break ;
 		}
@@ -122,7 +121,7 @@ void			ssl_rsa(char **av, t_ssl *ssl)
 	else if (!av[2] && (ssl->flag = 'Z'))
 		ft_error(6, av[1], ssl);
 	else if (ssl->type == 32)
-		ft_printf("rsautl - test SUCCESS\n");
+		;//rsa_util(rsa);
 	else if (ssl->type == 33)
 		rsa_command(rsa);
 	else if (ssl->type == 36)

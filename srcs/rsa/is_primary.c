@@ -6,12 +6,12 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 13:49:49 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/12 20:08:21 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/04 23:36:00 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "../../ft_ssl.h"
+#include "rsa.h"
 
 /*
 **	int				lazy_prime(__uint64_t n, t_primary checks)
@@ -76,30 +76,6 @@ __uint64_t		*get_a(__uint64_t n)
 	return (array_make(12, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37));
 }
 
-__uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
-{
-	__uint64_t	x;
-
-	if (mod < 2 || num == 0)
-	{
-		if (mod == 0)
-			write(2, "Cannot take modpow with modulus 0\n", 34);
-		return (0);
-	}
-	if (exp == 0)
-		return (1);
-	x = 1;
-	num = num % mod;
-	while (exp > 0)
-	{
-		if (exp & 0x1)
-			x = (x * num) % mod;
-		exp /= 2;
-		num = (num * num) % mod;
-	}
-	return (x);
-}
-
 static int		witness(__uint64_t n, t_primary *checks)
 {
 	__uint64_t	tmp;
@@ -113,7 +89,7 @@ static int		witness(__uint64_t n, t_primary *checks)
 		checks->x = modpow(checks->a[i], checks->d, n);
 		if (checks->x == 1 || checks->x == n - 1)
 		{
-			ft_putchar('+');
+			ft_putchar_fd('+', 2);
 			continue ;
 		}
 		while (checks->r - 1)
@@ -123,9 +99,9 @@ static int		witness(__uint64_t n, t_primary *checks)
 				break ;
 			--checks->r;
 		}
-		IF_RETURN(!(checks->r - 1), 0);
-		ft_putchar('+');
+		IF_RETURN(!(checks->r - 1) && !checks->a[i + 1], 0);
 	}
+	ft_putchar_fd('+', 2);
 	return (1);
 }
 
