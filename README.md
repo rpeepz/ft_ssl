@@ -40,23 +40,32 @@ Executable `ft_ssl` will be created
 <br>
 
 ## Usage  
-for message digest
+Message Digest Commands
+```
+md5 | sha224 | sha256 | sha384 | sha512
+```
 ```bash
 ./ft_ssl { command } [-pqr] [-s string] [files ...]  
 ```
-for chiper _**_
+Chiper Commands _**_
+```
+base64 | des | des-ecb | des-cbc | des-ofb | des3 | des3-ebc | des3-cbc | des3-ofb
+```
 ``` bash
-./ft_ssl { command } [-a | -d | -e] [-p passwd] [-k key] [-s salt] [-v vector] [-i input_file] [-o output_file]  
+./ft_ssl { command } [-a|d|e] [-p passwd] [-k key] [-s salt] [-v vector] [-in file] [-out file]  
 ```
 for standard _**_
+```
+genrsa | rsa | rsautl
+```
 ``` bash
-./ft_ssl { command } [-in file] [-passin arg] [-out file] [-passout arg] [-des] [-text] [-noout] [-modulus] [-check] [-pubin] [-pubout]
+./ft_ssl { command } [-in file] [-out file] [-text] [-noout] [-check] [-pubin] [-pubout] [-encrypt] [-decrypt] [-hexdump]
 ```
 or for help with a command
 ```
 ./ft_ssl { command } -h
 ```  
-###### (entering a wrong command will show all current supported commands)
+
 #### _** works are still in development_
 
 Make sure you have the required [dependencies](#dependencies) before proceeding.  
@@ -74,42 +83,50 @@ For instructions and/or greater detail refer to the project [pdf's](#pdf)
 
 ```
 src/
-├── hash
+├── encode/
+|   └── encode.c
+├── hash/
 │   ├── hash.c
 │   ├── md5.c
 │   ├── sha224.c
 │   ├── sha256.c
 │   ├── sha384.c
 │   └── sha512.c
-├── rsa
+├── rsa/
 │   ├── genrsa.c
 │   ├── is_primary.c
-│   └── rsa.c
+│   ├── rsa_out.c
+│   ├── rsa.c
+│   └── ssl_rsa.c
+├── uitl/
+│   ├── in.c
+│   ├── maths.c
+│   └── reference.c
 ├── choose.c
-├── des.c
 ├── error.c
 ├── inputs.c
-├── main.c
-├── reference.c
-└── utils.c
+└── main.c
 
-2 directories, 16 files
+4 directories, 19 files
 ```
 
 ### Header files
 
 ```
-ft_ssl.h
-│
+includes/
+├── encode.h
+├── ft_ssl.h
+├── hash.h
+├── rsa.h
 └── libft
-    └── includes
+    └── includes/
         ├── ft_get_next_line.h
         ├── ft_pipewrench.h
         ├── ft_printf.h
         ├── ft_sprintf.h
         └── libft.h
     
-1 directory, 6 files
+2 directory, 9 files
 ```
 <br>
 
@@ -142,7 +159,7 @@ WolframAlpha.com
 Tom Scott @ [Computerphile](https://www.youtube.com/user/Computerphile)  
 [RSA cryptosystem](https://en.wikipedia.org/wiki/RSA_(cryptosystem))  
 [RSA algorithm](https://simple.wikipedia.org/wiki/RSA_algorithm)  
-https://sahandsaba.com/cryptography-rsa-part-1.html  
+https://sahandsaba.com/cryptography-rsa-part-1.html
 https://www.nku.edu/~christensen/section%2026%20RSA.pdf  
 [Gaurav Sen](https://www.youtube.com/channel/UCRPMAqdtSgd0Ipeef7iFsKw)  
 [Leandro Junes](https://www.youtube.com/channel/UC4qyGwNwWA3kg4AyD61y82A/playlists)  
