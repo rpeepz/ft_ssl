@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ssl.h"
+#include "ft_ssl.h"
 
 int				valid_flags(t_ssl *ssl, char c)
 {
@@ -47,7 +47,7 @@ int				scan_rsa(char *input)
 		return (32);
 	else if (!ft_strcmp(input, "rsa"))
 		return (33);
-	else if (!ft_strcmp(input, "check-prime"))
+	else if (!ft_strcmp(input, "primep"))
 		return (36);
 	return (0);
 }
