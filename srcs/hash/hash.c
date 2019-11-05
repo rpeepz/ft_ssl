@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../ft_ssl.h"
+#include "hash.h"
 
 void			copy_free(char *buf, char **contents, char **tmp)
 {

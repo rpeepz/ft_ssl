@@ -6,11 +6,14 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/12 19:15:40 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/04 19:28:36 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ssl.h"
+#include "ft_ssl.h"
+#include "encode.h"
+#include "hash.h"
+#include "rsa.h"
 
 void			opt_desciption(int type)
 {
@@ -18,20 +21,20 @@ void			opt_desciption(int type)
 		ft_printf("\n%s%s%s%s", H_P, H_Q, H_R, H_S);
 	else if (type == 11)
 	{
-		ft_printf("\n%s%s%s%s", B_D, B_R, D_I, D_O);
+		ft_printf("\n%s%s%s%s%s", B_E, B_D, B_R, I_HELP, O_HELP);
 	}
 	else if (type < 30)
 	{
 		ft_printf("\n%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K);
-		ft_printf("%s%s%s%s", D_S, D_V, D_I, D_O);
+		ft_printf("%s%s%s%s", D_S, D_V, I_HELP, O_HELP);
 	}
 	else if (type == 31)
-		ft_printf("%s", R_UO);
+		ft_printf("\n%s%s", O_HELP, R_B);
 	else if (type == 32)
-		ft_printf("%s%s%s%s%s%s%s", R_UI, R_UO, R_UIK,
+		ft_printf("\n%s%s%s%s%s%s%s", I_HELP, O_HELP, R_UIK,
 		R_UPI, R_UE, R_UD, R_UH);
 	else if (type == 33)
-		ft_printf("%s%s%s%s%s%s", R_UI, R_N, R_UO, R_PI, R_PO, R_T);
+		ft_printf("\n%s%s%s%s%s%s", R_N, I_HELP, O_HELP, R_PI, R_PO, R_T);
 }
 
 void			show_supported(void)
@@ -41,9 +44,12 @@ void			show_supported(void)
 	ft_printf("%sMessage Digest Commands%s:\n", UWHT, NOCOL);
 	ft_printf("md5\nsha224\t\tsha256\nsha384\t\tsha512\n\n");
 	ft_printf("%sCipher Commands%s:\n", UWHT, NOCOL);
-	ft_printf("base64\ndes\tdes-ecb\t\tdes-cbc\t\tdes-ofb\n");
-	ft_printf("des3\tdes3-ecb\tdes3-cbc\tdes3-ofb\n");
 }
+
+/*
+**	ft_printf("base64\ndes\tdes-ecb\t\tdes-cbc\t\tdes-ofb\n");
+**	ft_printf("des3\tdes3-ecb\tdes3-cbc\tdes3-ofb\n");
+*/
 
 void			full_usage(char *ex, int type)
 {
@@ -54,12 +60,12 @@ void			full_usage(char *ex, int type)
 	}
 	else if (type == 11)
 	{
-		ft_printf("base64 [-d | -e] [-i input_file] [-o output_file]\n");
+		ft_printf("base64 [-d | -e] [-in file] [-out file]\n");
 	}
 	else if (type < 30)
 	{
 		ft_printf("%s [-a | -d | -e] [-p passwd] [-k key] [-s salt] ", ex);
-		ft_printf("[-v vector] [-i input_file] [-o output_file]\n");
+		ft_printf("[-v vector] [-in file] [-out file]\n");
 	}
 }
 
@@ -68,11 +74,11 @@ void			err_6(t_ssl *ssl)
 	if (ssl->flag == 'Z' && ssl->type == 33)
 		ft_printf("ft_ssl: Error: rsa: option requires an argument\n");
 	else if (ssl->type == 31)
-		ft_printf("Usage: genrsa [args] [numbits]\n");
+		ft_printf("%susage%s: genrsa [args] [numbits]\n", YEL, NOCOL);
 	else if (ssl->type == 32)
-		ft_printf("Usage: rsautl [options]\n");
+		ft_printf("%susage%s: rsautl [options]\n", YEL, NOCOL);
 	else if (ssl->type == 33)
-		ft_printf("Usage: rsa [options]\n");
+		ft_printf("%susage%s: rsa [options]\n", YEL, NOCOL);
 	opt_desciption(ssl->type);
 }
 

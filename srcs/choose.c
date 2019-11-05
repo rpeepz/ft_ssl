@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_ssl.h"
+#include "ft_ssl.h"
+#include "hash.h"
 
 void			ssl_md5(char **av, t_ssl *ssl)
 {
