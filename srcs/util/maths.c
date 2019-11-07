@@ -43,14 +43,12 @@ __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 
 __uint64_t		safe_modpow(__uint64_t b, __uint64_t c, __uint64_t mod)
 {
-	__uint64_t	a;
 	__uint64_t	two_bc;
 
-	b = (b * b) % mod;
 	two_bc = (2 * (b * c)) % mod;
+	b = (b * b) % mod;
 	c = (c * c) % mod;
-	a = b + two_bc + c;
-	return (a);
+	return (b + two_bc + c);
 }
 
 __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
@@ -75,7 +73,8 @@ __uint64_t		modpow(__uint64_t num, __uint64_t exp, __uint64_t mod)
 		if (num <= UINT32_MAX)
 			num = (num * num) % mod;
 		else
-			num = safe_modpow(num - (num >> 32), num >> 32, mod);
+			num = safe_modpow((num & 0xFFFFFFFF00000000) >> 32,
+			num - ((num & 0xFFFFFFFF00000000) >> 32) & 0xFFFFFFFF, mod);
 	}
 	return (x);
 }
