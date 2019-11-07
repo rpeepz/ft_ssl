@@ -50,12 +50,46 @@ void			rsa_text_out(t_rsa_out rsa, t_rsa gg)
 // 	ft_printf("[%llx/%llb]\n", n, n);
 
 // }
+int			byte_len(__uint64_t n)
+{
+	int	len;
 
+	len = 0;
+	while (n)
+	{
+		len++;
+		n >>= 8;
+	}
+	return (len);
+}
+
+#define SEQUENCE '\x30'
+#define INT '\x02'
+#define VERSION "\x01\x00"
 void			rsa_encode_out(t_rsa_out rsa, t_rsa gg)
 {
+	char	buf[PAGESIZE];
+	int	bytes;
+
+	ft_bzero(buf, PAGESIZE);
 	ft_putstr_fd("-----BEGIN RSA PRIVATE KEY-----\n", rsa.fd_out);
 	//put base64
-	base64_str_fd("any carnal pleasure.", rsa.fd_out);
+	ft_printf("%x%s\n\n", byte_len(gg.e), num_string_u_base(gg.e, 16));
+//	base64_str_fd("any carnal pleasure.", rsa.fd_out);
+	bytes = ft_sprintf(buf,
+	"%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c%c%s%c%c%s", INT, VERSION,
+	INT, byte_len(gg.n), num_string_u_base(gg.n, 10),
+	INT, byte_len(gg.e), num_string_u_base(gg.e, 10),
+	INT, byte_len(gg.d), num_string_u_base(gg.d, 10),
+	INT, byte_len(gg.p), num_string_u_base(gg.p, 10),
+	INT, byte_len(gg.q), num_string_u_base(gg.q, 10),
+	INT, byte_len(gg.dmp1), num_string_u_base(gg.dmp1, 10),
+	INT, byte_len(gg.dmq1), num_string_u_base(gg.dmq1, 10),
+	INT, byte_len(gg.iqmp), num_string_u_base(gg.iqmp, 10));
+	ft_printf("[%d]\n", LEN(buf));
+	ft_printf("[%d]\n", bytes);
+	ft_sprintf(buf, "%c%c%c%s\n", SEQUENCE, bytes, bytes, buf);
+	base64_str_fd(buf, rsa.fd_out);
 	ft_putstr_fd("\n", rsa.fd_out);
 	// base64_llu_fd(gg.e, rsa.fd_out);
 	ft_putstr_fd("-----END RSA PRIVATE KEY-----\n", rsa.fd_out);
