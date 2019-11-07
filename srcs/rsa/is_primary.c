@@ -99,7 +99,7 @@ static int		witness(__uint64_t n, t_primary *checks)
 				break ;
 			--checks->r;
 		}
-		IF_RETURN(!(checks->r - 1) && !checks->a[i + 1], 0);
+		IF_RETURN(!(checks->r - 1) && !(checks->a[i + 1]), 0);
 	}
 	ft_putchar_fd('+', 2);
 	return (1);
