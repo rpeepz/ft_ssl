@@ -12,7 +12,7 @@
 
 #include "encode.h"
 
-void			print_base64_fd(int edata, int fd)
+void			print_base64_fd(int edata, int near_end, int fd)
 {
 	char	buf[4];
 	int		i;
@@ -25,7 +25,7 @@ void			print_base64_fd(int edata, int fd)
 	i = 0;
 	while (i < 4)
 	{
-		if (!buf[i])
+		if (!buf[i] && near_end < 3)
 			ft_putchar_fd('=', fd);
 		else if (buf[i] < 26)
 			ft_putchar_fd(buf[i] + 'A', fd);
@@ -34,8 +34,10 @@ void			print_base64_fd(int edata, int fd)
 		else if (buf[i] < 62)
 			ft_putchar_fd(buf[i] - 4, fd);
 		else
+		{
+			ft_putstr("YEEHAW\n");
 			ft_putchar_fd(buf[i] % 2 ? '/' : '+', fd);
-		i++;
+		}i++;
 	}
 }
 
@@ -55,7 +57,9 @@ void			base64_str_fd(char *in, int fd)
 		edata += in[(i + 1) < len ? i + 1 : len];
 		edata <<= 8;
 		edata += in[(i + 2) < len ? i + 2 : len];
-		print_base64_fd(edata, fd);
+		print_base64_fd(edata, len - i, fd);
 		i += 3;
+		if (!(i % 48))
+			ft_putchar('\n');
 	}
 }
