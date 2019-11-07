@@ -49,7 +49,7 @@ void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
 void				des(char *input, char *to_hash, t_ssl *ssl, int i);
 int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl);
 
-void			    print_base64_fd(int edata, int fd);
+void			    print_base64_fd(int edata, int near_end, int fd);
 void			    base64_str_fd(char *in, int fd);
 
 #endif
