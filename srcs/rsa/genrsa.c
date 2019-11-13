@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 22:56:10 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/12 18:19:31 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/13 10:58:43 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,12 @@ __uint64_t		genrsa(t_rsa_out rsa)
 	ft_sprintf(buf, "Generating RSA private key, %d bit long modulus\n",
 	rsa.bits);
 	ft_putstr_fd(buf, 2);
-	gg.p = 60539;
-	gg.q = 49223;
+	gg.p = 57719;
+	gg.q = 50459;
+	// gg.p = genprime(rsa.bits / 2);
+	// ft_putchar_fd('\n', 2);
+	// gg.q = genprime(rsa.bits / 2);
+	// ft_putchar_fd('\n', 2);
 	gg.n = gg.p * gg.q;
 	gg.e = 65537;
 	gg.phi = (gg.p - 1) * (gg.q - 1);
@@ -84,17 +88,6 @@ __uint64_t		genrsa(t_rsa_out rsa)
 	gg.dmp1 = gg.d % (gg.p - 1);
 	gg.dmq1 = gg.d % (gg.q - 1);
 	gg.iqmp = mod_inverse(gg.q, gg.p);
-	// gg.p = genprime(rsa.bits / 2);
-	// ft_putchar_fd('\n', 2);
-	// gg.q = genprime(rsa.bits / 2);
-	// ft_putchar_fd('\n', 2);
-	// gg.n = gg.p * gg.q;
-	// gg.e = 65537;
-	// gg.phi = (gg.p - 1) * (gg.q - 1);
-	// gg.d = mod_inverse(gg.e, gg.phi);
-	// gg.dmp1 = gg.d % (gg.p - 1);
-	// gg.dmq1 = gg.d % (gg.q - 1);
-	// gg.iqmp = mod_inverse(gg.q, gg.p);
 	ft_bzero(buf, 80);
 	ft_sprintf(buf, "e is %llu (%#x)\n", gg.e, gg.e);
 	ft_putstr_fd(buf, 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rsa.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 19:09:32 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/03 19:09:34 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/13 14:39:13 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,20 @@ void				rsa_command(t_rsa_out rsa)
 	ft_bzero(&gg, sizeof(t_rsa));
 	if (rsa.flag & 0x2)
 	{
-		if (rsa.flag & 0x8) //noout
+		//noout
+		if (rsa.flag & 0x8)
 			return ;
-		else if (rsa.flag & 0x10) //check
+		//check
+		else if (rsa.flag & 0x10)
 			;
-		else if (rsa.flag & 0x20) //pubin
+		//pubin
+		else if (rsa.flag & 0x20)
 			decode(rsa, &gg, 1);
-		else if (rsa.flag & 0x4) //text
+		//text
+		else if (rsa.flag & 0x4)
 			decode(rsa, &gg, 2);
-		else if (rsa.flag & 0x40) //pubout
+		//pubout
+		else if (rsa.flag & 0x40)
 			decode(rsa, &gg, 3);
 		rsa_text_out(rsa, gg);
 	}
