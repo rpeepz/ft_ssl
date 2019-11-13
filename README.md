@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/rpeepz/ssl_clone.svg?branch=master)](https://travis-ci.org/rpeepz/ssl_clone)
+[![Actions Status](https://github.com/rpeepz/ssl_clone/workflows/C/C++%20CI/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)
 
 # ssl_clone  
 A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography...  
