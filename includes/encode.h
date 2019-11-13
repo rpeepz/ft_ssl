@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/05 02:00:14 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/12 18:02:56 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@
 # define D_K "-k\t\tKey in hex is the next arguement\n"
 # define D_S "-s\t\tSalt in hex is the next argument\n"
 # define D_V "-v\t\tInitialization vector in hex is the next argument\n"
+
+# define SEQUENCE '\x30'
+# define INT '\x02'
+# define V '\x01'
+# define V1 '\x00'
 
 /*
 **	--------------------------------
