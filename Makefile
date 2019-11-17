@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/11/05 02:02:55 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/11/16 17:51:58 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ RSA		=ssl_rsa.c\
 		genrsa.c \
 		is_primary.c \
 		rsa.c \
-		rsa_out.c
+		rsa_out.c \
+		asn1.c
 UTIL	=maths.c \
 		reference.c \
 		in.c
