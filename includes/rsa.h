@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:21:29 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/12 18:02:37 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:49:15 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 # define R_PI "-pubin\t\tExpect a public key (default private key)\n"
 # define R_PO "-pubout\t\tOutput a public key (default private key)\n"
 # define R_T "-text\t\tPrint in plain text in addition to encoded\n"
+
+# define PRIV_BEGIN_HEADER "-----BEGIN RSA PRIVATE KEY-----\n"
+# define PRIV_END_HEADER "-----END RSA PRIVATE KEY-----\n"
 
 /*
 **	--------------------------------
@@ -78,6 +81,7 @@ typedef struct		s_rsa
 */
 
 void				debug_output(t_ssl *ssl, t_rsa_out rsa);
+void				asn1(t_rsa gg, uint8_t *buf, uint8_t *buf2, int *len);
 void				rsa_encode_out(t_rsa_out rsa, t_rsa gg);
 void				rsa_text_out(t_rsa_out rsa, t_rsa gg);
 void				rsa_command(t_rsa_out rsa);
