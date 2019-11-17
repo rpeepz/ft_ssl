@@ -38,7 +38,7 @@ void			print_base64_fd(int edata, int near_end, int fd)
 		ft_putchar_fd('=', fd) : ft_putchar_fd(g_base64[buf[i]], fd);
 		i++;
 	}
-	if (DEBUG)
+//	if (DEBUG)
 		ft_printf("--- %02d %02d %02d %02d\n", buf[0], buf[1], buf[2], buf[3]);
 }
 
@@ -48,6 +48,8 @@ void			base64_nstr_fd(char *in, int len, int fd)
 	int		edata;
 
 	i = 0;
+//	ft_printf("len         [%d]\n", len);
+//	ft_printf("at len      [%c]\n", in[len]);
 	while(i < len)
 	{
 		edata = 0;
@@ -62,9 +64,9 @@ void			base64_nstr_fd(char *in, int len, int fd)
 		edata += in[(i + 2) < len ? i + 2 : len] & 0x3F;
 		print_base64_fd(edata, (len) - i, fd);
 		i += 3;
-		if (!(i <= (len)) && !(i % 48))
-			ft_putchar('\n');
+		if (!(i % 48))
+			ft_putchar_fd('\n', fd);
 	}
-	if ((i <= (len)) || (i % 48))
-		ft_putchar('\n');
+	if ((i % 48))
+		ft_putchar_fd('\n', fd);
 }
