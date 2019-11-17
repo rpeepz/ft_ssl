@@ -50,9 +50,10 @@ void			rsa_encode_out(t_rsa_out rsa, t_rsa gg)
 	uint8_t		buf2[10];
 
 	ft_bzero(buf, PAGESIZE);
-	ft_bzero(buf2, PAGESIZE);
+	ft_bzero(buf2, 10);
 	len = 0;
 	i = 0;
+	//need to find a better way to encode 00 in asn1
 	asn1(gg, buf, buf2, &len);
 	while (i < len)
 	{
@@ -64,4 +65,5 @@ void			rsa_encode_out(t_rsa_out rsa, t_rsa gg)
 	base64_nstr_fd((char*)buf, len, rsa.fd_out);
 	ft_putstr_fd(PRIV_END_HEADER, rsa.fd_out);
 	rsa_text_out(rsa, gg);
+	close(rsa.fd_out);
 }
