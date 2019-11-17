@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 22:56:10 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/13 10:58:43 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/16 16:51:56 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ __uint64_t		genprime(int bits)
 		p += 2;
 		i++;
 	}
-	DEBUG ? ft_printf("\nSUCCESS\tprime --> [%llb]\n", p) : 0;
+	DEBUG ? ft_printf("\nSUCCESS\tprime --> [%llb]", p) : 0;
+	ft_putchar_fd('\n', 2);
 	return (p);
 }
 
@@ -75,12 +76,8 @@ __uint64_t		genrsa(t_rsa_out rsa)
 	ft_sprintf(buf, "Generating RSA private key, %d bit long modulus\n",
 	rsa.bits);
 	ft_putstr_fd(buf, 2);
-	gg.p = 57719;
-	gg.q = 50459;
-	// gg.p = genprime(rsa.bits / 2);
-	// ft_putchar_fd('\n', 2);
-	// gg.q = genprime(rsa.bits / 2);
-	// ft_putchar_fd('\n', 2);
+	gg.p = genprime(rsa.bits / 2);
+	gg.q = genprime(rsa.bits / 2);
 	gg.n = gg.p * gg.q;
 	gg.e = 65537;
 	gg.phi = (gg.p - 1) * (gg.q - 1);
