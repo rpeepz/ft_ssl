@@ -67,6 +67,17 @@ __uint64_t		genprime(int bits)
 	return (p);
 }
 
+__uint64_t		valid_modulus(t_rsa gg, int bits)
+{
+	__uint64_t	n;
+
+	(void)bits;
+	n = gg.p * gg.q;
+//	if (n & 1ULL << (bits - 1))
+		return (n);
+//	return (0);
+}
+
 __uint64_t		genrsa(t_rsa_out rsa)
 {
 	t_rsa		gg;
@@ -76,9 +87,13 @@ __uint64_t		genrsa(t_rsa_out rsa)
 	ft_sprintf(buf, "Generating RSA private key, %d bit long modulus\n",
 	rsa.bits);
 	ft_putstr_fd(buf, 2);
-	gg.p = genprime(rsa.bits / 2);
-	gg.q = genprime(rsa.bits / 2);
-	gg.n = gg.p * gg.q;
+//	while (1)
+//	{
+		gg.p = genprime(rsa.bits / 2);
+		gg.q = genprime(rsa.bits / 2);
+		gg.n = valid_modulus(gg, rsa.bits);
+//			break ;
+//	}
 	gg.e = 65537;
 	gg.phi = (gg.p - 1) * (gg.q - 1);
 	gg.d = mod_inverse(gg.e, gg.phi);
