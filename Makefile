@@ -68,13 +68,12 @@ clean:
 		@printf "[$(RED)clean   obj$(NC)]\t[:#         :]\r"
 		@make -C libft clean
 		@printf "[$(RED)clean   obj$(NC)]\t[:#######   :]\r"
-		@rm -f $(OBJ)
+		@rm -rf $(OBJ_PATH)
 		@printf "[$(RED)clean   obj$(NC)]\t[:##########:]\n"
 
 fclean: clean
 		@make -C libft fclean
 		@printf "[$(RED)full  clean$(NC)]\t[:######    :]\r"
-		@rm -rf $(OBJ_PATH)
 		@rm -rf $(NAME).dSYM
 		@rm -rf $(NAME).h.gch
 		@rm -rf $(NAME)
