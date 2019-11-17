@@ -90,7 +90,7 @@ int				parse_rsa(char **av, t_ssl *ssl, t_rsa_out *rsa, int i)
 			if (valid_arg(ssl, rsa, &av[i][1], av[i + 1]))
 				return (ft_error(6, &av[i][1], ssl));
 			else if (rsa->fd_out == 1 && rsa->flag & 0x1)
-				rsa->fd_out = open(av[++i], O_RDWR | O_CREAT, 0644);
+				rsa->fd_out = open(av[++i], O_RDWR | O_CREAT | O_TRUNC, 0644);
 			else if (ssl->type > 31 && (!rsa->fd_in) && (rsa->flag & 0x2))
 				rsa->fd_in = open(av[++i], O_RDONLY);
 			else if (ssl->type == 32 && (!rsa->fd_inkey) && (rsa->flag & 0x4))
