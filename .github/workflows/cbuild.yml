@@ -1,0 +1,37 @@
+name: C/Build
+
+on: [push]
+
+jobs:
+  job_libs:
+    name: libs
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: making libraries
+        run: make libft/libft.a 
+          
+  job_build:
+    name: ft_ssl
+    runs-on: macOS-latest
+    needs: [job_libs]
+    steps:
+    - uses: actions/checkout@v1
+    - name: build
+      run: |
+        make
+        make clean
+
+  job_tests:
+    name: testing
+    runs-on: macOS-latest
+    needs: [job_build]
+    steps:
+    - uses: actions/checkout@v1
+    - name: hash
+      run: ./ft_ssl sha256 Makefile
+    - name: primep
+      run: ./ft_ssl primep 2018111111
+    - name: genrsa
+      run: ./ft_ssl genrsa 32
+      
