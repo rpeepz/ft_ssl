@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/rpeepz/ssl_clone.svg?branch=master)](https://travis-ci.org/rpeepz/ssl_clone)
+[![Actions Status](https://github.com/rpeepz/ssl_clone/workflows/C/Build/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ssl_clone.svg)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ssl_clone/total.svg)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ssl_clone/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94) 
 
 # ssl_clone  
 A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography...  
@@ -40,23 +40,31 @@ Executable `ft_ssl` will be created
 <br>
 
 ## Usage  
-for message digest
-```bash
+Message Digest Commands
+```
+md5 | sha224 | sha256 | sha384 | sha512
+```
+```
 ./ft_ssl { command } [-pqr] [-s string] [files ...]  
 ```
-for chiper _**_
-``` bash
-./ft_ssl { command } [-a | -d | -e] [-p passwd] [-k key] [-s salt] [-v vector] [-i input_file] [-o output_file]  
+Chiper Commands _**_
+```
+base64 | des | des-ecb | des-cbc | des-ofb | des3 | des3-ebc | des3-cbc | des3-ofb
+```
+```
+./ft_ssl { command } [-a|d|e] [-p passwd] [-k key] [-s salt] [-v vector] [-in file] [-out file]  
 ```
 for standard _**_
-``` bash
-./ft_ssl { command } [-in file] [-passin arg] [-out file] [-passout arg] [-des] [-text] [-noout] [-modulus] [-check] [-pubin] [-pubout]
+```
+genrsa | rsa | rsautl
+```
+```
+./ft_ssl { command } [-in file] [-out file] [-text] [-noout] [-check] [-pubin] [-pubout] [-encrypt] [-decrypt] [-hexdump]
 ```
 or for help with a command
 ```
 ./ft_ssl { command } -h
 ```  
-###### (entering a wrong command will show all current supported commands)
 #### _** works are still in development_
 
 Make sure you have the required [dependencies](#dependencies) before proceeding.  
@@ -74,41 +82,52 @@ For instructions and/or greater detail refer to the project [pdf's](#pdf)
 
 ```
 src/
-├── hash
+├── encode/
+│   ├── base64_print.c
+|   └── encode.c
+├── hash/
 │   ├── hash.c
 │   ├── md5.c
 │   ├── sha224.c
 │   ├── sha256.c
 │   ├── sha384.c
 │   └── sha512.c
-├── rsa
+├── rsa/
+│   ├── asn1.c
 │   ├── genrsa.c
 │   ├── is_primary.c
-│   └── rsa.c
+│   ├── rsa_out.c
+│   ├── rsa.c
+│   └── ssl_rsa.c
+├── uitl/
+│   ├── in.c
+│   ├── maths.c
+│   └── reference.c
 ├── choose.c
-├── des.c
 ├── error.c
 ├── inputs.c
-├── main.c
-├── reference.c
-└── utils.c
+└── main.c
 
-2 directories, 16 files
+4 directories, 21 files
 ```
 
 ### Header files
 
 ```
-ft_ssl.h
-└── libft
-    └── includes
+includes/
+├── encode.h
+├── ft_ssl.h
+├── hash.h
+├── rsa.h
+└── libft/
+    └── includes/
         ├── ft_get_next_line.h
         ├── ft_pipewrench.h
         ├── ft_printf.h
         ├── ft_sprintf.h
         └── libft.h
     
-1 directory, 6 files
+2 directory, 9 files
 ```
 <br>
 
@@ -141,7 +160,7 @@ WolframAlpha.com
 Tom Scott @ [Computerphile](https://www.youtube.com/user/Computerphile)  
 [RSA cryptosystem](https://en.wikipedia.org/wiki/RSA_(cryptosystem))  
 [RSA algorithm](https://simple.wikipedia.org/wiki/RSA_algorithm)  
-https://sahandsaba.com/cryptography-rsa-part-1.html
+https://sahandsaba.com/cryptography-rsa-part-1.html  
 https://www.nku.edu/~christensen/section%2026%20RSA.pdf  
 [Gaurav Sen](https://www.youtube.com/channel/UCRPMAqdtSgd0Ipeef7iFsKw)  
 [Leandro Junes](https://www.youtube.com/channel/UC4qyGwNwWA3kg4AyD61y82A/playlists)  
@@ -153,7 +172,7 @@ https://www.nku.edu/~christensen/section%2026%20RSA.pdf
 ## Keep in Touch
 
 You can find me on:
-* [Github](https://github.com/rpeepz) 
+* [Github](https://github.com/rpeepz)  
 * [Twitter](https://twitter.com/papagna94) 
 * [LinkedIn](https://www.linkedin.com/in/rpapagna-510) 
 <!-- * [Medium](https://medium.com/@themichaelbrave)  -->

@@ -60,6 +60,7 @@ QSRCS	+= $(addprefix srcs/encode/,$(ENCODE))
 QSRCS	+= $(addprefix srcs/rsa/,$(RSA))
 QSRCS	+= $(addprefix srcs/util/,$(UTIL))
 
+
 .PHONY: clean debug
 
 all:	$(NAME)
