@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 17:48:28 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/16 17:52:13 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:03:27 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,32 @@ static char		byte_len(__uint64_t n)
 	return (len);
 }
 
-static uint8_t  *byte_string(uint8_t *buf, __uint64_t n)
+static uint8_t	*byte_string(uint8_t *buf, __uint64_t n)
 {
 	int		i;
 	int		p;
 	int		trig;
 
-	i = 0;
+	i = -1;
 	p = 0;
 	trig = 0;
 	ft_bzero(buf, 10);
-	while (i < 8)
+	while (++i < 8)
 	{
-		if (trig || (n & (0xFF << 8 * (7 - i))) >> 8 * (7 - i))
+		if (trig || (n & (0xFFULL << 8 * (7 - i))) >> 8 * (7 - i))
 		{
-			buf[p] = ((n & (0xFF << 8 * (7 - i))) >> 8 * (7 - i));
+			buf[p] = (n & (0xFFULL << 8 * (7 - i))) >> 8 * (7 - i);
+			DEBUG ? ft_printf("[%02x]", buf[p]) : 0;
 			if (!trig && (buf[p] & 0x80))
 			{
 				buf[p + 1] = buf[p];
 				buf[p++] = 0xFF;
 			}
-			if (!buf[p])
-				buf[p] = 0xFF;
 			p++;
 			trig = 1;
 		}
-		i++;
 	}
+	DEBUG ? ft_printf(" [%llu]\n", n) : 0;
 	return (buf);
 }
 
@@ -70,12 +69,17 @@ static void		dump_to_buf(uint8_t *buf, char c, uint8_t *s, int *len)
 	{
 		i = 0;
 		n = LEN((char*)s);
+		if (n == 1 && s[2] == '\x01')
+			n = 3;
+		DEBUG ? ft_printf("len:[%d] ", n) : 0;
 		while (i < n || s[n])
 		{
+			DEBUG ? ft_printf("{%d}", i) : 0;
 			buf[*len] = s[i];
 			++(*len);
 			++i;
 		}
+		DEBUG ? ft_printf(" ---\n") : 0;
 	}
 }
 
@@ -97,15 +101,14 @@ static void		asn1_cont(t_rsa gg, uint8_t *buf, uint8_t *buf2, int *len)
 	dump_to_buf(buf, 0, byte_string(buf2, gg.iqmp), len);
 	ft_memcpy(copy, buf, *len);
 	ft_bzero(buf, PAGESIZE);
-	*len += 3;
 	index = 0;
 	dump_to_buf(buf, SEQUENCE, NULL, &index);
-	dump_to_buf(buf, (char)*len, NULL, &index);
+	dump_to_buf(buf, (char)(*len + 3), NULL, &index);
 	dump_to_buf(buf, INT, NULL, &index);
 	dump_to_buf(buf, V, NULL, &index);
 	dump_to_buf(buf, V1, NULL, &index);
-	dump_to_buf(buf, 0, copy, &index);
-	*len += 2;
+	ft_memcpy(&buf[index], copy, *len);
+	*len += 5;
 }
 
 void			asn1(t_rsa gg, uint8_t *buf, uint8_t *buf2, int *len)
