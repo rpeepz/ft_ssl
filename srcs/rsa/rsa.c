@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 19:09:32 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/13 14:39:13 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:02:21 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,15 @@ void				rsa_command(t_rsa_out rsa)
 	ft_bzero(&gg, sizeof(t_rsa));
 	if (rsa.flag & 0x2)
 	{
-		//noout
-		if (rsa.flag & 0x8)
+		if (rsa.flag & R_NOOUT)
 			return ;
-		//check
-		else if (rsa.flag & 0x10)
+		else if (rsa.flag & R_CHECK)
 			;
-		//pubin
-		else if (rsa.flag & 0x20)
+		else if (rsa.flag & R_PUBIN)
 			decode(rsa, &gg, 1);
-		//text
-		else if (rsa.flag & 0x4)
+		else if (rsa.flag & R_TEXT)
 			decode(rsa, &gg, 2);
-		//pubout
-		else if (rsa.flag & 0x40)
+		else if (rsa.flag & R_PUBOUT)
 			decode(rsa, &gg, 3);
 		rsa_text_out(rsa, gg);
 	}
