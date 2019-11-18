@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5.h                                              :+:      :+:    :+:   */
+/*   hash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:20:59 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/04 13:21:00 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:35:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,10 @@
 # define S0(x) (RR(x, 1) ^ RR(x, 8) ^ ((x) >> 7))
 # define S1(x) (RR(x, 19) ^ RR(x, 61) ^ ((x) >> 6))
 
-# define A_FLAG 0x1
-# define D_FLAG 0x8
-# define E_FLAG 0x10
-# define I_FLAG 0x100
-# define K_FLAG 0x400
-# define O_FLAG 0x4000
 # define P_FLAG 0x8000
 # define Q_FLAG 0x10000
 # define R_FLAG 0x20000
 # define S_FLAG 0x40000
-# define V_FLAG 0x200000
 
 # define H_P "-p\tEcho stdin to stdout and append the checksum to stdout\n"
 # define H_Q "-q\tQuiet mode\n"

@@ -6,21 +6,28 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/16 17:16:31 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:35:37 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENCODE_H
 # define ENCODE_H
 
-
-#include "ft_ssl.h"
+# include "ft_ssl.h"
 
 /*
 **	--------------------------------
 **				MACROS
 **	--------------------------------
 */
+
+# define A_FLAG 0x1
+# define D_FLAG 0x8
+# define E_FLAG 0x10
+# define I_FLAG 0x100
+# define K_FLAG 0x400
+# define O_FLAG 0x4000
+# define V_FLAG 0x200000
 
 # define B_E "-e\t\tEncode input stream to Base64 (default)\n"
 # define B_D "-d\t\tDecode incoming Base64 stream to binary data\n"
@@ -54,6 +61,6 @@ void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
 void				des(char *input, char *to_hash, t_ssl *ssl, int i);
 int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl);
 
-void			    base64_nstr_fd(char *in, int len, int fd);
+void				base64_nstr_fd(uint8_t *in, int len, int fd);
 
 #endif
