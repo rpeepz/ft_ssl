@@ -21,13 +21,6 @@ jobs:
       run: |
         make
         make clean
-
-  job_tests:
-    name: testing
-    runs-on: macOS-latest
-    needs: [job_build]
-    steps:
-    - uses: actions/checkout@v1
     - name: hash
       run: ./ft_ssl sha256 Makefile
     - name: primep
