@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 21:14:12 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/01 22:17:16 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:56:52 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,6 @@ char				*ft_itoa(int n);
 char				*ft_itoa_base(int n, int base);
 char				*ft_uitoa_base(unsigned int n, int base);
 char				*ft_strpop(char *str, size_t id);
-
 
 char				*num_string_base(long long num, int base);
 char				*num_string_u_base(unsigned long long num, int base);
