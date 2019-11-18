@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 18:41:24 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/16 18:00:02 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 19:33:58 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ void			rsa_encode_out(t_rsa_out rsa, t_rsa gg)
 	ft_bzero(buf2, 10);
 	len = 0;
 	i = 0;
-	//need to find a better way to encode 00 in asn1
 	asn1(gg, buf, buf2, &len);
+	DEBUG ? ft_printf("asn1 len:[%d]\n", len) : 0;
 	while (i < len)
 	{
-		if (buf[i] == 0xFF)
-			buf[i] = 0x00;
+		if (buf[i] == 0x02 && buf[i + 2] == 0xFF)
+			buf[i + 2] = 0x00;
 		i++;
 	}
 	ft_putstr_fd(PRIV_BEGIN_HEADER, rsa.fd_out);
-	base64_nstr_fd((char*)buf, len, rsa.fd_out);
+	base64_nstr_fd(buf, len, rsa.fd_out);
 	ft_putstr_fd(PRIV_END_HEADER, rsa.fd_out);
 	rsa_text_out(rsa, gg);
 	close(rsa.fd_out);
