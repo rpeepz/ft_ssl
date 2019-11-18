@@ -6,14 +6,14 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:21:29 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/16 17:49:15 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:03:49 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RSA_H
 # define RSA_H
 
-#include "ft_ssl.h"
+# include "ft_ssl.h"
 
 /*
 **	--------------------------------
@@ -22,6 +22,12 @@
 */
 
 # define MAX_BIT_KEY 64
+
+# define R_NOOUT 0x8
+# define R_CHECK 0x10
+# define R_PUBIN 0x20
+# define R_TEXT 0x4
+# define R_PUBOUT 0x40
 
 # define R_B "numbits\t\tlength of key in bits\n"
 # define R_UIK "-inkey file\tInput key\n"
