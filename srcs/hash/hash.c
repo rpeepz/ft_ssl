@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 21:28:37 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/12 18:39:37 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:55:22 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,24 @@ void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 	(ssl->flag & S_FLAG || ssl->fd[i]) && !(ssl->flag & R_FLAG)))
 	{
 		ft_printf("%s (", ft_strtoupper(input));
-		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
+		ssl->fd[i] < 1 ? ft_putchar('\"') : 0;
 		ft_printf("%s", to_hash);
-		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
+		ssl->fd[i] < 1 ? ft_putchar('\"') : 0;
 		ft_printf(") = ");
 	}
-	if (!(ssl->flag & 0x70000) &&
-	(ssl->flag & P_FLAG || (ssl->fd[i] && ssl->flag)))
-		ft_printf("%s", to_hash);
+	!(ssl->flag & 0x70000) && (ssl->flag & P_FLAG || (ssl->fd[i] && ssl->flag))
+	? ft_printf("%s", to_hash) : 0;
 	ft_printf("%s%c", get_hash(&to_hash, &input, ssl, i),
-	((!(ssl->flag & R_FLAG) || ssl->flag & Q_FLAG)
-	|| (ssl->flag & R_FLAG && !(ssl->flag & Q_FLAG) && (ssl->flag & P_FLAG))
-	? '\n' : ' '));
+	((!(ssl->flag & R_FLAG) || ssl->flag & Q_FLAG) || (ssl->flag & R_FLAG &&
+	!(ssl->flag & Q_FLAG) && (ssl->flag & P_FLAG)) ? '\n' : ' '));
 	if (ssl->flag & R_FLAG && !(ssl->flag & 0x18000))
 	{
-		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
-		IF_THEN((ssl->fd[i] || ssl->flag & R_FLAG), ft_printf("%s", input));
-		IF_THEN(ssl->fd[i] < 1, ft_putchar('\"'));
-		// IF_THEN(!(ssl->flag & S_FLAG),
+		ssl->fd[i] < 1 ? ft_putchar('\"') : 0;
+		(ssl->fd[i] || ssl->flag & R_FLAG) ? ft_printf("%s", input) : 0;
+		ssl->fd[i] < 1 ? ft_putchar('\"') : 0;
 		ft_putchar('\n');
 	}
-	IF_THEN(!ssl->fd[i] && !(ssl->flag & S_FLAG), ft_putchar('\n'));
+	!ssl->fd[i] && !(ssl->flag & S_FLAG) ? ft_putchar('\n') : 0;
 	ft_strdel(&to_hash);
 }
 
