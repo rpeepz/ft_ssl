@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 21:48:49 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/01 22:16:27 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:56:43 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,5 @@ int					convert_u(t_mods modifiers, va_list ap, int i);
 int					convert_x(t_mods modifiers, va_list ap, int i);
 int					convert_f(t_mods modifiers, va_list ap, int i);
 int					convert_b(t_mods modifiers, va_list ap, int i);
-
 
 #endif
