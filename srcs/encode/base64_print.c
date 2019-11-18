@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/16 18:03:32 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/17 21:11:10 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,52 +21,36 @@ unsigned char	g_base64[64] =
 	'8', '9', '+', '/'
 };
 
-void			print_base64_fd(int edata, int near_end, int fd)
-{
-	unsigned char	buf[4];
-	int				i;
+/*
+**	No padding on ASN1
+**	ft_putchar_fd(g_base64[edata[2]], fd);
+**	ft_putchar_fd(g_base64[edata[3]], fd);
+*/
 
-	ft_bzero(buf, 4);
-	buf[0] = (edata & 0xFF000000) >> 24;
-	buf[1] = (edata & 0xFF0000) >> 16;
-	buf[2] = (edata & 0xFF00) >> 8;
-	buf[3] = (edata & 0xFF);
-	i = 0;
-	while (i < 4)
-	{
-		near_end < 3 && !buf[i] ?
-		ft_putchar_fd('=', fd) : ft_putchar_fd(g_base64[buf[i]], fd);
-		i++;
-	}
-//	if (DEBUG)
-		ft_printf("--- %02d %02d %02d %02d\n", buf[0], buf[1], buf[2], buf[3]);
-}
-
-void			base64_nstr_fd(char *in, int len, int fd)
+void			base64_nstr_fd(uint8_t *in, int len, int fd)
 {
-	int		i;
-	int		edata;
+	int			i;
+	uint8_t		edata[4];
 
 	i = 0;
-//	ft_printf("len         [%d]\n", len);
-//	ft_printf("at len      [%c]\n", in[len]);
-	while(i < len)
+	while (i < len)
 	{
-		edata = 0;
-		edata += (in[i] & 0xFC) >> 2;
-		edata <<= 8;
-		edata += (in[i] & 0x03) << 4;
-		edata += (in[(i + 1) < len ? i + 1 : len] & 0xF0) >> 4;
-		edata <<= 8;
-		edata += (in[(i + 1) < len ? i + 1 : len] & 0x0F) << 2;
-		edata += (in[(i + 2) < len ? i + 2 : len] & 0xC0) >> 6;
-		edata <<= 8;
-		edata += in[(i + 2) < len ? i + 2 : len] & 0x3F;
-		print_base64_fd(edata, (len) - i, fd);
+		DEBUG ? ft_printf("%02x %02x %02x\n", in[i], in[i + 1], in[i + 2]) : 0;
+		ft_bzero(edata, 4);
+		edata[0] |= in[i] >> 2;
+		edata[1] |= ((in[i] & 0x03) << 4);
+		edata[1] |= (in[i + 1] >> 4);
+		edata[2] |= ((in[i + 1] & 0x0F) << 2);
+		edata[2] |= (in[i + 2] >> 6);
+		edata[3] |= (in[i + 2] & 0x3F);
+		ft_putchar_fd(g_base64[edata[0]], fd);
+		ft_putchar_fd(g_base64[edata[1]], fd);
+		ft_putchar_fd((!edata[2] && len - i < 2) ?
+		'=' : g_base64[edata[2]], fd);
+		ft_putchar_fd((!edata[3] && len - i < 3) ?
+		'=' : g_base64[edata[3]], fd);
 		i += 3;
-		if (!(i % 48))
-			ft_putchar_fd('\n', fd);
+		(i % 48) == 0 ? ft_putchar_fd('\n', fd) : 0;
 	}
-	if ((i % 48))
-		ft_putchar_fd('\n', fd);
+	(i % 48) ? ft_putchar_fd('\n', fd) : 0;
 }
