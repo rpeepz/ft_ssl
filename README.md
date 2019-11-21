@@ -1,18 +1,16 @@
+# ssl_clone&emsp;[![Actions Status](https://github.com/rpeepz/ssl_clone/workflows/C/Build/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ssl_clone.svg)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ssl_clone/total.svg)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ssl_clone/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
+A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography... <br/> 
 
-[![Build Status](https://travis-ci.org/rpeepz/ssl_clone.svg?branch=master)](https://travis-ci.org/rpeepz/ssl_clone)
-
-# ssl_clone  
-A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography...  
-
-<br>
 
 ### Table Of Contents
 * [Objective](#objective)
+* [Sources](#sources)
 * [Installation](#installation)
-* [Project Structure](#project-structure)
 * [Usage](#usage)
+* [Project Structure](#project-structure)
+* [Dependencies](#dependencies)
 * [Future](#future)
-* [Credits](#sources)
+* [Subject PDF](#subject-pdf)
 * [Keep In Touch](#keep-in-touch)
 
 #### About 42  
@@ -29,6 +27,15 @@ This projects goal is to replicate [OpenSSL][openssl] and some of its functional
 
 <br>
 
+## Sources  
+**my boy** [JeanLouis](https://github.com/42jm)  
+WolframAlpha.com  
+Click [Here](https://gist.github.com/rpeepz/376bae6f34ceee9d8efb3a0e0da050bd) for a full list of my sources  
+
+
+---  
+
+
 ## Installation
 Download and compile repo:  
 ``` 
@@ -44,32 +51,31 @@ Message Digest Commands
 ```
 md5 | sha224 | sha256 | sha384 | sha512
 ```
-```bash
+```
 ./ft_ssl { command } [-pqr] [-s string] [files ...]  
 ```
 Chiper Commands _**_
 ```
 base64 | des | des-ecb | des-cbc | des-ofb | des3 | des3-ebc | des3-cbc | des3-ofb
 ```
-``` bash
+```
 ./ft_ssl { command } [-a|d|e] [-p passwd] [-k key] [-s salt] [-v vector] [-in file] [-out file]  
 ```
 for standard _**_
 ```
 genrsa | rsa | rsautl
 ```
-``` bash
+```
 ./ft_ssl { command } [-in file] [-out file] [-text] [-noout] [-check] [-pubin] [-pubout] [-encrypt] [-decrypt] [-hexdump]
 ```
 or for help with a command
 ```
 ./ft_ssl { command } -h
 ```  
-
 #### _** works are still in development_
 
 Make sure you have the required [dependencies](#dependencies) before proceeding.  
-For instructions and/or greater detail refer to the project [pdf's](#pdf)  
+For instructions and/or greater detail refer to the project's [pdfs](#subject-pdf)  
 
 <br>
 
@@ -84,6 +90,7 @@ For instructions and/or greater detail refer to the project [pdf's](#pdf)
 ```
 src/
 ├── encode/
+│   ├── base64_print.c
 |   └── encode.c
 ├── hash/
 │   ├── hash.c
@@ -93,6 +100,7 @@ src/
 │   ├── sha384.c
 │   └── sha512.c
 ├── rsa/
+│   ├── asn1.c
 │   ├── genrsa.c
 │   ├── is_primary.c
 │   ├── rsa_out.c
@@ -107,7 +115,7 @@ src/
 ├── inputs.c
 └── main.c
 
-4 directories, 19 files
+4 directories, 21 files
 ```
 
 ### Header files
@@ -118,7 +126,7 @@ includes/
 ├── ft_ssl.h
 ├── hash.h
 ├── rsa.h
-└── libft
+└── libft/
     └── includes/
         ├── ft_get_next_line.h
         ├── ft_pipewrench.h
@@ -152,26 +160,10 @@ It is on my agenda to complete the DES cypher portion on this trio of projects.
 
 ---  
 
-## Sources  
-**my boy [JeanLouis](https://github.com/42jm)**  
-WolframAlpha.com  
-[Eddie Woo](https://www.youtube.com/channel/UCq0EGvLTyy-LLT1oUSO_0FQ)  
-Tom Scott @ [Computerphile](https://www.youtube.com/user/Computerphile)  
-[RSA cryptosystem](https://en.wikipedia.org/wiki/RSA_(cryptosystem))  
-[RSA algorithm](https://simple.wikipedia.org/wiki/RSA_algorithm)  
-https://sahandsaba.com/cryptography-rsa-part-1.html
-https://www.nku.edu/~christensen/section%2026%20RSA.pdf  
-[Gaurav Sen](https://www.youtube.com/channel/UCRPMAqdtSgd0Ipeef7iFsKw)  
-[Leandro Junes](https://www.youtube.com/channel/UC4qyGwNwWA3kg4AyD61y82A/playlists)  
-
-<br>
-
----  
-
 ## Keep in Touch
 
 You can find me on:
-* [Github](https://github.com/rpeepz) 
+* [Github](https://github.com/rpeepz)  
 * [Twitter](https://twitter.com/papagna94) 
 * [LinkedIn](https://www.linkedin.com/in/rpapagna-510) 
 <!-- * [Medium](https://medium.com/@themichaelbrave)  -->

@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/11/01 23:36:05 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/11/16 17:51:58 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ARCHIVE = libft/libft.a
 AUTHOR	= rpapagna
 
 CFLAGS	= -Wall -Wextra
-INCL	= -I ./
+INCL	= includes/
 OBJ_PATH= obj
 
 #COLOR OUTPUT OPIONS
@@ -26,28 +26,39 @@ MAG		=\033[0;35m
 NC		=\033[0m
 
 SRCS 	=main.c\
-		reference.c\
 		inputs.c\
 		choose.c\
-		utils.c\
-		error.c\
-		des.c
+		error.c
 HASH	=hash.c\
 		md5.c\
 		sha224.c\
 		sha256.c\
 		sha384.c\
 		sha512.c
+ENCODE	=encode.c \
+		base64_print.c
 RSA		=ssl_rsa.c\
 		genrsa.c \
 		is_primary.c \
 		rsa.c \
-		rsa_out.c
+		rsa_out.c \
+		asn1.c
+UTIL	=maths.c \
+		reference.c \
+		in.c
 
 RU_DEB	=_DEBUG_RULE_
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
+OBJ		+= $(addprefix $(OBJ_PATH)/,$(ENCODE:.c=.o))
+OBJ		+= $(addprefix $(OBJ_PATH)/,$(RSA:.c=.o))
+OBJ		+= $(addprefix $(OBJ_PATH)/,$(UTIL:.c=.o))
 
+QSRCS	= $(addprefix srcs/,$(SRCS))
+QSRCS	+= $(addprefix srcs/hash/,$(HASH))
+QSRCS	+= $(addprefix srcs/encode/,$(ENCODE))
+QSRCS	+= $(addprefix srcs/rsa/,$(RSA))
+QSRCS	+= $(addprefix srcs/util/,$(UTIL))
 
 
 .PHONY: clean debug
@@ -55,33 +66,37 @@ OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
 all:	$(NAME)
 
 clean:
+		@printf "[$(RED)clean   obj$(NC)]\t[:#         :]\r"
 		@make -C libft clean
-		@rm -rf obj
+		@printf "[$(RED)clean   obj$(NC)]\t[:#######   :]\r"
+		@rm -rf $(OBJ_PATH)
+		@printf "[$(RED)clean   obj$(NC)]\t[:##########:]\n"
 
 fclean: clean
-		@printf "[$(RED)$(NAME)$(NC)]\tRm binary\n" #PRINT
 		@make -C libft fclean
+		@printf "[$(RED)full  clean$(NC)]\t[:######    :]\r"
 		@rm -rf $(NAME).dSYM
-		@rm -rf $(NAME)
 		@rm -rf $(NAME).h.gch
+		@rm -rf $(NAME)
+		@printf "[$(RED)full  clean$(NC)]\t[:##########:]\n"
 
 re: fclean all
 
 $(NAME): $(ARCHIVE) $(OBJ)
-		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##        :]\r"
+		@printf "[$(NAME)]\t[:#######   :]\r"
 		@gcc $(CFLAGS) -Werror $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##########:]\n"
 
 q:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc $(CFLAGS) -g $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@gcc $(CFLAGS) -g -I $(INCL) $(QSRCS) $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
 
 debug:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc -D$(RU_DEB) $(CFLAGS) -g $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME)
+		@gcc -D$(RU_DEB) $(CFLAGS) -g -I $(INCL) $(QSRCS) $(ARCHIVE) -o $(NAME)
 		@printf "[$(YELLOW)debug$(NC)]\t\t[:##########:]\n"
 
 sanitize:
@@ -90,16 +105,27 @@ sanitize:
 		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##        :$(NC)]\r"
 		@rm -rf $(NAME).dSYM
 		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):###       :$(NC)]\r"
-		@gcc -g -Wall -Wextra $(addprefix srcs/,$(SRCS)) $(addprefix srcs/hash/,$(HASH)) $(addprefix srcs/rsa/,$(RSA)) $(ARCHIVE) -o $(NAME) -fsanitize=address
+		@gcc -g $(CFLAGS) -I $(INCL) $(QSRCS) $(ARCHIVE) -o $(NAME) -fsanitize=address
 		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##########:$(NC)]\n"
 
 $(OBJ_PATH):
+		@printf "[$(GREEN)$(NAME)$(NC)]\t[:#         :]\r"
 		@mkdir -p $@
 
-$(OBJ_PATH)/%.o: srcs/%.c ft_ssl.h | $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/%.c includes/ft_ssl.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:##        :]\r"
-		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
-$(OBJ_PATH)/%.o: srcs/hash/%.c ft_ssl.h | $(OBJ_PATH)
-		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
+		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/hash/%.c includes/hash.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:###       :]\r"
+		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/encode/%.c includes/encode.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:####      :]\r"
+		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/rsa/%.c includes/rsa.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:######    :]\r"
+		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/util/%.c includes/ft_ssl.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:#######   :]\r"
+		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(ARCHIVE):
 		@make -C libft

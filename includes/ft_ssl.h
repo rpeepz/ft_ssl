@@ -56,8 +56,7 @@ typedef struct		s_ssl
 */
 
 __uint64_t			mod_inverse(__uint64_t a, __uint64_t b);
-__uint64_t			safe_modpow(__uint64_t b, __uint64_t c, __uint64_t mod);
-__uint64_t			modpow(__uint64_t num, __uint64_t exp, __uint64_t mod);
+__uint64_t			powmod(__uint64_t num, __uint64_t exp, __uint64_t mod);
 
 void				ssl_rsa(char **av, t_ssl *ssl);
 void				ssl_des(char **av, t_ssl *ssl);

@@ -21,5 +21,6 @@ int				main(int ac, char **av)
 	{
 		;
 	}
+	DEBUG ? system("leaks ft_ssl") : 0;
 	return (0);
 }
