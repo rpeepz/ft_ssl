@@ -1,0 +1,3 @@
+[submodule "rsa"]
+	path = rsa
+	url = https://github.com/rpeepz/rsa
