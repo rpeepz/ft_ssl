@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:50:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/12 18:53:21 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/22 20:45:22 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,13 @@ int				scan_des(char *input)
 
 int				valid_command(char *input, t_ssl *ssl)
 {
-	if (!ft_strcmp(input, "md5"))
+	int		i;
+
+	i = 0;
+	while (input[i] && input[i] != ' ')
+		i++;
+	input[i] = '\0';
+	if (!ft_strcmp(input, "md5\0"))
 		ssl->type = 1;
 	else if (!ft_strcmp(input, "sha224"))
 		ssl->type = 2;

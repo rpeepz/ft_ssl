@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 21:05:23 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/12 19:07:45 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/22 20:45:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,12 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 				ssl_md5, ssl_des, ssl_rsa};
 	char		**pv;
 
-	if (*ac < 2)
+	if (*ac < 2 && (ssl->stdin = 1))
 		if (get_inputs(ac, av))
-			return (1);
+			return (0);
 	pv = *av;
+	if (!ft_strcmp(pv[1], "quit") || !ft_strcmp(pv[1], "exit"))
+		return (0);
 	if (valid_command(pv[1], ssl))
 		return (ft_error(1, pv[1], ssl));
 	if (ssl->type > 30)

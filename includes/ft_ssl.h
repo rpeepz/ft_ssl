@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/05 00:47:01 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/22 20:45:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 
 typedef struct		s_ssl
 {
+	int				stdin;
 	int				flag;
 	int				type;
 	int				fd[255];
