@@ -1,4 +1,4 @@
-# ssl_clone&emsp;[![Actions Status](https://github.com/rpeepz/ssl_clone/workflows/C/Build/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ssl_clone?color=yellow&include_prereleases)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ssl_clone/total.svg)](https://github.com/rpeepz/ssl_clone/releases)[![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ssl_clone)](https://github.com/rpeepz/ssl_clone)[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ssl_clone/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
+# ssl_clone&emsp;[![Actions Status](https://github.com/rpeepz/ssl_clone/workflows/C/Build/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ssl_clone?color=yellow&include_prereleases)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ssl_clone/total.svg)](https://github.com/rpeepz/ssl_clone/releases)<!-- [![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ssl_clone)](https://github.com/rpeepz/ssl_clone) -->[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ssl_clone/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
 A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography... <br/> 
 
 
@@ -28,10 +28,7 @@ This projects goal is to replicate [OpenSSL][openssl] and some of its functional
 <br>
 
 ## Sources  
-**my boy** [JeanLouis](https://github.com/42jm)  
-WolframAlpha.com  
-Click [Here](https://gist.github.com/rpeepz/376bae6f34ceee9d8efb3a0e0da050bd) for a full list of my sources  
-
+**Listed as a Gist -> [Here](https://gist.github.com/rpeepz/376bae6f34ceee9d8efb3a0e0da050bd)**  
 
 ---  
 
