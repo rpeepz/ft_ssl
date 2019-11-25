@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:47:06 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/22 20:45:20 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:32:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,26 @@
 
 int				read_files(char **av, t_ssl *ssl, int i, int j)
 {
+	DIR		*dir;
+
 	if (!i)
 		return (0);
 	while (av[i])
 	{
-		opendir(av[i]);
+		dir = opendir(av[i]);
 		if (!(ft_strncmp(strerror(errno), "No such file or directory", 26)))
 			ft_printf("%s: %s: %s\n", av[1], av[i], strerror(errno));
+		else if (dir)
+			ft_printf("%s: %s: %s\n", av[1], av[i], "Is a directory");
 		else
 		{
 			ssl->fd[j] = open(av[i], O_RDONLY);
 			ssl->file_index[j] = i;
 			j++;
 		}
+		if (dir)
+			closedir(dir);
+		errno = 0;
 		i++;
 	}
 	return (j ? j : j);
