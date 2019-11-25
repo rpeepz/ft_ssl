@@ -157,7 +157,10 @@ It is on my agenda to complete the DES cypher portion on this trio of projects.
 
 ---  
 
-## Keep in Touch
+## Keep in Touch  
+Found a bug? Report it by contacting me on a social below  😃  
+or if you feel like you can solve it, make a [pull request]!  
+<br>  
 
 You can find me on:
 * [Github](https://github.com/rpeepz)  
@@ -177,3 +180,4 @@ _This project was attempted for learning purposes only. This repo may not be kep
 [pdf1]:  https://github.com/rpeepz/ssl_clone/blob/master/extra/ft_ssl_md5.en.pdf "ft_ssl_md5"
 [pdf2]:  https://github.com/rpeepz/ssl_clone/blob/master/extra/ft_ssl_des.pdf "ft_ssl_des"
 [pdf3]:  https://github.com/rpeepz/ssl_clone/blob/master/extra/ft_ssl_rsa.pdf "ft_ssl_rsa"
+[pull request]: https://github.com/rpeepz/ssl_clone/pulls "pull away"
