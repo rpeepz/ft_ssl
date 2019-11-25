@@ -12,6 +12,20 @@
 
 #include "ft_ssl.h"
 
+int				clean_exit(int ac, char **av)
+{
+	int		i;
+
+	i = 0;
+	while (ac ? i < ac : av[i])
+	{
+		ft_strdel(&av[i]);
+		i++;
+	}
+	ft_memdel((void**)&av);
+	return (0);
+}
+
 int				main(int ac, char **av)
 {
 	t_ssl	ssl;
@@ -24,13 +38,7 @@ int				main(int ac, char **av)
 	{
 		if (!ssl.stdin)
 			break ;
-		i = 0;
-		while (i < ac)
-		{
-			ft_strdel(&av[i]);
-			i++;
-		}
-		ft_memdel((void**)&av);
+		clean_exit(ac, av);
 		ft_bzero(&ssl, (sizeof(t_ssl)));
 		ac = 1;
 		av = tmp;

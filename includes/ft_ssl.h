@@ -63,6 +63,7 @@ void				ssl_rsa(char **av, t_ssl *ssl);
 void				ssl_des(char **av, t_ssl *ssl);
 void				ssl_md5(char **av, t_ssl *ssl);
 
+int					clean_exit(int ac, char **av);
 void				free_message(int count, __uint64_t **ptr);
 void				hash(char *input, char *to_hash, t_ssl *ssl, int i);
 char				string_input(char **input, int *i, int *j, t_ssl *ssl);

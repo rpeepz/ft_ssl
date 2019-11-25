@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 21:05:23 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/22 20:45:30 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:24:53 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 			return (0);
 	pv = *av;
 	if (!ft_strcmp(pv[1], "quit") || !ft_strcmp(pv[1], "exit"))
-		return (0);
+		return (clean_exit(0, pv));
 	if (valid_command(pv[1], ssl))
 		return (ft_error(1, pv[1], ssl));
 	if (ssl->type > 30)
@@ -129,7 +129,7 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 	if (!read_files(pv, ssl, ssl->file_index[0], 0))
 		if ((ssl->type < 10) &&
 		!(ssl->flag & 0x38000) && ssl->flag && !ssl->file_index[0])
-			return (1);
+			return (ft_printf("Here I AM\n"));
 	choose[ssl->type < 10 ? 0 : 1](pv, ssl);
 	return (1);
 }
