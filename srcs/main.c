@@ -17,7 +17,7 @@ int				clean_exit(int ac, char **av)
 	int		i;
 
 	i = 0;
-	while (ac ? i < ac : av[i])
+	while (ac ? i < ac : av[i] != 0)
 	{
 		ft_strdel(&av[i]);
 		i++;
@@ -29,7 +29,6 @@ int				clean_exit(int ac, char **av)
 int				main(int ac, char **av)
 {
 	t_ssl	ssl;
-	int		i;
 	char	**tmp;
 
 	ft_bzero(&ssl, (sizeof(t_ssl)));
