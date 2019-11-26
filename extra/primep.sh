@@ -6,5 +6,5 @@ then
 	exit
 fi
 for i in $(seq $1 $2); do
-	../ft_ssl check-prime $i
+	../ft_ssl primep $i
 done
