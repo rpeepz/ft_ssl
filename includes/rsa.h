@@ -23,10 +23,14 @@
 
 # define MAX_BIT_KEY 64
 
+# define F_OUT 0x1
+# define F_IN 0x2
+# define F_INK 0x4
+
+# define R_TEXT 0x4
 # define R_NOOUT 0x8
 # define R_CHECK 0x10
 # define R_PUBIN 0x20
-# define R_TEXT 0x4
 # define R_PUBOUT 0x40
 
 # define R_B "numbits\t\tlength of key in bits\n"
@@ -40,8 +44,10 @@
 # define R_PO "-pubout\t\tOutput a public key (default private key)\n"
 # define R_T "-text\t\tPrint in plain text in addition to encoded\n"
 
-# define PRIV_BEGIN_HEADER "-----BEGIN RSA PRIVATE KEY-----\n"
-# define PRIV_END_HEADER "-----END RSA PRIVATE KEY-----\n"
+# define PRIV_BEG "-----BEGIN RSA PRIVATE KEY-----\n"
+# define PRIV_END "-----END RSA PRIVATE KEY-----\n"
+# define PUB_BEG "-----BEGIN PUBLIC KEY-----\n"
+# define PUB_END "-----END PUBLIC KEY-----\n"
 
 /*
 **	--------------------------------
