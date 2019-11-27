@@ -52,8 +52,8 @@ char			*get_hash(char **to_hash, char **input, t_ssl *ssl, int i)
 
 void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 {
-	if ((!(ssl->flag & 0x18000) &&
-	(ssl->flag & S_FLAG || ssl->fd[i]) && !(ssl->flag & R_FLAG)))
+	if ((!(ssl->flag & 0x38000) &&
+	(ssl->flag & S_FLAG || (i >= 0 && ssl->fd[i]))))
 	{
 		ft_printf("%s (", ft_strtoupper(input));
 		ssl->fd[i] < 1 ? ft_putchar('\"') : 0;
