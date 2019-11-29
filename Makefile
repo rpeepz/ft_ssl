@@ -36,7 +36,7 @@ HASH	=hash.c\
 		sha384.c\
 		sha512.c
 ENCODE	=encode.c \
-		base64_print.c
+		base64.c
 RSA		=ssl_rsa.c\
 		genrsa.c \
 		is_primary.c \
