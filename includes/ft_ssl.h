@@ -68,6 +68,7 @@ void				free_message(int count, __uint64_t **ptr);
 void				hash(char *input, char *to_hash, t_ssl *ssl, int i);
 char				string_input(char **input, int *i, int *j, t_ssl *ssl);
 
+int					open_file_to_fd(int *fd, char *fname, int type);
 int					get_stdin(char **line, char *str, int x, int i);
 int					read_files(char **av, t_ssl *ssl, int i, int j);
 int					valid_flags(t_ssl *ssl, char c);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   in.c                                               :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,6 +11,27 @@
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+
+int				open_file_to_fd(int *fd, char *fname, int type)
+{
+	int		tmp;
+
+	if (type)
+	{
+		tmp = open(fname, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	}
+	else
+	{
+		tmp = open(fname, O_RDONLY);
+	}
+	if (tmp < 0)
+	{
+		ft_printf("%s: %s\n", fname, strerror(errno));
+		return (1);
+	}
+	*fd = tmp;
+	return (0);
+}
 
 int				read_files(char **av, t_ssl *ssl, int i, int j)
 {

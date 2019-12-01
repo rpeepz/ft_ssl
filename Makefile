@@ -45,7 +45,7 @@ RSA		=ssl_rsa.c\
 		asn1.c
 UTIL	=maths.c \
 		reference.c \
-		in.c
+		utils.c
 
 RU_DEB	=_DEBUG_RULE_
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
