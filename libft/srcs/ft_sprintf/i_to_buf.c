@@ -44,13 +44,13 @@ static void		neg_justify(char *buf, t_mod mod, char *num)
 	int		nbyte;
 
 	nbyte = 0;
-	if (mod.fl.fzero && mod.prcsn < 0 && mod.width > LEN(num))
+	if (mod.fl.fzero && mod.prcsn < 0 && mod.width > (int)ft_strlen(num))
 	{
 		ft_strcpy(buf, "-");
 		buf++;
 		nbyte++;
 	}
-	nbyte = ft_padding(buf, LEN(num), mod, nbyte);
+	nbyte = ft_padding(buf, ft_strlen(num), mod, nbyte);
 	if (!mod.fl.fzero || mod.prcsn > 0 || !nbyte)
 	{
 		ft_strcpy(buf, "-");
@@ -65,8 +65,8 @@ static void		right_justify(char *buf, char *num, t_mod mod, int nbyte)
 	if (mod.neg == 1)
 		neg_justify(buf, mod, num);
 	else if (mod.neg == 0)
-		pos_justify(buf, mod, LEN(num));
-	if (mod.prcsn > (len = LEN(num)))
+		pos_justify(buf, mod, ft_strlen(num));
+	if (mod.prcsn > (len = ft_strlen(num)))
 	{
 		while ((mod.prcsn--) - len > 0)
 		{
@@ -74,7 +74,7 @@ static void		right_justify(char *buf, char *num, t_mod mod, int nbyte)
 			buf++;
 		}
 	}
-	nbyte = LEN(buf);
+	nbyte = ft_strlen(buf);
 	ft_strncpy(buf + nbyte, num, len);
 }
 
@@ -108,13 +108,13 @@ int				i_to_buf(char *buf, t_mod modifiers, va_list ap)
 
 	num = convert_length(modifiers.length, ap);
 	modifiers.neg = (num < 0) ? 1 : 0;
-	IF_THEN(modifiers.neg == 1, num *= -1);
+	modifiers.neg == 1 ? num *= -1 : 0;
 	str = num_string_base(num, 10);
-	IF_THEN(str[0] == '0' && modifiers.prcsn == 0, str[0] = '\0');
+	str[0] == '0' && modifiers.prcsn == 0 ? str[0] = '\0' : 0;
 	if (modifiers.fl.minus == 1)
 		left_jut(buf, str, modifiers, 0);
 	else
 		right_justify(buf, str, modifiers, 0);
 	free(str);
-	return (LEN(buf));
+	return (ft_strlen(buf));
 }

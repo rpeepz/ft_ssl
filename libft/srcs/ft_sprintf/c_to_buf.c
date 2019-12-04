@@ -17,11 +17,11 @@ static int		left_justify(char *buf, char c, int width)
 	int		n;
 
 	n = 0;
-	ADD_ONE_TO_BUFF(buf, &c, n);
+	add_one_to_buf(buf, c, &n);
 	if (n < width)
 		while (n < width)
 		{
-			ADD_ONE_TO_BUFF(buf, " ", n);
+			add_one_to_buf(buf, ' ', &n);
 		}
 	return (n);
 }
@@ -35,17 +35,17 @@ static int		right_justify(char *buf, char c, int width, int fzero)
 	{
 		while (width-- > 1)
 		{
-			ADD_ONE_TO_BUFF(buf, "0", n);
+			add_one_to_buf(buf, '0', &n);
 		}
 	}
 	else
 	{
 		while (width-- > 1)
 		{
-			ADD_ONE_TO_BUFF(buf, " ", n);
+			add_one_to_buf(buf, ' ', &n);
 		}
 	}
-	ADD_ONE_TO_BUFF(buf, &c, n);
+	add_one_to_buf(buf, c, &n);
 	return (n);
 }
 
@@ -64,6 +64,6 @@ int				c_to_buf(char *buf, t_mod modifiers, va_list ap)
 		return (right_justify(buf, c, modifiers.width, modifiers.fl.fzero));
 	}
 	n = 0;
-	ADD_ONE_TO_BUFF(buf, &c, n);
+	add_one_to_buf(buf, c, &n);
 	return (n);
 }

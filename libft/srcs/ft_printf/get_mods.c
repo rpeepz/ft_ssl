@@ -65,20 +65,18 @@ static int		get_precision(char **str, va_list ap)
 		if (ft_isdigit(**str))
 		{
 			precision = ft_atoi(*str);
-			IF_THEN(precision < 0, precision = -1);
 			while (ft_isdigit(**str))
 				(*str)++;
 		}
 		else if (**str == '*')
 		{
 			precision = va_arg(ap, int);
-			IF_THEN(precision < 0, precision = -1);
 			(*str)++;
 		}
+		if (precision < 0)
+			precision = -1;
 	}
-	if (precision >= 0)
-		return (precision);
-	return (-1);
+	return (precision);
 }
 
 static int		get_length(char **str)

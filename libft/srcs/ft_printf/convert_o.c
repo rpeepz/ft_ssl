@@ -28,7 +28,7 @@ static int		pad_width(t_mods mod, int len, int nbyte, int neg)
 	{
 		if (mod.width > len)
 		{
-			IF_THEN(mod.fl.fzero && mod.prcsn == -1, pad_char = "0");
+			mod.fl.fzero && mod.prcsn == -1 ? pad_char = "0" : 0;
 			if (nbyte == 0)
 			{
 				if (mod.fl.space && mod.fl.fzero)
@@ -107,7 +107,7 @@ int				convert_o(t_mods modifiers, va_list ap, int i)
 	char		*str;
 
 	nbyte = 0;
-	IF_THEN(i == 16, modifiers.length = 'z');
+	i == 16 ? modifiers.length = 'z' : 0;
 	num = convert_length(modifiers.length, ap);
 	if (modifiers.length == 'l' || modifiers.length / 2 == 'l' ||
 		modifiers.length == 'z')
@@ -119,11 +119,11 @@ int				convert_o(t_mods modifiers, va_list ap, int i)
 	else
 		str = ft_strdup(tmp);
 	free(tmp);
-	IF_THEN(str[0] == '0' && modifiers.prcsn == 0 && !modifiers.fl.pound,
-			str[0] = '\0');
+	(str[0] == '0' && modifiers.prcsn == 0 &&\
+		!modifiers.fl.pound) ? str[0] = '\0' : 0;
 	if (modifiers.fl.minus == 1)
 		nbyte += left_justify(modifiers, str, nbyte);
 	else
 		nbyte += right_justify(modifiers, str, nbyte);
-	IF_RETURN(1, (ft_pipewrench("-s", &str) + nbyte) - 1);
+	return ((ft_pipewrench("-s", &str) + nbyte) - 1);
 }

@@ -27,7 +27,7 @@ static int		pad_width(t_mods mod, int len, int nbyte, char *num)
 	{
 		if (mod.width > len)
 		{
-			IF_THEN(mod.fl.fzero && mod.prcsn == -1, pad_char = "0");
+			mod.fl.fzero && mod.prcsn == -1 ? pad_char = "0" : 0;
 			if (mod.fl.space && mod.fl.fzero && !nbyte)
 				nbyte += write(1, " ", 1);
 			if (mod.fl.pound && !nbyte && num[0] != '0')
@@ -52,19 +52,14 @@ static	int		right_justify(t_mods mod, char *num, int nbyte, int capital)
 {
 	int		len;
 
-	if ((len = LEN(num)) && mod.fl.pound && num[0] != '\0')
+	len = ft_strlen(num);
+	if (mod.fl.pound && num[0] != '\0')
 	{
 		if (mod.fl.fzero && mod.prcsn == -1)
-		{
-			IF_THEN(capital == 10, nbyte += (int)write(1, "0b", 2));
-			IF_THEN(capital == 20, nbyte += (int)write(1, "0B", 2));
-		}
+			nbyte += (int)write(1, capital == 10 ? "0b" : "0B", 2);
 		nbyte = pad_width(mod, len, nbyte, num);
 		if (!mod.fl.fzero || mod.prcsn > -1)
-		{
-			IF_THEN(capital == 10, nbyte += (int)write(1, "0b", 2));
-			IF_THEN(capital == 20, nbyte += (int)write(1, "0B", 2));
-		}
+			nbyte += (int)write(1, capital == 10 ? "0b" : "0B", 2);
 	}
 	else
 		nbyte = pad_width(mod, len, nbyte, num);
@@ -78,7 +73,7 @@ static	int		left_justify(t_mods mod, char *num, int nbyte, int capital)
 {
 	int		len;
 
-	len = LEN(num);
+	len = ft_strlen(num);
 	if (mod.fl.pound && num[0] != '\0')
 	{
 		if (capital == 20)
@@ -130,7 +125,7 @@ int				convert_b(t_mods modifiers, va_list ap, int i)
 		str = num_string_u_base(num, 2);
 	else
 		str = ft_uitoa_base(num, 2);
-	IF_THEN(num == 0 && modifiers.prcsn == 0, str[0] = '\0');
+	num == 0 && modifiers.prcsn == 0 ? str[0] = '\0' : 0;
 	if (modifiers.fl.minus == 1)
 		nbyte += left_justify(modifiers, str, nbyte, i);
 	else

@@ -22,10 +22,10 @@ static void		left_just(char *buf, char *num, t_mod mod, int nbyte)
 		ft_strcpy(buf, "0");
 		buf++;
 	}
-	ADD_TO_BUFF(buf, num, nbyte, len);
+	add_to_buf(buf, num, &nbyte, len);
 	while (nbyte < mod.width)
 	{
-		ADD_ONE_TO_BUFF(buf, " ", nbyte);
+		add_one_to_buf(buf, ' ', &nbyte);
 	}
 }
 
@@ -48,8 +48,8 @@ static void		right_justify(char *buf, char *num, t_mod mod, int nbyte)
 	int		len;
 
 	if (mod.neg == 0)
-		pos_justify(buf, mod, LEN(num));
-	if (mod.prcsn > (len = LEN(num)))
+		pos_justify(buf, mod, ft_strlen(num));
+	if (mod.prcsn > (len = ft_strlen(num)))
 	{
 		while ((mod.prcsn--) - len > 0)
 		{
@@ -57,7 +57,7 @@ static void		right_justify(char *buf, char *num, t_mod mod, int nbyte)
 			buf++;
 		}
 	}
-	nbyte = LEN(buf);
+	nbyte = ft_strlen(buf);
 	ft_strncpy(buf + nbyte, num, len);
 }
 
@@ -93,11 +93,11 @@ int				u_to_buf(char *buf, t_mod modifiers, va_list ap, int i)
 		modifiers.length = 'z';
 	num = convert_length(modifiers.length, ap);
 	str = num_string_u_base(num, 10);
-	IF_THEN(str[0] == '0' && modifiers.prcsn == 0, str[0] = '\0');
+	str[0] == '0' && modifiers.prcsn == 0 ? str[0] = '\0' : 0;
 	if (modifiers.fl.minus == 1)
 		left_just(buf, str, modifiers, 0);
 	else
 		right_justify(buf, str, modifiers, 0);
 	free(str);
-	return (LEN(buf));
+	return (ft_strlen(buf));
 }

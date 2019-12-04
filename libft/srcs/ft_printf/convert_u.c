@@ -28,7 +28,7 @@ static int		pad_width(t_mods mod, int len, int nbyte, int neg)
 	{
 		if (mod.width > len)
 		{
-			IF_THEN(mod.fl.fzero && mod.prcsn == -1, pad_char = "0");
+			mod.fl.fzero && mod.prcsn == -1 ? pad_char = "0" : 0;
 			if (nbyte == 0)
 			{
 				while (mod.width - len - neg > nbyte)
@@ -108,7 +108,7 @@ int				convert_u(t_mods modifiers, va_list ap, int i)
 		str = num_string_u_base(num, 10);
 	else
 		str = ft_uitoa_base(num, 10);
-	IF_THEN(str[0] == '0' && modifiers.prcsn == 0, str[0] = '\0');
+	str[0] == '0' && modifiers.prcsn == 0 ? str[0] = '\0' : 0;
 	if (modifiers.fl.minus == 1)
 		nbyte += left_justify(modifiers, str, nbyte);
 	else

@@ -30,7 +30,7 @@ static int		pad_width(t_mods mod, int len, int nbyte, int neg)
 	{
 		if (mod.width > len)
 		{
-			IF_THEN(mod.fl.fzero && mod.prcsn == -1, pad_char = "0");
+			mod.fl.fzero && mod.prcsn == -1 ? pad_char = "0" : 0;
 			if (nbyte == 0)
 			{
 				while (mod.width - len - neg > nbyte)
@@ -70,8 +70,8 @@ static	int		right_justify(t_mods mod, char *num, int nbyte)
 			while ((mod.prcsn--) - len > 0)
 				nbyte += (int)write(1, "0", 1);
 	}
-	IF_RETURN(mod.prcsn == 0 && num[2] == '0',
-		nbyte += (int)write(1, num, len - 1));
+	if (mod.prcsn == 0 && num[2] == '0')
+		return (nbyte += (int)write(1, num, len - 1));
 	return (nbyte += (int)write(1, num, len));
 }
 

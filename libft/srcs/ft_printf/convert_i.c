@@ -28,7 +28,7 @@ static int		pad_width(t_mods mod, int len, int nbyte, int neg)
 	{
 		if (mod.width > len)
 		{
-			IF_THEN(mod.fl.fzero && mod.prcsn == -1, pad_char = "0");
+			mod.fl.fzero && mod.prcsn == -1 ? pad_char = "0" : 0;
 			if (nbyte == 0)
 			{
 				if (mod.fl.space && mod.fl.fzero)
@@ -51,7 +51,7 @@ static	int		right_justify(t_mods mod, char *num, int nbyte, int neg)
 {
 	int		len;
 
-	if ((len = LEN(num)) && neg == 1)
+	if ((len = ft_strlen(num)) && neg == 1)
 	{
 		if (mod.fl.fzero && mod.prcsn < 0 && mod.width > len)
 			nbyte += (int)write(1, "-", 1);
@@ -131,12 +131,12 @@ int				convert_i(t_mods modifiers, va_list ap)
 	nbyte = 0;
 	num = convert_length(modifiers.length, ap);
 	neg = (num < 0) ? 1 : 0;
-	IF_THEN(neg == 1, num *= -1);
+	neg == 1 ? num *= -1 : 0;
 	str = num_string_base(num, 10);
-	IF_THEN(str[0] == '0' && modifiers.prcsn == 0, str[0] = '\0');
+	str[0] == '0' && modifiers.prcsn == 0 ? str[0] = '\0' : 0;
 	if (modifiers.fl.minus == 1)
 		nbyte += left_justify(modifiers, str, nbyte, neg);
 	else
 		nbyte += right_justify(modifiers, str, nbyte, neg);
-	IF_RETURN(1, (ft_pipewrench("-s", &str) + nbyte) - 1);
+	return ((ft_pipewrench("-s", &str) + nbyte) - 1);
 }

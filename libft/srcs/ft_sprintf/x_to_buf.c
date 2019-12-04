@@ -30,26 +30,21 @@ static void		right_justify(char *buf, char *num, t_mod mod, int capital)
 {
 	int		len;
 
-	if ((len = LEN(num)) && mod.fl.pound && num[0] != '0' && num[0] != '\0')
+	len = ft_strlen(num);
+	if (mod.fl.pound && num[0] != '0' && num[0] != '\0')
 	{
 		if (mod.fl.fzero && mod.prcsn == -1)
-		{
-			IF_THEN(capital == 8, ft_strcpy(buf, "0x"));
-			IF_THEN(capital == 18, ft_strcpy(buf, "0X"));
-		}
-		pos_justify(buf + LEN(buf), mod, len);
+			ft_strcpy(buf, capital == 8 ? "0x" : "0X");
+		pos_justify(buf + ft_strlen(buf), mod, len);
 		if (!mod.fl.fzero || mod.prcsn > -1)
-		{
-			IF_THEN(capital == 8, ft_strcpy(buf, "0x"));
-			IF_THEN(capital == 18, ft_strcpy(buf, "0X"));
-		}
+			ft_strcpy(buf, capital == 8 ? "0x" : "0X");
 	}
 	else
-		pos_justify(buf + LEN(buf), mod, len);
+		pos_justify(buf + ft_strlen(buf), mod, len);
 	if (mod.prcsn > len)
 		while ((mod.prcsn--) - len > 0)
-			ft_strcpy(buf + LEN(buf), "0");
-	ft_strncpy(buf + LEN(buf), num, len);
+			ft_strcpy(buf + ft_strlen(buf), "0");
+	ft_strncpy(buf + ft_strlen(buf), num, len);
 }
 
 static void		left_justify(char *buf, char *num, t_mod mod, int capital)
@@ -74,10 +69,10 @@ static void		left_justify(char *buf, char *num, t_mod mod, int capital)
 		buf++;
 		count++;
 	}
-	ADD_TO_BUFF(buf, num, count, len);
+	add_to_buf(buf, num, &count, len);
 	while (count < mod.width)
 	{
-		ADD_ONE_TO_BUFF(buf, " ", count);
+		add_one_to_buf(buf, ' ', &count);
 	}
 }
 
@@ -120,11 +115,11 @@ int				x_to_buf(char *buf, t_mod modifiers, va_list ap, int i)
 	if (i == 8)
 		while (str[++len])
 			str[len] = ft_tolower(str[len]);
-	IF_THEN(str[0] == '0' && modifiers.prcsn == 0, str[0] = '\0');
+	str[0] == '0' && modifiers.prcsn == 0 ? str[0] = '\0' : 0;
 	if (modifiers.fl.minus == 1)
 		left_justify(buf, str, modifiers, i);
 	else
 		right_justify(buf, str, modifiers, i);
 	free(str);
-	return (LEN(buf));
+	return (ft_strlen(buf));
 }

@@ -52,7 +52,8 @@ char		*num_string_u_base(unsigned long long num, int base)
 
 	len = 0;
 	tmp = num;
-	IF_RETURN(tmp == 0, str = ft_strdup("0"));
+	if (tmp == 0)
+		return ((str = ft_strdup("0")));
 	while (tmp > 0)
 	{
 		len++;
@@ -78,9 +79,10 @@ char		*num_string_base(long long num, int base)
 
 	len = 0;
 	tmp = num;
-	IF_RETURN((tmp + 1) * -1 == 9223372036854775807,
-		str = ft_strdup("9223372036854775808"));
-	IF_RETURN(tmp == 0, str = ft_strdup("0"));
+	if ((tmp + 1) * -1 == 9223372036854775807)
+		return ((str = ft_strdup("9223372036854775808")));
+	if (tmp == 0)
+		return ((str = ft_strdup("0")));
 	while (tmp > 0)
 	{
 		len++;
@@ -131,7 +133,7 @@ char		*num_string_base(long long num, int base)
 **(g, G)max number of significant digits
 **(s)max num of chars to print.
 **(c, %) no effect
-**	LENGTH
+**	ft_strlenGTH
 **calls for specific "length" variable conversion
 **		d, i			o, u, x, X
 **	hh	signed char		unsigned char

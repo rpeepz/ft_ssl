@@ -34,11 +34,17 @@ static int		parse_string(char *buf, char **str, va_list ap)
 		(*buf)++;
 		return (1);
 	}
-	IF_RETURN((i == 2 || i == 12) && (*str)++, i_to_buf(buf, modifier, ap));
-	IF_RETURN(i == 3 && (*str)++, c_to_buf(buf, modifier, ap));
-	IF_RETURN(i == 4 && (*str)++, s_to_buf(buf, modifier, ap));
-	IF_RETURN((i == 7 || i == 17) && (*str)++, u_to_buf(buf, modifier, ap, i));
-	IF_RETURN((i == 8 || i == 18) && (*str)++, x_to_buf(buf, modifier, ap, i));
+	(*str)++;
+	if (i == 2 || i == 12)
+		return (i_to_buf(buf, modifier, ap));
+	if (i == 3)
+		return (c_to_buf(buf, modifier, ap));
+	if (i == 4)
+		return (s_to_buf(buf, modifier, ap));
+	if (i == 7 || i == 17)
+		return (u_to_buf(buf, modifier, ap, i));
+	if (i == 8 || i == 18)
+		return (x_to_buf(buf, modifier, ap, i));
 	return (42);
 }
 
@@ -54,7 +60,7 @@ int				ft_sprintf(char *buf, char *str, ...)
 	{
 		if (*str != '%')
 		{
-			ADD_ONE_TO_BUFF(buf, str, nbyte);
+			add_one_to_buf(buf, *str, &nbyte);
 			str++;
 		}
 		else
@@ -64,69 +70,8 @@ int				ft_sprintf(char *buf, char *str, ...)
 			nbyte += i;
 		}
 	}
-	IF_THEN(nbyte < PAGESIZE, *buf = '\0');
+	if (nbyte < PAGESIZE)
+		*buf = '\0';
 	va_end(ap);
 	return (nbyte);
-}
-
-static void		ft_put_to_buf(char **buf, char *pad_char, int *nbyte)
-{
-	ft_strncpy(*buf, pad_char, 1);
-	(*buf)++;
-	(*nbyte)++;
-}
-
-int				ft_padding(char *buf, int len, t_mod mod, int nbyte)
-{
-	char	*pad_char;
-
-	if ((pad_char = " ") && (len > mod.prcsn || mod.prcsn == -1))
-	{
-		if (mod.width > len)
-		{
-			IF_THEN(mod.fl.fzero && mod.prcsn == -1, pad_char = "0");
-			if (!nbyte)
-			{
-				if (mod.fl.space && mod.fl.fzero)
-					ft_put_to_buf(&buf, pad_char, &nbyte);
-				while (mod.width - len - mod.neg > nbyte)
-					ft_put_to_buf(&buf, pad_char, &nbyte);
-			}
-			else
-			{
-				while (mod.width - len > nbyte)
-					ft_put_to_buf(&buf, pad_char, &nbyte);
-			}
-		}
-	}
-	else
-		while (mod.width - mod.prcsn - mod.neg > nbyte)
-			ft_put_to_buf(&buf, pad_char, &nbyte);
-	return (nbyte);
-}
-
-void			left_jut(char *buf, char *num, t_mod mod, int nbyte)
-{
-	int		len;
-
-	if ((len = (int)ft_strlen(num)) && mod.neg == 1)
-		ft_strcpy(buf, "-");
-	else if (mod.neg == 0)
-	{
-		if (mod.fl.fplus)
-			ft_strcpy(buf, "+");
-		else if (mod.fl.space)
-			ft_strcpy(buf, "-");
-	}
-	buf++;
-	while (mod.prcsn-- > len)
-	{
-		ft_strcpy(buf, "0");
-		buf++;
-	}
-	ADD_TO_BUFF(buf, num, nbyte, len);
-	while (nbyte < mod.width)
-	{
-		ADD_ONE_TO_BUFF(buf, " ", nbyte);
-	}
 }

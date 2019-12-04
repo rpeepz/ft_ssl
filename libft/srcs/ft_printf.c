@@ -18,6 +18,31 @@
 **	as standard logic for basic printf.
 */
 
+static int		dispatch(t_mods modifier, va_list ap, int i)
+{
+	if (i == 1)
+		return (convert_percent(modifier));
+	if ((i == 2 || i == 12))
+		return (convert_i(modifier, ap));
+	if (i == 3)
+		return (convert_c(modifier, ap));
+	if (i == 4)
+		return (convert_s(modifier, ap));
+	if (i == 5)
+		return (convert_p(modifier, ap));
+	if ((i == 6 || i == 16))
+		return (convert_o(modifier, ap, i));
+	if ((i == 7 || i == 17))
+		return (convert_u(modifier, ap, i));
+	if ((i == 8 || i == 18))
+		return (convert_x(modifier, ap, i));
+	if ((i == 9 || i == 19))
+		return (convert_f(modifier, ap, i));
+	if ((i == 10 || i == 20))
+		return (convert_b(modifier, ap, i));
+	return (42);
+}
+
 static int		parse_string(char **str, va_list ap)
 {
 	int		i;
@@ -32,17 +57,8 @@ static int		parse_string(char **str, va_list ap)
 			print_one(str);
 		return (i);
 	}
-	IF_RETURN(i == 1 && (*str)++, convert_percent(modifier));
-	IF_RETURN((i == 2 || i == 12) && (*str)++, convert_i(modifier, ap));
-	IF_RETURN(i == 3 && (*str)++, convert_c(modifier, ap));
-	IF_RETURN(i == 4 && (*str)++, convert_s(modifier, ap));
-	IF_RETURN(i == 5 && (*str)++, convert_p(modifier, ap));
-	IF_RETURN((i == 6 || i == 16) && (*str)++, convert_o(modifier, ap, i));
-	IF_RETURN((i == 7 || i == 17) && (*str)++, convert_u(modifier, ap, i));
-	IF_RETURN((i == 8 || i == 18) && (*str)++, convert_x(modifier, ap, i));
-	IF_RETURN((i == 9 || i == 19) && (*str)++, convert_f(modifier, ap, i));
-	IF_RETURN((i == 10 || i == 20) && (*str)++, convert_b(modifier, ap, i));
-	return (42);
+	(*str)++;
+	return (dispatch(modifier, ap, i));
 }
 
 int				ft_printf(char *str, ...)
@@ -65,6 +81,7 @@ int				ft_printf(char *str, ...)
 		}
 	}
 	va_end(ap);
-	IF_THEN(nbyte < 0, nbyte = 0);
+	if (nbyte < 0)
+		nbyte = 0;
 	return (nbyte);
 }
