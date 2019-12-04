@@ -68,7 +68,7 @@ int				get_stdin(char **line, char *str, int x, int i)
 	tmp = NULL;
 	while (((i = read(0, buf, PAGESIZE))))
 	{
-		IF_THEN(!str, (str = ft_strdup("")));
+		!str ? (str = ft_strdup("")) : 0;
 		buf[i] = 0;
 		tmp = ft_strjoin(str, buf);
 		ft_strdel(&str);
@@ -85,7 +85,6 @@ int				get_stdin(char **line, char *str, int x, int i)
 	ft_strdel(&tmp);
 	*line = i == 1 ? ft_strjoin(str, "\n") : ft_strdup(str);
 	ft_strdel(&str);
-	IF_THEN(!x && tmp && *line && *line[0] != '\n', ft_strdel(&tmp));
 	return (x);
 }
 

@@ -23,11 +23,13 @@ __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 	b0 = b;
 	x0 = 0;
 	x1 = 1;
-	IF_RETURN(a == b, 0);
+	if (a == b)
+		return (0);
 	while (a > 1)
 	{
 		!b ? ft_putendl_fd("Error divide by 0", 2) : 0;
-		IF_THEN(!b, exit(0));
+		if (!b)
+			exit(0);
 		q = a / b;
 		t = b;
 		b = a % b;
@@ -36,9 +38,7 @@ __uint64_t		mod_inverse(__uint64_t a, __uint64_t b)
 		x0 = x1 - q * x0;
 		x1 = t;
 	}
-	if (x1 < 0)
-		x1 += b0;
-	return (x1);
+	return (x1 < 0 ? x1 += b0 : x1);
 }
 
 /*

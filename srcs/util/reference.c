@@ -99,3 +99,17 @@ int				valid_command(char *input, t_ssl *ssl)
 		return (0);
 	return (1);
 }
+
+/*
+**	ft_printf("base64\ndes\tdes-ecb\t\tdes-cbc\t\tdes-ofb\n");
+**	ft_printf("des3\tdes3-ecb\tdes3-cbc\tdes3-ofb\n");
+*/
+
+void			show_supported(void)
+{
+	ft_printf("%sStandard commands%s:\n", UWHT, NOCOL);
+	ft_printf("genrsa\t\trsa\trsautl\n\n");
+	ft_printf("%sMessage Digest Commands%s:\n", UWHT, NOCOL);
+	ft_printf("md5\nsha224\t\tsha256\nsha384\t\tsha512\n\n");
+	ft_printf("%sCipher Commands%s:\n", UWHT, NOCOL);
+}
