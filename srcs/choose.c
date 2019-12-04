@@ -31,7 +31,8 @@ void			ssl_md5(char **av, t_ssl *ssl)
 		if (ssl->flag || (ssl->flag && !(ssl->flag & 0x10000)))
 			ssl->flag |= 0x8000;
 		hash(av[1], line, ssl, -1);
-		IF_THEN(ft_pipewrench("-s", &line), ssl->flag &= ~0x1000);
+		if (ft_pipewrench("-s", &line))
+			ssl->flag &= ~0x1000;
 	}
 	ssl->flag &= ~P_FLAG;
 	while (ssl->fd[++i])

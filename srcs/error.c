@@ -34,22 +34,9 @@ void			opt_desciption(int type)
 		ft_printf("\n%s%s%s%s%s%s%s", I_HELP, O_HELP, R_UIK,
 		R_UPI, R_UE, R_UD, R_UH);
 	else if (type == 33)
-		ft_printf("\n%s%s%s%s%s%s", R_N, I_HELP, O_HELP, R_PI, R_PO, R_T);
+		ft_printf("\n%s%s%s%s%s%s%s",\
+		R_N, I_HELP, O_HELP, R_MOD, R_PI, R_PO, R_T);
 }
-
-void			show_supported(void)
-{
-	ft_printf("%sStandard commands%s:\n", UWHT, NOCOL);
-	ft_printf("genrsa\t\trsa\trsautl\n\n");
-	ft_printf("%sMessage Digest Commands%s:\n", UWHT, NOCOL);
-	ft_printf("md5\nsha224\t\tsha256\nsha384\t\tsha512\n\n");
-	ft_printf("%sCipher Commands%s:\n", UWHT, NOCOL);
-}
-
-/*
-**	ft_printf("base64\ndes\tdes-ecb\t\tdes-cbc\t\tdes-ofb\n");
-**	ft_printf("des3\tdes3-ecb\tdes3-cbc\tdes3-ofb\n");
-*/
 
 void			full_usage(char *ex, int type)
 {
@@ -69,8 +56,31 @@ void			full_usage(char *ex, int type)
 	}
 }
 
-void			err_6(t_ssl *ssl)
+void			rsa_error2(int e)
 {
+	if (e == 20)
+		ft_printf("Only private keys can be checked\n");
+	else
+		ft_printf("Unable to load %s Key\n", e % 2 ? "Public" : "Private");
+	if (e <= 8)
+		ft_printf("PEM routines:PEM_read_bio:bad base64 decode\n");
+	else if (e <= 10)
+		ft_printf("PEM routines:PEM_read_bio:no start line\n");
+	else if (e <= 12)
+		ft_printf("PEM routines:PEM_read_bio:bad end line\n");
+	else if (e <= 14)
+		ft_printf("asn1 encoding routines:ASN1_CHECK_Tft_strlen:wrong tag\n");
+}
+
+void			rsa_error(char *s, t_ssl *ssl, int e)
+{
+	if (e != 6)
+	{
+		rsa_error2(e);
+		return ;
+	}
+	if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") || !ft_strcmp(s, "in")))
+		ft_printf("ft_ssl: Error: invalid option: \'%s\'\n", s);
 	if (ssl->flag == 'Z' && ssl->type == 33)
 		ft_printf("ft_ssl: Error: rsa: option requires an argument\n");
 	else if (ssl->type == 31)
@@ -105,7 +115,7 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 		ft_printf("unknown option '-%c'\n", *ex);
 	if (err == 5)
 		ft_printf("ft_ssl: Error: %s need a flag\n", ex);
-	if (err == 6)
-		err_6(ssl);
+	if (err >= 6)
+		rsa_error(ex, ssl, err);
 	return (err);
 }

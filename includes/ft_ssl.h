@@ -73,6 +73,7 @@ int					get_stdin(char **line, char *str, int x, int i);
 int					read_files(char **av, t_ssl *ssl, int i, int j);
 int					valid_flags(t_ssl *ssl, char c);
 int					valid_command(char *input, t_ssl *ssl);
+void				show_supported(void);
 int					handle_inputs(int *ac, char ***av, t_ssl *ssl);
 int					ft_error(int err, char *ex, t_ssl *ssl);
 

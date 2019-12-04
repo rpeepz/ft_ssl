@@ -79,7 +79,8 @@ static int		default_mode(t_ssl *ssl)
 
 int				parse_av(char **av, t_ssl *ssl, int i, int j)
 {
-	IF_RETURN(ssl->type > 10 && !av[2], default_mode(ssl));
+	if (ssl->type > 10 && !av[2])
+		return (default_mode(ssl));
 	while ((av[++i]) && av[i][0] == '-' && !(j = 0))
 	{
 		if (av[i][1])
@@ -122,7 +123,7 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 	if (ssl->type > 30)
 	{
 		choose[2](pv, ssl);
-		return (0);
+		return (1);
 	}
 	if (parse_av(*(av), ssl, 1, 0))
 		return (ft_error(3, pv[1], ssl));
