@@ -72,6 +72,7 @@ PRINTF	= finders.c \
 		convert_x.c \
 		convert_percent.c
 SPRINTF	= get_mod.c \
+		sprintf_helper.c \
 		c_to_buf.c \
 		i_to_buf.c \
 		s_to_buf.c \

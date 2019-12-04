@@ -28,11 +28,6 @@
 # define MAX_FD 4096
 # define PAGESIZE 4096
 
-# define LEN(X) (int)ft_strlen(X)
-# define IS_SPACE(x) (x == ' ' || x == '\t' || x == '\r' || x == '\f')
-# define IF_THEN(X, Y) if(X) {(Y);}
-# define IF_RETURN(X, Y) if(X) {return (Y);}
-
 /*
 **	----- ----- -----
 **	STRUCTS
