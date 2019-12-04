@@ -41,6 +41,7 @@
 # define D_V "-v\t\tInitialization vector in hex is the next argument\n"
 
 # define SEQUENCE '\x30'
+# define BIT '\x03'
 # define INT '\x02'
 # define V '\x01'
 # define V1 '\xff'

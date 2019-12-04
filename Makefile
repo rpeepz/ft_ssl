@@ -45,7 +45,8 @@ RSA		=ssl_rsa.c\
 		rsa.c \
 		rsa_out.c \
 		asn1.c \
-		asn1_helper.c
+		asn1_helper.c \
+		rsautl.c
 UTIL	=maths.c \
 		reference.c \
 		utils.c
