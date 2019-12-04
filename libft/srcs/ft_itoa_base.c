@@ -20,14 +20,15 @@ char	*ft_itoa_base(int n, int base)
 	int		len;
 	char	*str;
 
-	IF_RETURN((n == -2147483648), ft_strdup("-2147483648"));
-	IF_THEN(n < 0, n *= -1);
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	n < 0 ? n *= -1 : 0;
 	tmp = n;
 	len = 1;
 	while (tmp /= base)
 		len++;
 	tmp = n;
-	IF_THEN(base == 10, len += 1);
+	base == 10 ? len += 1 : 0;
 	if (!(str = ft_strnew(len)))
 		return (NULL);
 	while (len--)
@@ -67,7 +68,8 @@ char	*ft_itoa(int n)
 	int		len;
 	char	*str;
 
-	IF_RETURN((n == -2147483648), ft_strdup("-2147483648"));
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
 	tmp = n;
 	len = 0;
 	if (n < 0)
