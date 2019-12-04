@@ -21,18 +21,6 @@
 **	--------------------------------
 */
 
-# define RR_32(a, b) (((a) >> (b)) | ((a) << (32 - (b))))
-# define E0_32(x) (RR_32(x, 2) ^ RR_32(x, 13) ^ RR_32(x, 22))
-# define E1_32(x) (RR_32(x, 6) ^ RR_32(x, 11) ^ RR_32(x, 25))
-# define S0_32(x) (RR_32(x, 7) ^ RR_32(x, 18) ^ ((x) >> 3))
-# define S1_32(x) (RR_32(x, 17) ^ RR_32(x, 19) ^ ((x) >> 10))
-
-# define RR(a, b) (((a) >> (b)) | ((a) << (64 - (b))))
-# define E0(x) (RR(x, 28) ^ RR(x, 34) ^ RR(x, 39))
-# define E1(x) (RR(x, 14) ^ RR(x, 18) ^ RR(x, 41))
-# define S0(x) (RR(x, 1) ^ RR(x, 8) ^ ((x) >> 7))
-# define S1(x) (RR(x, 19) ^ RR(x, 61) ^ ((x) >> 6))
-
 # define P_FLAG 0x8000
 # define Q_FLAG 0x10000
 # define R_FLAG 0x20000
@@ -92,6 +80,15 @@ typedef struct		s_sha64bit
 	__uint64_t		h;
 	__uint64_t		**message;
 }					t_sha64bit;
+
+__uint32_t			e0_32(__uint32_t x);
+__uint32_t			e1_32(__uint32_t x);
+__uint32_t			s0_32(__uint32_t x);
+__uint32_t			s1_32(__uint32_t x);
+__uint64_t			e0(__uint64_t x);
+__uint64_t			e1(__uint64_t x);
+__uint64_t			s0(__uint64_t x);
+__uint64_t			s1(__uint64_t x);
 
 void				sha64_cycle(int count, t_sha64bit *s, __uint64_t *w, int i);
 void				sha64_start(char *to_hash, t_sha64bit *s);

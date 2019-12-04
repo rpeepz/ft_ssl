@@ -36,8 +36,8 @@ static void		sha256_loop(int i, t_sha32bit *s, __uint32_t *w)
 
 	ch = (s->e & s->f) ^ ((~s->e) & s->g);
 	maj = (s->a & s->b) ^ (s->a & s->c) ^ (s->b & s->c);
-	t1 = s->h + E1_32(s->e) + ch + g_sha32bit_k[i] + w[i];
-	t2 = E0_32(s->a) + maj;
+	t1 = s->h + e1_32(s->e) + ch + g_sha32bit_k[i] + w[i];
+	t2 = e0_32(s->a) + maj;
 	s->h = s->g;
 	s->g = s->f;
 	s->f = s->e;
@@ -54,7 +54,7 @@ void			sha32_cycle(int count, t_sha32bit *s, __uint32_t *w, int i)
 		w[i] = s->message[count][i];
 	i = 15;
 	while (++i < 64)
-		w[i] = w[i - 16] + S0_32(w[i - 15]) + w[i - 7] + S1_32(w[i - 2]);
+		w[i] = w[i - 16] + s0_32(w[i - 15]) + w[i - 7] + s1_32(w[i - 2]);
 	s->a = s->hash[0];
 	s->b = s->hash[1];
 	s->c = s->hash[2];
@@ -110,7 +110,7 @@ void			sha32_set(char *to_hash, t_sha32bit *s)
 		s->message[i] = (__uint32_t*)malloc(sizeof(__uint32_t) * 16);
 		ft_bzero(s->message[i], sizeof(__uint32_t) * 16);
 	}
-	sha_pad(to_hash, s, LEN(to_hash));
+	sha_pad(to_hash, s, ft_strlen(to_hash));
 }
 
 char			*sha256(char *buf, char *to_hash)

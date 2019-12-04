@@ -52,8 +52,8 @@ static void		sha512_loop(t_sha64bit *s, int i, __uint64_t *w)
 
 	ch = (s->e & s->f) ^ ((~s->e) & s->g);
 	maj = (s->a & s->b) ^ (s->a & s->c) ^ (s->b & s->c);
-	t1 = s->h + E1(s->e) + ch + g_sha64bit_k[i] + w[i];
-	t2 = E0(s->a) + maj;
+	t1 = s->h + e1(s->e) + ch + g_sha64bit_k[i] + w[i];
+	t2 = e0(s->a) + maj;
 	s->h = s->g;
 	s->g = s->f;
 	s->f = s->e;
@@ -70,7 +70,7 @@ void			sha64_cycle(int count, t_sha64bit *s, __uint64_t *w, int i)
 		w[i] = s->message[count][i];
 	i = 15;
 	while (++i < 80)
-		w[i] = w[i - 16] + S0(w[i - 15]) + w[i - 7] + S1(w[i - 2]);
+		w[i] = w[i - 16] + s0(w[i - 15]) + w[i - 7] + s1(w[i - 2]);
 	s->a = s->hash[0];
 	s->b = s->hash[1];
 	s->c = s->hash[2];
@@ -130,7 +130,7 @@ void			sha64_start(char *to_hash, t_sha64bit *s)
 		s->message[i] = (__uint64_t*)malloc(sizeof(__uint64_t) * 16);
 		ft_bzero(s->message[i], sizeof(__uint64_t) * 16);
 	}
-	sha_pad(to_hash, s, LEN(to_hash));
+	sha_pad(to_hash, s, ft_strlen(to_hash));
 }
 
 char			*sha512(char *buf, char *to_hash)

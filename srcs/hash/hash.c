@@ -12,38 +12,46 @@
 
 #include "hash.h"
 
-void			copy_free(char *buf, char **contents, char **tmp)
+void			copy_free(char *buf, char **acontents)
 {
+	char		*tmp;
+	char		*contents;
+	int			len;
+
 	buf[PAGESIZE] = 0;
-	*tmp = ft_strjoin(*contents, buf);
-	if (ft_strcmp(*contents, ""))
-		ft_strdel(contents);
-	*contents = ft_strdup(*tmp);
-	ft_strdel(tmp);
+	tmp = NULL;
+	contents = *acontents;
+	tmp = ft_strjoin(contents, buf);
+	len = ft_strlen(tmp);
+	ft_strdel(&contents);
+	contents = ft_strdup(tmp);
+	ft_strdel(&tmp);
+	*acontents = contents;
 }
 
 char			*get_hash(char **to_hash, char **input, t_ssl *ssl, int i)
 {
 	char		buf[PAGESIZE + 1];
-	char		*tmp;
 	char		*contents;
+	char		*tmp;
 	static char	*(*hasher[5])(char *, char *) = {
 				md5, sha224, sha256, sha384, sha512};
 
 	ft_bzero(buf, PAGESIZE);
+	contents = NULL;
+	tmp = NULL;
 	*input = *to_hash;
 	if (ssl->fd[i] > 2)
 	{
-		contents = "";
+		contents = ft_strdup("");
 		while (read(ssl->fd[i], buf, PAGESIZE) > 0)
 		{
-			copy_free((char *)buf, &contents, &tmp);
+			copy_free(buf, &contents);
 			ft_bzero(buf, PAGESIZE);
 		}
-		copy_free((char*)buf, &contents, &tmp);
-		*to_hash = ft_strdup(contents);
-		free(contents);
 		close(ssl->fd[i]);
+		*to_hash = ft_strdup(contents);
+		ft_strdel(&contents);
 	}
 	else
 		*to_hash = ft_strdup(*to_hash);
