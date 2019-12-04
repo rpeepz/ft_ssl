@@ -21,17 +21,17 @@ static int	right_justify(char *buf, char *s, int len, t_mod mod)
 	{
 		while (mod.width-- > len)
 		{
-			add_one_to_buf(buf, '0', &nbyte);
+			add_one_to_buf(&buf, '0', &nbyte);
 		}
 	}
 	else
 	{
 		while (mod.width-- > len)
 		{
-			add_one_to_buf(buf, ' ', &nbyte);
+			add_one_to_buf(&buf, ' ', &nbyte);
 		}
 	}
-	add_to_buf(buf, s, &nbyte, len);
+	add_to_buf(&buf, s, &nbyte, len);
 	return (nbyte);
 }
 
@@ -40,10 +40,10 @@ static int	left_justify(char *buf, char *s, int len, t_mod mod)
 	int		nbyte;
 
 	nbyte = 0;
-	add_to_buf(buf, s, &nbyte, len);
+	add_to_buf(&buf, s, &nbyte, len);
 	while (nbyte < mod.width)
 	{
-		add_one_to_buf(buf, ' ', &nbyte);
+		add_one_to_buf(&buf, ' ', &nbyte);
 	}
 	return (nbyte);
 }

@@ -69,10 +69,10 @@ static void		left_justify(char *buf, char *num, t_mod mod, int capital)
 		buf++;
 		count++;
 	}
-	add_to_buf(buf, num, &count, len);
+	add_to_buf(&buf, num, &count, len);
 	while (count < mod.width)
 	{
-		add_one_to_buf(buf, ' ', &count);
+		add_one_to_buf(&buf, ' ', &count);
 	}
 }
 

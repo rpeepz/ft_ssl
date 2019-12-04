@@ -60,7 +60,7 @@ int				ft_sprintf(char *buf, char *str, ...)
 	{
 		if (*str != '%')
 		{
-			add_one_to_buf(buf, *str, &nbyte);
+			add_one_to_buf(&buf, *str, &nbyte);
 			str++;
 		}
 		else

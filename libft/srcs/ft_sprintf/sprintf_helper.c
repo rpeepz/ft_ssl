@@ -12,17 +12,17 @@
 
 #include "ft_sprintf.h"
 
-void			add_one_to_buf(char *buf, int c, int *n)
+void			add_one_to_buf(char **buf, int c, int *n)
 {
-	ft_strncpy(buf, (const char *)&c, 1);
-	buf++;
+	ft_strncpy(*buf, (const char *)&c, 1);
+	(*buf)++;
 	++(*n);
 }
 
-void			add_to_buf(char *buf, char *src, int *n, int len)
+void			add_to_buf(char **buf, char *src, int *n, int len)
 {
-	ft_strncpy(buf, src, len);
-	buf += len;
+	ft_strncpy(*buf, src, len);
+	(*buf) += len;
 	(*n) += len;
 }
 
@@ -38,20 +38,20 @@ int				ft_padding(char *buf, int len, t_mod mod, int nbyte)
 			if (!nbyte)
 			{
 				if (mod.fl.space && mod.fl.fzero)
-					add_one_to_buf(buf, *pad_char, &nbyte);
+					add_one_to_buf(&buf, *pad_char, &nbyte);
 				while (mod.width - len - mod.neg > nbyte)
-					add_one_to_buf(buf, *pad_char, &nbyte);
+					add_one_to_buf(&buf, *pad_char, &nbyte);
 			}
 			else
 			{
 				while (mod.width - len > nbyte)
-					add_one_to_buf(buf, *pad_char, &nbyte);
+					add_one_to_buf(&buf, *pad_char, &nbyte);
 			}
 		}
 	}
 	else
 		while (mod.width - mod.prcsn - mod.neg > nbyte)
-			add_one_to_buf(buf, *pad_char, &nbyte);
+			add_one_to_buf(&buf, *pad_char, &nbyte);
 	return (nbyte);
 }
 
@@ -74,9 +74,9 @@ void			left_jut(char *buf, char *num, t_mod mod, int nbyte)
 		ft_strcpy(buf, "0");
 		buf++;
 	}
-	add_to_buf(buf, num, &nbyte, len);
+	add_to_buf(&buf, num, &nbyte, len);
 	while (nbyte < mod.width)
 	{
-		add_one_to_buf(buf, ' ', &nbyte);
+		add_one_to_buf(&buf, ' ', &nbyte);
 	}
 }

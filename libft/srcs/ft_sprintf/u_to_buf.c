@@ -22,10 +22,10 @@ static void		left_just(char *buf, char *num, t_mod mod, int nbyte)
 		ft_strcpy(buf, "0");
 		buf++;
 	}
-	add_to_buf(buf, num, &nbyte, len);
+	add_to_buf(&buf, num, &nbyte, len);
 	while (nbyte < mod.width)
 	{
-		add_one_to_buf(buf, ' ', &nbyte);
+		add_one_to_buf(&buf, ' ', &nbyte);
 	}
 }
 

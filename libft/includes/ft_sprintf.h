@@ -52,6 +52,6 @@ void				left_jut(char *buf, char *num, t_mod mod, int nbyte);
 
 void				left_jut(char *buf, char *num, t_mod mod, int nbyte);
 int					ft_padding(char *buf, int len, t_mod mod, int nbyte);
-void				add_one_to_buf(char *buf, int c, int *n);
-void				add_to_buf(char *buf, char *src, int *n, int len);
+void				add_one_to_buf(char **buf, int c, int *n);
+void				add_to_buf(char **buf, char *src, int *n, int len);
 #endif
