@@ -43,9 +43,9 @@ char	*str_3join(char const *s1, char const *s2, char const *s3)
 
 	if (!s1 || !s2 || !s3)
 		return (NULL);
-	len[0] = LEN(s1);
-	len[1] = LEN(s2);
-	len[2] = LEN(s3);
+	len[0] = ft_strlen(s1);
+	len[1] = ft_strlen(s2);
+	len[2] = ft_strlen(s3);
 	if (!(new_str = ft_strnew(len[0] + len[1] + len[2])))
 		return (NULL);
 	i[0] = -1;

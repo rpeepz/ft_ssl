@@ -72,9 +72,11 @@ char			**ft_strsplit(char const *s, char c)
 
 static int		has_whitespace(char *str, size_t *i, size_t *j)
 {
-	while (IS_SPACE(str[*i]) || str[*i] == '\n' || *i > ft_strlen(str))
+	while (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\r' ||\
+		str[*i] == '\f' || str[*i] == '\n' || *i > ft_strlen(str))
 		(*i)++;
-	while (IS_SPACE(str[*j]) || str[*j] == '\n')
+	while (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\r' ||\
+		str[*i] == '\f' || str[*j] == '\n')
 		(*j)--;
 	if (*i || *j < ft_strlen(str))
 		return (1);
