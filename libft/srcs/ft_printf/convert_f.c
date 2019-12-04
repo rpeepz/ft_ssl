@@ -30,7 +30,7 @@ static int		pad_width(t_mods mod, int len, int nbyte, int neg)
 	{
 		if (mod.width > len)
 		{
-			IF_THEN(mod.fl.fzero && mod.prcsn == -1, pad_char = "0");
+			mod.fl.fzero && mod.prcsn == -1 ? pad_char = "0" : 0;
 			if (nbyte == 0)
 			{
 				if (mod.fl.space && mod.fl.fzero)
@@ -53,21 +53,21 @@ static	int		right_justify(t_mods m, char *num, int by, int neg)
 {
 	int		len;
 
-	IF_THEN((len = LEN(num)) && m.fl.pound && !ft_strchr(num, '.'), len++);
+	(len = ft_strlen(num)) && m.fl.pound && !ft_strchr(num, '.') ? len++ : 0;
 	if (neg == 1)
 	{
 		if (m.fl.fzero && m.prcsn < 0 && m.width > len)
 			by += write(1, "-", 1);
 		by = pad_width(m, len, by, neg);
-		IF_THEN((!m.fl.fzero || m.prcsn > 0 || !by), by += write(1, "-", 1));
+		(!m.fl.fzero || m.prcsn > 0 || !by) ? by += write(1, "-", 1) : 0;
 	}
 	else if (neg == 0)
 	{
-		IF_THEN((m.fl.fplus && m.fl.fzero && m.prcsn < 0 && m.width > len
-			&& (m.fl.space = -1)), by += write(1, "+", 1));
+		(m.fl.fplus && m.fl.fzero && m.prcsn < 0 && m.width > len
+			&& (m.fl.space = -1)) ? by += write(1, "+", 1) : 0;
 		by = pad_width(m, len, by, m.fl.fplus);
-		IF_THEN((m.fl.fplus && m.fl.space != -1), by += write(1, "+", 1));
-		IF_THEN((!m.fl.fplus && m.fl.space && !by), by += write(1, " ", 1));
+		(m.fl.fplus && m.fl.space != -1) ? by += write(1, "+", 1) : 0;
+		(!m.fl.fplus && m.fl.space && !by) ? by += write(1, " ", 1) : 0;
 	}
 	if (m.prcsn > len)
 		while ((m.prcsn--) - len > 0)
@@ -82,8 +82,8 @@ static	int		left_justify(t_mods mod, char *num, int nbyte, int neg)
 {
 	int		len;
 
-	len = LEN(num);
-	IF_THEN(mod.fl.pound && mod.prcsn == 0, len += 1);
+	len = ft_strlen(num);
+	mod.fl.pound && mod.prcsn == 0 ? len += 1 : 0;
 	if (neg == 1)
 		nbyte += (int)write(1, "-", 1);
 	else if (neg == 0)
@@ -96,8 +96,8 @@ static	int		left_justify(t_mods mod, char *num, int nbyte, int neg)
 	while (mod.prcsn-- > len)
 		nbyte += (int)write(1, "0", 1);
 	if (mod.fl.pound && mod.prcsn == 0)
-		IF_THEN(nbyte += (int)write(1, num, len - 1),
-		nbyte += (int)write(1, ".", 1));
+		if (nbyte += (int)write(1, num, len - 1))
+			nbyte += (int)write(1, ".", 1);
 	if (!mod.fl.pound && mod.prcsn == 0)
 		nbyte += (int)write(1, num, len);
 	while (nbyte < mod.width)
@@ -112,24 +112,24 @@ static char		**num_string_modld(long double num, t_mods mod, int add_zeros)
 	char			*zeros;
 	int				len;
 
-	IF_THEN(mod.prcsn == -1, mod.prcsn = 6);
+	mod.prcsn == -1 ? mod.prcsn = 6 : 0;
 	str = (char **)malloc(sizeof(*str) * 3);
 	str[0] = num_string_base(get_pre_float(num, 0), 10);
 	str[2] = 0;
-	IF_RETURN(mod.prcsn == 0 && (str[1] = ft_strdup("\0")), str);
+	if (mod.prcsn == 0 && (str[1] = ft_strdup("\0")))
+		return (str);
 	tmp = num - (int)num;
 	add_zeros = mod.prcsn;
-	IF_THEN(mod.prcsn <= 15, tmp += 0.0000000000000001);
+	mod.prcsn <= 15 ? tmp += 0.0000000000000001 : 0;
 	while (mod.prcsn-- > 0)
 		tmp *= 10.0;
 	str[1] = num_string_base((int)tmp, 10);
-	if ((len = LEN(str[1])) < add_zeros)
+	if ((len = ft_strlen(str[1])) < add_zeros)
 	{
 		zeros = ft_strcnew(add_zeros, '0');
 		zeros = ft_strncpy(zeros + (add_zeros - len), str[1], len);
-		if (ft_pipewrench("-s", &str[1]))
-			if ((str[1] = ft_strdup(zeros - (add_zeros - len))))
-				ft_pipewrench("-s", &zeros - (add_zeros - len));
+		ft_pipewrench("-s", &str[1]) && (str[1] = ft_strdup(zeros - add_zeros -\
+		len)) ? ft_pipewrench("-s", &zeros - add_zeros - len) : 0;
 	}
 	return (str);
 }
@@ -142,12 +142,13 @@ int				convert_f(t_mods modifiers, va_list ap, int i)
 	char			**str;
 	char			*to_print;
 
+	return (0);
 	if (modifiers.length == 'L' || i == 19)
 		num = va_arg(ap, long double);
 	else
 		num = va_arg(ap, double);
 	neg = (num < 0.0) ? 1 : 0;
-	IF_THEN(neg == 1, num *= -1);
+	neg == 1 ? num *= -1 : 0;
 	str = num_string_modld(num, modifiers, 0);
 	if (str[1][0] != '\0')
 		to_print = str_3join(str[0], ".", str[1]);
