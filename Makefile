@@ -30,6 +30,8 @@ SRCS 	=main.c\
 		choose.c\
 		error.c
 HASH	=hash.c\
+		hash_helper32.c \
+		hash_helper64.c \
 		md5.c\
 		sha224.c\
 		sha256.c\
@@ -42,7 +44,8 @@ RSA		=ssl_rsa.c\
 		is_primary.c \
 		rsa.c \
 		rsa_out.c \
-		asn1.c
+		asn1.c \
+		asn1_helper.c
 UTIL	=maths.c \
 		reference.c \
 		utils.c

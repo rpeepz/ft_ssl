@@ -32,6 +32,7 @@
 # define R_CHECK 0x10
 # define R_PUBIN 0x20
 # define R_PUBOUT 0x40
+# define R_MODULUS 0x80
 
 # define R_B "numbits\t\tlength of key in bits\n"
 # define R_UIK "-inkey file\tInput key\n"
@@ -43,11 +44,15 @@
 # define R_PI "-pubin\t\tExpect a public key (default private key)\n"
 # define R_PO "-pubout\t\tOutput a public key (default private key)\n"
 # define R_T "-text\t\tPrint in plain text in addition to encoded\n"
+# define R_MOD "-modulus\tPrint in hexadecimal the modulus\n"
 
 # define PRIV_BEG "-----BEGIN RSA PRIVATE KEY-----\n"
 # define PRIV_END "-----END RSA PRIVATE KEY-----\n"
 # define PUB_BEG "-----BEGIN PUBLIC KEY-----\n"
 # define PUB_END "-----END PUBLIC KEY-----\n"
+
+# define EXPECT_PRV "Expecting: ANY PRIVATE KEY\n"
+# define EXPECT_PUB "Expecting: PUBLIC KEY\n"
 
 /*
 **	--------------------------------
@@ -93,10 +98,18 @@ typedef struct		s_rsa
 */
 
 void				debug_output(t_ssl *ssl, t_rsa_out rsa);
+
+char				byte_len(__uint64_t n);
+uint8_t				*byte_string(uint8_t *buf, __uint64_t n);
+void				dump_to_buf(uint8_t *buf, char c, uint8_t *s, int *len);
+void				asn1_pub(t_rsa gg, uint8_t *buf, uint8_t *buf2, int *len);
 void				asn1(t_rsa gg, uint8_t *buf, uint8_t *buf2, int *len);
+
+void				rsa_out_options(t_rsa_out rsa, t_rsa gg, char option);
 void				rsa_encode_out(t_rsa_out rsa, t_rsa gg);
 void				rsa_text_out(t_rsa_out rsa, t_rsa gg);
 void				rsa_command(t_rsa_out rsa);
+
 __uint64_t			genrsa(t_rsa_out rsa);
 int					ft_is_primary(__uint64_t number, float probability);
 
