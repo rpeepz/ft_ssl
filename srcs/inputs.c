@@ -130,7 +130,7 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 	if (!read_files(pv, ssl, ssl->file_index[0], 0))
 		if ((ssl->type < 10) &&
 		!(ssl->flag & 0x38000) && ssl->flag && !ssl->file_index[0])
-			return (ft_printf("Here I AM\n"));
+			return (DEBUG ? ft_printf("Here I AM\n") : 1);
 	choose[ssl->type < 10 ? 0 : 1](pv, ssl);
 	return (1);
 }
