@@ -18,6 +18,7 @@ jobs:
     - name: primep_1-101
       run: ./extra/primep.sh 1 101
     - name: primep
+      run: |
         ./ft_ssl primep 2018111111
         ./ft_ssl primep 215458247
         ./ft_ssl primep 21564653
