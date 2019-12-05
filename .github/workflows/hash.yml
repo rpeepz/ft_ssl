@@ -1,0 +1,46 @@
+name: Hash-Test
+
+on: [push]
+
+jobs:
+  job_hash:
+    name: hash_test
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}
+        submodules: true
+    - name: build
+      run: |
+        make
+        make clean
+    - name: hash-md5
+      run: |
+        echo -n "" | ./ft_ssl md5
+        echo "stdin" | ./ft_ssl md5 -p
+        ./ft_ssl md5 -s "test string"
+        ./ft_ssl md5 -q -s "quiet output"
+        ./ft_ssl md5 README.md
+        ./ft_ssl md5 -r srcs/main.c
+        ./ft_ssl md5 includes
+    - name: hash-sha-32
+      run: |
+        echo -n "" | ./ft_ssl sha256
+        echo "stdin" | ./ft_ssl sha256 -p
+        ./ft_ssl sha256 -s "test string"
+        ./ft_ssl sha256 -q -s "quiet output"
+        ./ft_ssl sha256 README.md
+        ./ft_ssl sha256 includes
+        ./ft_ssl sha224 -s "alternate 32bit"
+    - name: hash-sha-64 -r srcs/main.c
+      run: |
+        echo -n "" | ./ft_ssl sha512
+        echo "stdin" | ./ft_ssl sha512 -p
+        ./ft_ssl sha512 -s "test string"
+        ./ft_ssl sha512 -q -s "quiet output"
+        ./ft_ssl sha512 README.md
+        ./ft_ssl sha512 -r srcs/main.c
+        ./ft_ssl sha512 includes
+        ./ft_ssl sha384 -s "alternate 64bit"
+ 

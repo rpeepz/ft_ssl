@@ -1,0 +1,47 @@
+name: RSA-Test
+
+on: [push]
+
+jobs:
+  job_rsa:
+    name: rsa_test
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}
+        submodules: true
+    - name: build
+      run: |
+        make
+        make clean
+    - name: primep_1-101
+      run: ./extra/primep.sh 1 101
+    - name: primep
+        ./ft_ssl primep 2018111111
+        ./ft_ssl primep 215458247
+        ./ft_ssl primep 21564653
+        ./ft_ssl primep 656452
+        ./ft_ssl primep 7577784281823102539
+        ./ft_ssl primep 18400419841006694671
+    - name: genrsa
+      run: |
+        ./ft_ssl genrsa 32
+        ./ft_ssl genrsa 64
+        ./ft_ssl genrsa -out key0.out
+        cat key0.out
+    - name: rsa-priv
+      run: |
+        cat key0.out | ./ft_ssl rsa
+        ./ft_ssl rsa -in key0.out
+        ./ft_ssl rsa -in key0.out -out key1.out
+        diff key0.out key1.out
+        ./ft_ssl rsa -in key0.out -text -noout
+        ./ft_ssl rsa -in key0.out -check -modulus
+    - name: rsa-pub
+      run: |
+        ./ft_ssl rsa -in key0.out -pubout
+        ./ft_ssl rsa -in key0.out -pubout -test.pub
+        ./ft_ssl rsa -in test.pub -pubin
+        ./ft_ssl rsa -in test.pub -pubin -check
+        ./ft_ssl rsa -in test.pub -pubin -noout -modulus

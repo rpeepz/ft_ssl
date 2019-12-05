@@ -24,10 +24,5 @@ jobs:
       run: |
         make
         make clean
-    - name: hash
-      run: ./ft_ssl sha256 Makefile
-    - name: primep
-      run: ./ft_ssl primep 2018111111
-    - name: genrsa
-      run: ./ft_ssl genrsa 32
-      
+    - name: list_commands
+      run: ./ft_ssl help
