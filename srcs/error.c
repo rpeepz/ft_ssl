@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/04 19:28:36 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/05 18:28:19 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ void			rsa_error2(int e)
 {
 	if (e == 20)
 		ft_putstr_fd("Only private keys can be checked\n", 2);
+	if (e == 19)
+		ft_putstr_fd("A private key is needed for this operation\n", 2);
 	else
 	{
+		e > 22 ? ft_putstr_fd("no keyfile specified\n", 2) : 0;
 		ft_putstr_fd("Unable to load", 2);
 		ft_putstr_fd(e % 2 ? " Public " : " Private ", 2);
 		ft_putstr_fd("Key\n", 2);
@@ -79,9 +82,11 @@ void			rsa_error2(int e)
 
 void			rsa_error(char *s, t_ssl *ssl, int e)
 {
-	if (e != 6)
+	if (ssl && ssl->type == 36)
+		dprintf(2, "ft_ssl: Error: primep: option requires an argument\n");
+	else if (e != 6)
 	{
-		ft_putstr_fd("RSA operation error\n", 2);
+		e > 20 && e < 23 ? ft_putstr_fd("RSA operation error\n", 2) : 0;
 		if (e == 21 || e == 22)
 		{
 			ft_putstr_fd("RSA_padding_add_none:data too", 2);
@@ -92,11 +97,9 @@ void			rsa_error(char *s, t_ssl *ssl, int e)
 			rsa_error2(e);
 		return ;
 	}
-	if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") || !ft_strcmp(s, "in") ||\
-		!ft_strcmp(s, "inkey")))
+	else if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") ||\
+	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey")))
 		dprintf(2, "ft_ssl: Error: invalid option: \'%s\'\n", s);
-	if (ssl->flag == 'Z' && ssl->type == 33)
-		dprintf(2, "ft_ssl: Error: rsa: option requires an argument\n");
 	else if (ssl->type == 31)
 		dprintf(2, "%susage%s: genrsa [args] [numbits]\n", YEL, NOCOL);
 	else if (ssl->type == 32)
