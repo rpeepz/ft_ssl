@@ -42,7 +42,20 @@ jobs:
     - name: rsa-pub
       run: |
         ./ft_ssl rsa -in key0.out -pubout
-        ./ft_ssl rsa -in key0.out -pubout -test.pub
+        ./ft_ssl rsa -in key0.out -pubout -out test.pub
         ./ft_ssl rsa -in test.pub -pubin
         ./ft_ssl rsa -in test.pub -pubin -check
         ./ft_ssl rsa -in test.pub -pubin -noout -modulus
+        echo -n "accuracy" > plaintext
+        echo -n "surgical" > plaintext2
+        echo -n "brazzers" > plaintext3
+    - name: rsa-util-priv
+      run: |
+        echo -n "mountain" | ./ft_ssl rsautl -inkey key0.out -encrypt
+        ./ft_ssl rsautl -in plaintext -inkey key0.out -encrypt -out cipher
+        ./ft_ssl rsautl -in cipher -pubin -inkey key0.out -decrypt
+        ./ft_ssl rsautl -in cipher -inkey key0.out -decrypt
+        ./ft_ssl rsautl -in plaintext2 -inkey key0.out -encrypt -hexdump
+        ./ft_ssl rsautl -in plaintext3 -inkey test.pub -pubin -out cipher
+        ./ft_ssl rsautl -in cipher -inkey key0.out -decrypt -hexdump
+        
