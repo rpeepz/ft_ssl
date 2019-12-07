@@ -35,8 +35,8 @@ void			opt_desciption(int type)
 		dprintf(2, "\n%s%s%s%s%s%s%s", I_HELP, O_HELP, R_UIK,
 		R_UPI, R_UE, R_UD, R_UH);
 	else if (type == 33)
-		dprintf(2, "\n%s%s%s%s%s%s%s",\
-		R_N, I_HELP, O_HELP, R_MOD, R_PI, R_PO, R_T);
+		dprintf(2, "\n%s%s%s%s%s%s%s%s",\
+		R_C, R_N, I_HELP, O_HELP, R_MOD, R_PI, R_PO, R_T);
 }
 
 void			full_usage(char *ex, int type)
