@@ -1,4 +1,4 @@
-# ssl_clone&emsp;[![Actions Status](https://github.com/rpeepz/ssl_clone/workflows/C/Build/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ssl_clone?color=yellow&include_prereleases)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ssl_clone/total.svg)](https://github.com/rpeepz/ssl_clone/releases)<!-- [![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ssl_clone)](https://github.com/rpeepz/ssl_clone) -->[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ssl_clone/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
+# ssl_clone <br> [![Build Status](https://github.com/rpeepz/ssl_clone/workflows/C//Build/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![Hash Status](https://github.com/rpeepz/ssl_clone/workflows/Hash-Test/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![RSA Status](https://github.com/rpeepz/ssl_clone/workflows/RSA-Test/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ssl_clone?color=yellow&include_prereleases)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ssl_clone/total.svg)](https://github.com/rpeepz/ssl_clone/releases)<!-- [![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ssl_clone)](https://github.com/rpeepz/ssl_clone) -->[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ssl_clone/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
 A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography... <br/> 
 
 
@@ -58,16 +58,20 @@ base64 | des | des-ecb | des-cbc | des-ofb | des3 | des3-ebc | des3-cbc | des3-o
 ```
 ./ft_ssl { command } [-a|d|e] [-p passwd] [-k key] [-s salt] [-v vector] [-in file] [-out file]  
 ```
-for standard _**_
+Standard commands
 ```
 genrsa | rsa | rsautl
 ```
 ```
-./ft_ssl { command } [-in file] [-out file] [-text] [-noout] [-check] [-pubin] [-pubout] [-encrypt] [-decrypt] [-hexdump]
+./ft_ssl genrsa [-out file] [16 - 64]
+
+./ft_ssl rsa [-in file] [-out file] [-noout] [-check] [-modulus] [-pubin] [-pubout] [-text] 
+
+./ft_ssl rsautl [-in file] [-inkey key] [-out file] [-pubin] [-encrypt] [-decrypt] [-hexdump]
 ```
 or for help with a command
 ```
-./ft_ssl { command } -h
+./ft_ssl { command } -h | -help
 ```  
 #### _** works are still in development_
 
@@ -90,6 +94,8 @@ src/
 │   ├── base64_print.c
 |   └── encode.c
 ├── hash/
+│   ├── hash_helper32.c
+│   ├── hash_helper64.c
 │   ├── hash.c
 │   ├── md5.c
 │   ├── sha224.c
@@ -97,22 +103,24 @@ src/
 │   ├── sha384.c
 │   └── sha512.c
 ├── rsa/
+│   ├── asn1_helper.c
 │   ├── asn1.c
 │   ├── genrsa.c
 │   ├── is_primary.c
 │   ├── rsa_out.c
 │   ├── rsa.c
+│   ├── rsautl.c
 │   └── ssl_rsa.c
 ├── uitl/
-│   ├── in.c
 │   ├── maths.c
-│   └── reference.c
+│   ├── reference.c
+│   └── utils.c
 ├── choose.c
 ├── error.c
 ├── inputs.c
 └── main.c
 
-4 directories, 21 files
+4 directories, 25 files
 ```
 
 ### Header files
