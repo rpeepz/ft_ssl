@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:21:29 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/17 21:03:49 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/06 23:13:45 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define R_UE "-encrypt\tEncrypt with public key\n"
 # define R_UD "-decrypt\tDecrypt with private key\n"
 # define R_UH "-hexdump\tHex dump output\n"
-# define R_C "-check\t\tCheck consistency of RSA private key"
+# define R_C "-check\t\tCheck consistency of RSA private key\n"
 # define R_N "-noout\t\tDo not print encoded version of the key\n"
 # define R_PI "-pubin\t\tExpect a public key (default private key)\n"
 # define R_PO "-pubout\t\tOutput a public key (default private key)\n"
