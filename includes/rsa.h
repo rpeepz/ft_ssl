@@ -43,11 +43,12 @@
 # define R_UE "-encrypt\tEncrypt with public key\n"
 # define R_UD "-decrypt\tDecrypt with private key\n"
 # define R_UH "-hexdump\tHex dump output\n"
+# define R_C "-check\t\tCheck consistency of RSA private key"
 # define R_N "-noout\t\tDo not print encoded version of the key\n"
 # define R_PI "-pubin\t\tExpect a public key (default private key)\n"
 # define R_PO "-pubout\t\tOutput a public key (default private key)\n"
 # define R_T "-text\t\tPrint in plain text in addition to encoded\n"
-# define R_MOD "-modulus\tPrint in hexadecimal the modulus\n"
+# define R_MOD "-modulus\tPrint the RSA key modulus\n"
 
 # define PRIV_BEG "-----BEGIN RSA PRIVATE KEY-----\n"
 # define PRIV_END "-----END RSA PRIVATE KEY-----\n"

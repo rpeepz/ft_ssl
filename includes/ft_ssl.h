@@ -32,8 +32,8 @@
 
 # define VERBOSE 0
 # define HELP_KEY 'h'
-# define I_HELP "-in file\tInput file to read from\n"
-# define O_HELP "-out file\tOutput file to write to\n"
+# define I_HELP "-in file\tInput file (default stdin)\n"
+# define O_HELP "-out file\tOutput file (default stdout)\n"
 
 /*
 **	--------------------------------
