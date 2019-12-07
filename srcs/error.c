@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/05 18:28:19 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/06 21:36:10 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void			rsa_error(char *s, t_ssl *ssl, int e)
 	else if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") ||\
 	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey")))
 		dprintf(2, "ft_ssl: Error: invalid option: \'%s\'\n", s);
-	else if (ssl->type == 31)
+	if (ssl->type == 31)
 		dprintf(2, "%susage%s: genrsa [args] [numbits]\n", YEL, NOCOL);
 	else if (ssl->type == 32)
 		dprintf(2, "%susage%s: rsautl [options]\n", YEL, NOCOL);
