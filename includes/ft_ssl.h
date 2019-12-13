@@ -30,6 +30,8 @@
 **	--------------------------------
 */
 
+# define VERSION "Ft_ssl, version 1.1a-release (x86_64-apple-darwin17)\n"
+# define COPYRIGHT "Copyright (C) 2019 Robert Papagna MIT License\n"
 # define VERBOSE 0
 # define HELP_KEY 'h'
 # define I_HELP "-in file\tInput file (default stdin)\n"
@@ -60,6 +62,7 @@ __uint64_t			mod_inverse(__uint64_t a, __uint64_t b);
 __uint64_t			mulmod(__uint64_t a, __uint64_t b, __uint64_t m);
 __uint64_t			powmod(__uint64_t num, __uint64_t exp, __uint64_t mod);
 
+void				ssl_standard(char **av, t_ssl *ssl);
 void				ssl_rsa(char **av, t_ssl *ssl);
 void				ssl_des(char **av, t_ssl *ssl);
 void				ssl_md5(char **av, t_ssl *ssl);
@@ -76,6 +79,7 @@ int					valid_flags(t_ssl *ssl, char c);
 int					valid_command(char *input, t_ssl *ssl);
 void				show_supported(void);
 int					handle_inputs(int *ac, char ***av, t_ssl *ssl);
+int					opt_desciption(int type);
 int					ft_error(int err, char *ex, t_ssl *ssl);
 
 /*

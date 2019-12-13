@@ -117,6 +117,8 @@ void				rsa_text_out(t_rsa_out rsa, t_rsa gg);
 void				rsautl(t_rsa_out rsa, t_rsa gg);
 t_rsa				rsa_command(t_rsa_out rsa);
 
+__uint64_t			genrand(__uint64_t min, __uint64_t max);
+__uint64_t			genprime(int bits, int out);
 __uint64_t			genrsa(t_rsa_out rsa);
 int					ft_is_primary(__uint64_t number, float probability);
 
