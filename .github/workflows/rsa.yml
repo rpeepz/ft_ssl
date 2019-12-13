@@ -19,12 +19,16 @@ jobs:
       run: ./extra/primep.sh 1 101
     - name: primep
       run: |
-        ./ft_ssl primep 2018111111
-        ./ft_ssl primep 215458247
-        ./ft_ssl primep 21564653
-        ./ft_ssl primep 656452
-        ./ft_ssl primep 7577784281823102539
-        ./ft_ssl primep 18400419841006694671
+        ./ft_ssl prime 0
+        ./ft_ssl prime 2
+        ./ft_ssl prime 215458247
+        ./ft_ssl prime 21564653
+        ./ft_ssl prime 656452
+        ./ft_ssl prime 7577784281823102539
+        ./ft_ssl prime 18400419841006694671
+        ./ft_ssl prime 65537 -hex
+        ./ft_ssl prime -generate
+        ./ft_ssl prime -generate -bits 32
     - name: genrsa
       run: |
         ./ft_ssl genrsa 32
