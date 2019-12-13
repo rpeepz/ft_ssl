@@ -76,7 +76,11 @@ int				base64_decode(uint8_t *enc, uint8_t *dec, int len)
 	while (i < len)
 	{
 		if ((i + 4) % 64 == 0)
+		{
 			i++;
+			if (i == len)
+				return (i - 1);
+		}
 		dec[3 * (i / 4)] |= (g_base64_decode[enc[i]]) << 2;
 		dec[3 * (i / 4)] |= ((g_base64_decode[enc[i + 1]] & 0x30) >> 4);
 		dec[3 * (i / 4) + 1] |= ((g_base64_decode[enc[i + 1]] & 0x0F) << 4);
