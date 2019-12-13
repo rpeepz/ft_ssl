@@ -14,16 +14,15 @@
 #include "encode.h"
 #include "hash.h"
 #include "rsa.h"
+#include "standard.h"
 #include <stdio.h>
 
-void			opt_desciption(int type)
+int				opt_desciption(int type)
 {
 	if (type < 10)
 		dprintf(2, "\n%s%s%s%s", H_P, H_Q, H_R, H_S);
 	else if (type == 11)
-	{
 		dprintf(2, "\n%s%s%s%s%s", B_E, B_D, B_R, I_HELP, O_HELP);
-	}
 	else if (type < 30)
 	{
 		dprintf(2, "\n%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K);
@@ -37,19 +36,21 @@ void			opt_desciption(int type)
 	else if (type == 33)
 		dprintf(2, "\n%s%s%s%s%s%s%s%s",\
 		R_C, R_N, I_HELP, O_HELP, R_MOD, R_PI, R_PO, R_T);
+	else if (type == 36)
+	{
+		dprintf(2, "%susage%s: ", YEL, NOCOL);
+		dprintf(2, "\n%s%s%s%s", P_U, P_B, P_G, P_H);
+	}
+	return (1);
 }
 
 void			full_usage(char *ex, int type)
 {
 	dprintf(2, "%susage%s: ", YEL, NOCOL);
 	if (type < 10)
-	{
 		dprintf(2, "%s [-pqr] [-s string] [files ...]\n", ex);
-	}
 	else if (type == 11)
-	{
 		dprintf(2, "base64 [-d | -e] [-in file] [-out file]\n");
-	}
 	else if (type < 30)
 	{
 		dprintf(2, "%s [-a | -d | -e] [-p passwd] [-k key] [-s salt] ", ex);
@@ -82,9 +83,7 @@ void			rsa_error2(int e)
 
 void			rsa_error(char *s, t_ssl *ssl, int e)
 {
-	if (ssl && ssl->type == 36)
-		dprintf(2, "ft_ssl: Error: primep: option requires an argument\n");
-	else if (e != 6)
+	if (e != 6)
 	{
 		e > 20 && e < 23 ? ft_putstr_fd("RSA operation error\n", 2) : 0;
 		if (e == 21 || e == 22)
