@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+#include <stdio.h>
 
 int				valid_flags(t_ssl *ssl, char c)
 {
@@ -39,7 +40,7 @@ int				valid_flags(t_ssl *ssl, char c)
 	return (1);
 }
 
-int				scan_rsa(char *input)
+int				scan_standard(char *input)
 {
 	if (!ft_strcmp(input, "genrsa"))
 		return (31);
@@ -47,12 +48,20 @@ int				scan_rsa(char *input)
 		return (32);
 	else if (!ft_strcmp(input, "rsa"))
 		return (33);
-	else if (!ft_strcmp(input, "primep"))
+	else if (!ft_strcmp(input, "prime"))
 		return (36);
+	else if (!ft_strcmp(input, "version"))
+		return (41);
+	else if (!ft_strcmp(input, "rand"))
+		return (42);
+	else if (!ft_strcmp(input, "verify"))
+		return (43);
+	else if (!ft_strcmp(input, "dgst"))
+		return (44);
 	return (0);
 }
 
-int				scan_des(char *input)
+int				scan_encode(char *input)
 {
 	if (!ft_strcmp(input, "des3-ecb"))
 		return (28);
@@ -70,7 +79,7 @@ int				scan_des(char *input)
 		return (22);
 	else if (!ft_strcmp(input, "des"))
 		return (21);
-	return (scan_rsa(input));
+	return (scan_standard(input));
 }
 
 int				valid_command(char *input, t_ssl *ssl)
@@ -94,7 +103,7 @@ int				valid_command(char *input, t_ssl *ssl)
 	else if (!ft_strcmp(input, "base64"))
 		ssl->type = 11;
 	if (!ssl->type)
-		ssl->type = scan_des(input);
+		ssl->type = scan_encode(input);
 	if (ssl->type)
 		return (0);
 	return (1);
@@ -107,9 +116,11 @@ int				valid_command(char *input, t_ssl *ssl)
 
 void			show_supported(void)
 {
-	ft_printf("%sStandard commands%s:\n", UWHT, NOCOL);
-	ft_printf("genrsa\t\trsa\trsautl\n\n");
-	ft_printf("%sMessage Digest Commands%s:\n", UWHT, NOCOL);
-	ft_printf("md5\nsha224\t\tsha256\nsha384\t\tsha512\n\n");
-	ft_printf("%sCipher Commands%s:\n", UWHT, NOCOL);
+	dprintf(2, "%sStandard commands%s:\n", UWHT, NOCOL);
+	dprintf(2, "dgst\t\tgenrsa\t\tprime\t\trand\n");
+	dprintf(2, "rsa\t\trsautl\t\tverify\t\tversion\n\n");
+	dprintf(2, "%sMessage Digest Commands%s:\n", UWHT, NOCOL);
+	dprintf(2, "md5\t\tsha1\t\tsha224\t\tsha256\n");
+	dprintf(2, "sha384\t\tsha512\n\n");
+	dprintf(2, "%sCipher Commands%s:\n", UWHT, NOCOL);
 }
