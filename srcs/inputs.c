@@ -108,8 +108,8 @@ int				parse_av(char **av, t_ssl *ssl, int i, int j)
 
 int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 {
-	static void	(*choose[3])(char **, t_ssl *) = {
-				ssl_md5, ssl_des, ssl_rsa};
+	static void	(*choose[4])(char **, t_ssl *) = {
+				ssl_md5, ssl_des, ssl_rsa, ssl_standard};
 	char		**pv;
 
 	if (*ac < 2 && (ssl->stdin = 1))
@@ -122,7 +122,7 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 		return (ft_error(1, pv[1], ssl));
 	if (ssl->type > 30)
 	{
-		choose[2](pv, ssl);
+		choose[ssl->type < 40 ? 2 : 3](pv, ssl);
 		return (1);
 	}
 	if (parse_av(*(av), ssl, 1, 0))
