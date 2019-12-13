@@ -39,6 +39,8 @@ HASH	=hash.c\
 		sha512.c
 ENCODE	=encode.c \
 		base64.c
+STAND	=prime.c \
+		standard.c
 RSA		=ssl_rsa.c\
 		genrsa.c \
 		is_primary.c \
@@ -57,12 +59,14 @@ OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(ENCODE:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(RSA:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(UTIL:.c=.o))
+OBJ		+= $(addprefix $(OBJ_PATH)/,$(STAND:.c=.o))
 
 QSRCS	= $(addprefix srcs/,$(SRCS))
 QSRCS	+= $(addprefix srcs/hash/,$(HASH))
 QSRCS	+= $(addprefix srcs/encode/,$(ENCODE))
 QSRCS	+= $(addprefix srcs/rsa/,$(RSA))
 QSRCS	+= $(addprefix srcs/util/,$(UTIL))
+QSRCS	+= $(addprefix srcs/standard/,$(STAND))
 
 
 .PHONY: clean debug
@@ -87,7 +91,7 @@ fclean: clean
 re: fclean all
 
 $(NAME): $(ARCHIVE) $(OBJ)
-		@printf "[$(NAME)]\t[:#######   :]\r"
+		@printf "[$(NAME)]\t[:########  :]\r"
 		@gcc $(CFLAGS) -Werror $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##########:]\n"
 
@@ -119,17 +123,20 @@ $(OBJ_PATH):
 $(OBJ_PATH)/%.o: srcs/%.c includes/ft_ssl.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:##        :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
-$(OBJ_PATH)/%.o: srcs/hash/%.c includes/hash.h | $(OBJ_PATH)
-		@printf "[$(NAME)]\t[:###       :]\r"
-		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/encode/%.c includes/encode.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:####      :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/hash/%.c includes/hash.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:###       :]\r"
+		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/rsa/%.c includes/rsa.h | $(OBJ_PATH)
-		@printf "[$(NAME)]\t[:######    :]\r"
+		@printf "[$(NAME)]\t[:#####     :]\r"
+		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
+$(OBJ_PATH)/%.o: srcs/standard/%.c includes/standard.h | $(OBJ_PATH)
+		@printf "[$(NAME)]\t[:#######   :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/util/%.c includes/ft_ssl.h | $(OBJ_PATH)
-		@printf "[$(NAME)]\t[:#######   :]\r"
+		@printf "[$(NAME)]\t[:######    :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(ARCHIVE):
 		@make -C libft
