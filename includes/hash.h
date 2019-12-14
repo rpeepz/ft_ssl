@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:20:59 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/17 21:35:30 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:17:03 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # define R_FLAG 0x20000
 # define S_FLAG 0x40000
 
-# define H_P "-p\tEcho stdin to stdout and append the checksum to stdout\n"
-# define H_Q "-q\tQuiet mode\n"
-# define H_R "-r\tReverse the format of the output\n"
-# define H_S "-s\tPrint the sum of the given string\n"
+# define H_P " -p\tEcho stdin to stdout and append the checksum to stdout\n"
+# define H_Q " -q\tQuiet mode\n"
+# define H_R " -r\tReverse the format of the output\n"
+# define H_S " -s\tPrint the sum of the given string\n"
 
 /*
 **	--------------------------------

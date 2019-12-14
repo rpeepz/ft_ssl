@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/17 21:35:37 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:17:09 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@
 # define O_FLAG 0x4000
 # define V_FLAG 0x200000
 
-# define B_E "-e\t\tEncode input stream to Base64 (default)\n"
-# define B_D "-d\t\tDecode incoming Base64 stream to binary data\n"
-# define B_R "-r\t\tWrites encoded data as a continuous block to stdout\n"
-# define D_A "-a\t\tDecode/encode the input/output in base64\n"
-# define D_D "-d\t\tDecrypt mode\n"
-# define D_E "-e\t\tEncrypt mode\n"
-# define D_P "-p\t\tPassword in ascii is the next argument\n"
-# define D_K "-k\t\tKey in hex is the next arguement\n"
-# define D_S "-s\t\tSalt in hex is the next argument\n"
-# define D_V "-v\t\tInitialization vector in hex is the next argument\n"
+# define B_E " -e\t\tEncode input stream to Base64 (default)\n"
+# define B_D " -d\t\tDecode incoming Base64 stream to binary data\n"
+# define B_R " -r\t\tWrites encoded data as a continuous block to stdout\n"
+# define D_A " -a\t\tDecode/encode the input/output in base64\n"
+# define D_D " -d\t\tDecrypt mode\n"
+# define D_E " -e\t\tEncrypt mode\n"
+# define D_P " -p\t\tPassword in ascii is the next argument\n"
+# define D_K " -k\t\tKey in hex is the next arguement\n"
+# define D_S " -s\t\tSalt in hex is the next argument\n"
+# define D_V " -v\t\tInitialization vector in hex is the next argument\n"
 
 # define SEQUENCE '\x30'
 # define BIT '\x03'

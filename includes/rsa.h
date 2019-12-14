@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:21:29 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/06 23:13:45 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/14 01:29:26 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@
 # define R_DECRYPT 0x200
 # define R_HEXDUMP 0x400
 
-# define R_B "numbits\t\tlength of key in bits\n"
-# define R_UIK "-inkey file\tInput key\n"
-# define R_UPI "-pubin\t\tInput is an RSA public key\n"
-# define R_UE "-encrypt\tEncrypt with public key\n"
-# define R_UD "-decrypt\tDecrypt with private key\n"
-# define R_UH "-hexdump\tHex dump output\n"
-# define R_C "-check\t\tCheck consistency of RSA private key\n"
-# define R_N "-noout\t\tDo not print encoded version of the key\n"
-# define R_PI "-pubin\t\tExpect a public key (default private key)\n"
-# define R_PO "-pubout\t\tOutput a public key (default private key)\n"
-# define R_T "-text\t\tPrint in plain text in addition to encoded\n"
-# define R_MOD "-modulus\tPrint the RSA key modulus\n"
+# define R_B " numbits\tlength of key in bits\n"
+# define R_UIK " -inkey file\tInput key\n"
+# define R_UPI " -pubin\t\tInput is an RSA public key\n"
+# define R_UE " -encrypt\tEncrypt with public key\n"
+# define R_UD " -decrypt\tDecrypt with private key\n"
+# define R_UH " -hexdump\tHex dump output\n"
+# define R_C " -check\t\tCheck consistency of RSA private key\n"
+# define R_N " -noout\t\tDo not print encoded version of the key\n"
+# define R_PI " -pubin\t\tExpect a public key (default private key)\n"
+# define R_PO " -pubout\tOutput a public key (default private key)\n"
+# define R_T " -text\t\tPrint in plain text in addition to encoded\n"
+# define R_MOD " -modulus\tPrint the RSA key modulus\n"
 
 # define PRIV_BEG "-----BEGIN RSA PRIVATE KEY-----\n"
 # define PRIV_END "-----END RSA PRIVATE KEY-----\n"
@@ -57,6 +57,13 @@
 
 # define EXPECT_PRV "Expecting: ANY PRIVATE KEY\n"
 # define EXPECT_PUB "Expecting: PUBLIC KEY\n"
+# define KEY_SMALL "rsa routines:RSA_BUILTIN_KEYGEN:key size too small\n"
+
+# define N_NOT_PQ "RSA key error: n does not equal p q\n"
+# define P_NOT_PRIME "RSA key error: p not prime\n"
+# define Q_NOT_PRIME "RSA key error: q not prime\n"
+# define NOT_INV_Q "RSA key error: iqmp not inverse of q\n"
+# define DE_NOT_CONG "RSA key error: d e not congruent to 1\n"
 
 # define PKCS_1 "\xd\x6\x9\x2a\x86\x48\x86\xf7\xd\x1\x1\x1\5\xff"
 
@@ -117,7 +124,6 @@ void				rsa_text_out(t_rsa_out rsa, t_rsa gg);
 void				rsautl(t_rsa_out rsa, t_rsa gg);
 t_rsa				rsa_command(t_rsa_out rsa);
 
-__uint64_t			genrand(__uint64_t min, __uint64_t max);
 __uint64_t			genprime(int bits, int out);
 __uint64_t			genrsa(t_rsa_out rsa);
 int					ft_is_primary(__uint64_t number, float probability);
