@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/06 21:36:10 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/14 02:05:01 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,29 @@
 int				opt_desciption(int type)
 {
 	if (type < 10)
-		dprintf(2, "\n%s%s%s%s", H_P, H_Q, H_R, H_S);
+		dprintf(2, "%s%s%s%s", H_P, H_Q, H_R, H_S);
 	else if (type == 11)
-		dprintf(2, "\n%s%s%s%s%s", B_E, B_D, B_R, I_HELP, O_HELP);
+		dprintf(2, "%s%s%s%s%s", B_E, B_D, B_R, I_HELP, O_HELP);
 	else if (type < 30)
-	{
-		dprintf(2, "\n%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K);
-		dprintf(2, "%s%s%s%s", D_S, D_V, I_HELP, O_HELP);
-	}
+		dprintf(2, "%s%s%s%s%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K,\
+		D_S, D_V, I_HELP, O_HELP);
 	else if (type == 31)
-		dprintf(2, "\n%s%s", O_HELP, R_B);
+		dprintf(2, "%s%s", O_HELP, R_B);
 	else if (type == 32)
-		dprintf(2, "\n%s%s%s%s%s%s%s", I_HELP, O_HELP, R_UIK,
+		dprintf(2, "%s%s%s%s%s%s%s", I_HELP, O_HELP, R_UIK,\
 		R_UPI, R_UE, R_UD, R_UH);
 	else if (type == 33)
-		dprintf(2, "\n%s%s%s%s%s%s%s%s",\
+		dprintf(2, "%s%s%s%s%s%s%s%s",\
 		R_C, R_N, I_HELP, O_HELP, R_MOD, R_PI, R_PO, R_T);
 	else if (type == 36)
-	{
-		dprintf(2, "%susage%s: ", YEL, NOCOL);
-		dprintf(2, "\n%s%s%s%s", P_U, P_B, P_G, P_H);
-	}
-	return (1);
+		dprintf(2, "%susage%s: %s%s%s%s", YEL, NOCOL, P_U, P_B, P_G, P_H);
+	else if (type == 42)
+		dprintf(2, "%susage%s: %s%s%s%s", YEL, NOCOL, SR_U, SR_B, SR_H, O_HELP);
+	else if (type == 43)
+		dprintf(2, "%susage%s: %s%s%s%s%s%s%s%s%s%s%s%s%s%s", YEL, NOCOL, DG_U,\
+		DG_H, DG_B, DG_S, DG_V, DG_P, DG_O, DG_SIG,\
+		DG_H1, DG_H2, DG_H3, DG_H4, DG_H5, DG_H6);
+	return (-1);
 }
 
 void			full_usage(char *ex, int type)
@@ -133,5 +134,5 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 		dprintf(2, "ft_ssl: Error: %s need a flag\n", ex);
 	if (err >= 6)
 		rsa_error(ex, ssl, err);
-	return (err);
+	return (!err ? 0 : -1);
 }
