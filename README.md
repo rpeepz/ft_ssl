@@ -47,27 +47,28 @@ Executable `ft_ssl` will be created
 Message Digest Commands
 ```
 md5 | sha224 | sha256 | sha384 | sha512
-```
-```
+
 ./ft_ssl { command } [-pqr] [-s string] [files ...]  
 ```
 Chiper Commands _**_
 ```
 base64 | des | des-ecb | des-cbc | des-ofb | des3 | des3-ebc | des3-cbc | des3-ofb
-```
-```
+
 ./ft_ssl { command } [-a|d|e] [-p passwd] [-k key] [-s salt] [-v vector] [-in file] [-out file]  
 ```
 Standard commands
 ```
-genrsa | rsa | rsautl
-```
-```
-./ft_ssl genrsa [-out file] [16 - 64]
+genrsa | prime | rand | rsa | rsautl | version
 
-./ft_ssl rsa [-in file] [-out file] [-noout] [-check] [-modulus] [-pubin] [-pubout] [-text] 
+./ft_ssl genrsa [-out file] [numbits]
 
-./ft_ssl rsautl [-in file] [-inkey key] [-out file] [-pubin] [-encrypt] [-decrypt] [-hexdump]
+./ft_ssl rand [-base64 | -hex] [-out file] num-bytes
+
+./ft_ssl prime [-bits num] [-generate] [-hex] p
+
+./ft_ssl rsa [-check] [-noout] [-in file] [-out file]  [-modulus] [-pubin] [-pubout] [-text] 
+
+./ft_ssl rsautl [-in file] [-out file] [-inkey key] [-pubin] [-encrypt] [-decrypt] [-hexdump]
 ```
 or for help with a command
 ```
@@ -111,6 +112,10 @@ src/
 │   ├── rsa.c
 │   ├── rsautl.c
 │   └── ssl_rsa.c
+├── standard/
+│   ├── prime.c
+│   ├── rand.c
+│   └── standard.c
 ├── uitl/
 │   ├── maths.c
 │   ├── reference.c
@@ -120,7 +125,7 @@ src/
 ├── inputs.c
 └── main.c
 
-4 directories, 25 files
+5 directories, 28 files
 ```
 
 ### Header files
@@ -131,6 +136,7 @@ includes/
 ├── ft_ssl.h
 ├── hash.h
 ├── rsa.h
+├── standard.h
 └── libft/
     └── includes/
         ├── ft_get_next_line.h
@@ -139,7 +145,7 @@ includes/
         ├── ft_sprintf.h
         └── libft.h
     
-2 directory, 9 files
+2 directory, 10 files
 ```
 <br>
 
