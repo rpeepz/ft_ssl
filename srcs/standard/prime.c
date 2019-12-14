@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/12 19:01:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/12 19:01:03 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/14 01:23:00 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ int				arg_err(int err, char *arg, t_ssl *ssl)
 	return (opt_desciption(ssl->type));
 }
 
-int				valid_arg(char **av, t_ssl *ssl, int *i)
+static int		valid_arg(char **av, t_ssl *ssl, int *i)
 {
 	if (!ft_strcmp(&av[*i][1], "bits"))
 	{
-		ssl->flag |= BITS;
+		ssl->flag |= P_BITS;
 		ssl->fd[0] = av[*i + 1] && ft_isdigit(av[*i + 1][0]) ?\
 		ft_atoull(av[++(*i)]) : -1;
 	}
 	else if (!ft_strcmp(&av[*i][1], "generate"))
-		ssl->flag |= GEN;
+		ssl->flag |= P_GEN;
 	else if (!ft_strcmp(&av[*i][1], "hex"))
 		ssl->flag |= HEX;
 	else
@@ -72,7 +72,7 @@ int				parse_prime(char **av, t_ssl *ssl, __uint64_t *n, int i)
 			return (ft_error(6, av[i], ssl));
 		else if (*n)
 		{
-			ft_putstr_fd("too many arguments\n", 2);
+			ft_putstr_fd(E_MANY, 2);
 			return (opt_desciption(ssl->type));
 		}
 		else
@@ -95,14 +95,14 @@ void			prime_command(char **av, t_ssl *ssl)
 	ssl->fd[0] = 0;
 	if (parse_prime(av, ssl, &n, 1))
 		;
-	else if (!(ssl->flag & GEN) && ((!n && ssl->flag & BITS) || !av[2]))
+	else if (!(ssl->flag & P_GEN) && ((!n && ssl->flag & P_BITS) || !av[2]))
 	{
 		ft_putstr_fd("No prime specified.\n", 2);
 		opt_desciption(ssl->type);
 	}
 	else
 	{
-		if (ssl->flag & GEN)
+		if (ssl->flag & P_GEN)
 		{
 			if (!ssl->fd[0])
 				ft_putstr_fd("Specify the number of bits.\n", 2);
