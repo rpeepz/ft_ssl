@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/11/16 17:51:58 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/12/13 20:20:39 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ HASH	=hash.c\
 ENCODE	=encode.c \
 		base64.c
 STAND	=prime.c \
+		rand.c \
 		standard.c
 RSA		=ssl_rsa.c\
 		genrsa.c \
@@ -120,7 +121,7 @@ $(OBJ_PATH):
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:#         :]\r"
 		@mkdir -p $@
 
-$(OBJ_PATH)/%.o: srcs/%.c includes/ft_ssl.h | $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/%.c includes/*.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:##        :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/encode/%.c includes/encode.h | $(OBJ_PATH)
