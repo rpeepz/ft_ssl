@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:50:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/22 20:45:22 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:25:51 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ int				scan_standard(char *input)
 		return (41);
 	else if (!ft_strcmp(input, "rand"))
 		return (42);
-	else if (!ft_strcmp(input, "verify"))
-		return (43);
 	else if (!ft_strcmp(input, "dgst"))
-		return (44);
+		return (43);
 	return (0);
 }
 
@@ -100,6 +98,8 @@ int				valid_command(char *input, t_ssl *ssl)
 		ssl->type = 4;
 	else if (!ft_strcmp(input, "sha512"))
 		ssl->type = 5;
+	else if (!ft_strcmp(input, "sha1"))
+		ssl->type = 6;
 	else if (!ft_strcmp(input, "base64"))
 		ssl->type = 11;
 	if (!ssl->type)
@@ -118,7 +118,7 @@ void			show_supported(void)
 {
 	dprintf(2, "%sStandard commands%s:\n", UWHT, NOCOL);
 	dprintf(2, "dgst\t\tgenrsa\t\tprime\t\trand\n");
-	dprintf(2, "rsa\t\trsautl\t\tverify\t\tversion\n\n");
+	dprintf(2, "rsa\t\trsautl\t\tversion\n\n");
 	dprintf(2, "%sMessage Digest Commands%s:\n", UWHT, NOCOL);
 	dprintf(2, "md5\t\tsha1\t\tsha224\t\tsha256\n");
 	dprintf(2, "sha384\t\tsha512\n\n");
