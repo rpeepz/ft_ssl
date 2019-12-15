@@ -12,7 +12,7 @@
 
 #include "hash.h"
 
-static __uint32_t	g_sha1_k[4] =
+static __uint32_t	g_k[4] =
 {
 	0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6
 };
@@ -24,12 +24,12 @@ static void		sha1_loop(int i, t_sha32bit *s, __uint32_t *w)
 	if (i >= 0 && i < 20)
 		s->f = (s->b & s->c) | ((~s->b) & s->d);
 	else if (i >= 20 && i < 40)
-		s->f = s->b ^ s->c ^  s->d;
+		s->f = s->b ^ s->c ^ s->d;
 	else if (i >= 40 && i < 60)
 		s->f = (s->b & s->c) | (s->b & s->d) | (s->c & s->d);
 	else
 		s->f = s->b ^ s->c ^ s->d;
-	tmp = ((s->a << 5) | (s->a >> (32 - 5))) + s->f + s->e + g_sha1_k[i / 20] + w[i];
+	tmp = ((s->a << 5) | (s->a >> (32 - 5))) + s->f + s->e + g_k[i / 20] + w[i];
 	s->e = s->d;
 	s->d = s->c;
 	s->c = ((s->b << 30) | (s->b >> (32 - 30)));
