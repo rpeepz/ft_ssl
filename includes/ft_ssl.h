@@ -25,12 +25,17 @@
 # endif
 
 /*
+**	Version 1.2a with hashable binaries
+*/
+
+# define VERSION "Ft_ssl, version 1.2a-release (x86_64-apple-darwin17)\n"
+
+/*
 **	--------------------------------
 **				MACROS
 **	--------------------------------
 */
 
-# define VERSION "Ft_ssl, version 1.1b-release (x86_64-apple-darwin17)\n"
 # define COPYRIGHT "Copyright (C) 2019 Robert Papagna MIT License\n"
 # define VERBOSE 0
 # define HELP_KEY 'h'
