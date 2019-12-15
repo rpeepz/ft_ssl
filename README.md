@@ -1,4 +1,4 @@
-# ssl_clone <br> [![Build Status](https://github.com/rpeepz/ssl_clone/workflows/C//Build/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![Hash Status](https://github.com/rpeepz/ssl_clone/workflows/Hash-Test/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![RSA Status](https://github.com/rpeepz/ssl_clone/workflows/RSA-Test/badge.svg)](https://github.com/rpeepz/ssl_clone/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ssl_clone?color=yellow&include_prereleases)](https://github.com/rpeepz/ssl_clone/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ssl_clone/total.svg)](https://github.com/rpeepz/ssl_clone/releases)<!-- [![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ssl_clone)](https://github.com/rpeepz/ssl_clone) -->[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ssl_clone/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
+# ft_ssl <br> [![Build Status](https://github.com/rpeepz/ft_ssl/workflows/C//Build/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![Hash Status](https://github.com/rpeepz/ft_ssl/workflows/Hash-Test/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![RSA Status](https://github.com/rpeepz/ft_ssl/workflows/RSA-Test/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ft_ssl?color=yellow&include_prereleases)](https://github.com/rpeepz/ft_ssl/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ft_ssl/total.svg)](https://github.com/rpeepz/ft_ssl/releases)<!-- [![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ft_ssl)](https://github.com/rpeepz/ft_ssl) -->[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ft_ssl/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
 A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography... <br/> 
 
 
@@ -36,8 +36,8 @@ This projects goal is to replicate [OpenSSL][openssl] and some of its functional
 ## Installation
 Download and compile repo:  
 ``` 
-git clone https://github.com/rpeepz/ssl_clone.git  
-cd ssl_clone  
+git clone https://github.com/rpeepz/ft_ssl.git  
+cd ft_ssl  
 make  
 ```  
 Executable `ft_ssl` will be created  
@@ -191,7 +191,7 @@ _This project was attempted for learning purposes only. This repo may not be kep
 
 [42]: http://42.us.org "42 USA"
 [openssl]: https://www.openssl.org/ "OpenSsl"
-[pdf1]:  https://github.com/rpeepz/ssl_clone/blob/master/extra/ft_ssl_md5.en.pdf "ft_ssl_md5"
-[pdf2]:  https://github.com/rpeepz/ssl_clone/blob/master/extra/ft_ssl_des.pdf "ft_ssl_des"
-[pdf3]:  https://github.com/rpeepz/ssl_clone/blob/master/extra/ft_ssl_rsa.pdf "ft_ssl_rsa"
-[pull request]: https://github.com/rpeepz/ssl_clone/pulls "pull away"
+[pdf1]:  https://github.com/rpeepz/ft_ssl/blob/master/extra/ft_ssl_md5.en.pdf "ft_ssl_md5"
+[pdf2]:  https://github.com/rpeepz/ft_ssl/blob/master/extra/ft_ssl_des.pdf "ft_ssl_des"
+[pdf3]:  https://github.com/rpeepz/ft_ssl/blob/master/extra/ft_ssl_rsa.pdf "ft_ssl_rsa"
+[pull request]: https://github.com/rpeepz/ft_ssl/pulls "pull away"
