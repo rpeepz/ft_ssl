@@ -29,6 +29,27 @@ void			copy_free(char *buf, char **acontents)
 	*acontents = contents;
 }
 
+/*
+**	TODO
+**	streamline the effectivness of the following function.
+**
+**	Why?
+**	The open file descriptor of a binary file cannot be properly hashed.
+**	This is a problem for multiple reasons, one of which is the prevention
+**	of accurate verrification of files and programs such as this program itself.
+**
+**	Current state:
+**	--------------
+**	The file descriptor is passed to this point where it is then read from
+**	and its entire contents is stored in heap memory, which is passed to the
+**	proper hash function and is padded and hashed.
+**
+**	The proposed fix:
+**	-----------------
+**	To continue passing file descriptor to the hash function itself to where
+**	it can be safely read from and stored as blocks to be hashed.
+*/
+
 char			*get_hash(char **to_hash, char **input, t_ssl *ssl, int i)
 {
 	char		buf[PAGESIZE + 1];
