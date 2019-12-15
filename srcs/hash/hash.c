@@ -34,8 +34,8 @@ char			*get_hash(char **to_hash, char **input, t_ssl *ssl, int i)
 	char		buf[PAGESIZE + 1];
 	char		*contents;
 	char		*tmp;
-	static char	*(*hasher[5])(char *, char *) = {
-				md5, sha224, sha256, sha384, sha512};
+	static char	*(*hasher[6])(char *, char *) = {
+				md5, sha224, sha256, sha384, sha512, sha1};
 
 	ft_bzero(buf, PAGESIZE);
 	contents = NULL;
@@ -81,7 +81,6 @@ void			hash(char *input, char *to_hash, t_ssl *ssl, int i)
 		ssl->fd[i] < 1 ? ft_putchar('\"') : 0;
 		ft_putchar('\n');
 	}
-	!ssl->fd[i] && !(ssl->flag & S_FLAG) ? ft_putchar('\n') : 0;
 	ft_strdel(&to_hash);
 }
 

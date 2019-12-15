@@ -25,14 +25,12 @@ void			ssl_md5(char **av, t_ssl *ssl)
 	else if (!(ssl->flag & S_FLAG) && (!*(ssl->fd) || ssl->flag & P_FLAG))
 	{
 		get_stdin(&line, 0, 1, 0);
-		if (!line)
-			line = ft_strdup("");
+		line = (!line) ? ft_strdup("") : line;
 		ssl->flag &= ~0x40000;
 		if (ssl->flag || (ssl->flag && !(ssl->flag & 0x10000)))
 			ssl->flag |= 0x8000;
-		hash(av[1], line, ssl, -1);
-		if (ft_pipewrench("-s", &line))
-			ssl->flag &= ~0x1000;
+		hash(av[1], line, ssl, 0);
+		ft_pipewrench("-s", &line) ? ssl->flag &= ~0x1000 : 0;
 	}
 	ssl->flag &= ~P_FLAG;
 	while (ssl->fd[++i])
