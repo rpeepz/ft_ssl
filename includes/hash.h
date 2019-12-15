@@ -98,6 +98,7 @@ char				*sha512(char *buf, char *to_hash);
 char				*sha384(char *buf, char *to_hash);
 char				*sha256(char *buf, char *to_hash);
 char				*sha224(char *buf, char *to_hash);
+char				*sha1(char *buf, char *to_hash);
 char				*md5(char *buf, char *to_hash);
 
 #endif

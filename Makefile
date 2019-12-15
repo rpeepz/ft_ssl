@@ -36,7 +36,8 @@ HASH	=hash.c\
 		sha224.c\
 		sha256.c\
 		sha384.c\
-		sha512.c
+		sha512.c\
+		sha1.c
 ENCODE	=encode.c \
 		base64.c
 STAND	=prime.c \
