@@ -46,7 +46,7 @@ Executable `ft_ssl` will be created
 ## Usage  
 Message Digest Commands
 ```
-md5 | sha224 | sha256 | sha384 | sha512
+md5 | sha1 | sha224 | sha256 | sha384 | sha512
 
 ./ft_ssl { command } [-pqr] [-s string] [files ...]  
 ```
@@ -99,6 +99,7 @@ src/
 │   ├── hash_helper64.c
 │   ├── hash.c
 │   ├── md5.c
+│   ├── sha1.c
 │   ├── sha224.c
 │   ├── sha256.c
 │   ├── sha384.c
@@ -125,7 +126,7 @@ src/
 ├── inputs.c
 └── main.c
 
-5 directories, 28 files
+5 directories, 29 files
 ```
 
 ### Header files
