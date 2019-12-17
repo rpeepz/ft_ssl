@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/17 21:11:10 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:00:48 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,48 @@ int				base64_decode(uint8_t *enc, uint8_t *dec, int len)
 		i += 4;
 	}
 	return (i);
+}
+
+static int		valid_arg(t_parse *b64, char *arg, char *fname)
+{
+	if ((b64->fd_out == 1) && (!ft_strcmp(arg, "out") || !ft_strcmp(arg, "o")))
+	{
+		b64->flag |= F_OUT;
+		if (!fname)
+			ft_putstr_fd("missing argument for '-out'\n", 2);
+		return (!fname ? 1 : 0);
+	}
+	else if (!ft_strcmp(arg, "in") || !ft_strcmp(arg, "i"))
+	{
+		b64->flag |= F_IN;
+		if (!fname)
+			ft_putstr_fd("missing argument for '-in'\n", 2);
+		return ((!fname || open_file_to_fd(0, fname, 0)) ? 1 : 0);
+	}
+	else if (!ft_strcmp(arg, "e") || !ft_strcmp(arg, "-encode"))
+		b64->flag |= D_FLAG;
+	else if (!ft_strcmp(arg, "e") || !ft_strcmp(arg, "-encode"))
+		b64->flag |= E_FLAG;
+	else
+		return (1);
+	return (0);
+}
+
+int				parse_b64(char **av, t_parse *b64, t_ssl *ssl, int i)
+{
+	while ((av[++i]))
+	{
+		if (av[i][0] == '-')
+		{
+			if (valid_arg(b64, &av[i][1], av[i + 1]))
+				return (ft_error(6, &av[i][1], ssl));
+			else if (b64->fd_out == 1 && b64->flag & F_OUT)
+				open_file_to_fd((int*)&b64->fd_out, av[++i], 1);
+			else if ((!b64->fd_in) && (b64->flag & F_IN))
+				open_file_to_fd((int*)&b64->fd_in, av[++i], 0);
+		}
+		else
+			return (ft_error(6, av[i], ssl));
+	}
+	return (0);
 }
