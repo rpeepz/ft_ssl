@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 21:05:23 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/22 21:24:53 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 19:25:25 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,8 @@ int				get_inputs(int *ac, char ***av)
 	return (0);
 }
 
-static int		default_mode(t_ssl *ssl)
-{
-	if (ssl->type < 20)
-		return (ft_error(5, "base64", ssl));
-	else
-		ssl->flag |= 0x10;
-	return (0);
-}
-
 int				parse_av(char **av, t_ssl *ssl, int i, int j)
 {
-	if (ssl->type > 10 && !av[2])
-		return (default_mode(ssl));
 	while ((av[++i]) && av[i][0] == '-' && !(j = 0))
 	{
 		if (av[i][1])
@@ -108,8 +97,8 @@ int				parse_av(char **av, t_ssl *ssl, int i, int j)
 
 int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 {
-	static void	(*choose[4])(char **, t_ssl *) = {
-				ssl_md5, ssl_des, ssl_rsa, ssl_standard};
+	static void	(*choose[5])(char **, t_ssl *) = {
+				ssl_md5, ssl_b64, ssl_des, ssl_rsa, ssl_standard};
 	char		**pv;
 
 	if (*ac < 2 && (ssl->stdin = 1))
@@ -122,7 +111,7 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 		return (ft_error(1, pv[1], ssl));
 	if (ssl->type > 30)
 	{
-		choose[ssl->type < 40 ? 2 : 3](pv, ssl);
+		choose[ssl->type < 40 ? 3 : 4](pv, ssl);
 		return (1);
 	}
 	if (parse_av(*(av), ssl, 1, 0))
@@ -131,6 +120,6 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 		if ((ssl->type < 10) &&
 		!(ssl->flag & 0x38000) && ssl->flag && !ssl->file_index[0])
 			return (DEBUG ? ft_printf("Here I AM\n") : 1);
-	choose[ssl->type < 10 ? 0 : 1](pv, ssl);
+	choose[ssl->type / 10](pv, ssl);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/14 02:05:01 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 19:20:56 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int				opt_desciption(int type)
 	if (type < 10)
 		dprintf(2, "%s%s%s%s", H_P, H_Q, H_R, H_S);
 	else if (type == 11)
-		dprintf(2, "%s%s%s%s%s", B_E, B_D, B_R, I_HELP, O_HELP);
+		dprintf(2, "%s%s%s%s", B_E, B_D, I_HELP, O_HELP);
 	else if (type < 30)
 		dprintf(2, "%s%s%s%s%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K,\
 		D_S, D_V, I_HELP, O_HELP);
@@ -51,7 +51,7 @@ void			full_usage(char *ex, int type)
 	if (type < 10)
 		dprintf(2, "%s [-pqr] [-s string] [files ...]\n", ex);
 	else if (type == 11)
-		dprintf(2, "base64 [-d | -e] [-in file] [-out file]\n");
+		dprintf(2, "base64 [-e | -d] [-in file] [-out file]\n");
 	else if (type < 30)
 	{
 		dprintf(2, "%s [-a | -d | -e] [-p passwd] [-k key] [-s salt] ", ex);

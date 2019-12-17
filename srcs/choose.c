@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+#include "encode.h"
 #include "hash.h"
+#include "standard.h"
 
 void			ssl_md5(char **av, t_ssl *ssl)
 {
@@ -40,9 +42,27 @@ void			ssl_md5(char **av, t_ssl *ssl)
 	}
 }
 
+void			ssl_b64(char **av, t_ssl *ssl)
+{
+	ft_printf("base64 done here\n");
+	(void)av;
+	(void)ssl;
+}
+
 void			ssl_des(char **av, t_ssl *ssl)
 {
 	ft_printf("[%s] you made it to the part where you decide how to dispatch\n",
 	av[1]);
 	(void)ssl;
+}
+
+void				ssl_standard(char **av, t_ssl *ssl)
+{
+	if (ssl->type == 41 && ft_printf("%s%s", VERSION, COPYRIGHT))
+		;
+	else if (ssl->type == 42)
+		rand_command(av, ssl, 0);
+	else if (ssl->type == 43 && opt_desciption(ssl->type))
+		;
+	(void)av;
 }
