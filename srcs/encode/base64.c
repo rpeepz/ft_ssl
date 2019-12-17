@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 22:17:17 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 11:52:17 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,11 @@ static int		valid_arg(t_parse *b64, char *arg, char *fname)
 		b64->flag |= F_IN;
 		if (!fname)
 			ft_putstr_fd("missing argument for '-in'\n", 2);
-		return ((!fname || open_file_to_fd(&tmp, fname, 0)) ? 1 : 0);
+		if (open_file_to_fd(&tmp, fname, 0))
+			return (1);
+		close(tmp);
 	}
-	else if (!ft_strcmp(arg, "e") || !ft_strcmp(arg, "-encode"))
+	else if (!ft_strcmp(arg, "d") || !ft_strcmp(arg, "-decode"))
 		b64->flag |= D_FLAG;
 	else if (!ft_strcmp(arg, "e") || !ft_strcmp(arg, "-encode"))
 		b64->flag |= E_FLAG;
@@ -126,7 +128,11 @@ int				parse_b64(char **av, t_parse *b64, t_ssl *ssl, int i)
 		if (av[i][0] == '-')
 		{
 			if (valid_arg(b64, &av[i][1], av[i + 1]))
+			{
+				ssl->flag = b64->flag & F_IN ? -42 : ssl->flag;
+				ssl->flag = b64->flag & F_OUT ? -42 : ssl->flag;
 				return (ft_error(6, &av[i][1], ssl));
+			}
 			else if (b64->fd_out == 1 && b64->flag & F_OUT)
 				open_file_to_fd((int*)&b64->fd_out, av[++i], 1);
 			else if ((!b64->fd_in) && (b64->flag & F_IN))
