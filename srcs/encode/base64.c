@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 22:00:48 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:17:17 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int				base64_decode(uint8_t *enc, uint8_t *dec, int len)
 
 static int		valid_arg(t_parse *b64, char *arg, char *fname)
 {
+	int		tmp;
+
 	if ((b64->fd_out == 1) && (!ft_strcmp(arg, "out") || !ft_strcmp(arg, "o")))
 	{
 		b64->flag |= F_OUT;
@@ -106,7 +108,7 @@ static int		valid_arg(t_parse *b64, char *arg, char *fname)
 		b64->flag |= F_IN;
 		if (!fname)
 			ft_putstr_fd("missing argument for '-in'\n", 2);
-		return ((!fname || open_file_to_fd(0, fname, 0)) ? 1 : 0);
+		return ((!fname || open_file_to_fd(&tmp, fname, 0)) ? 1 : 0);
 	}
 	else if (!ft_strcmp(arg, "e") || !ft_strcmp(arg, "-encode"))
 		b64->flag |= D_FLAG;
