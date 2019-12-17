@@ -36,36 +36,37 @@ unsigned char	g_base64_decode[123] =
 
 /*
 **	No padding on ASN1
-**	ft_putchar_fd(g_base64[edata[2]], fd);
-**	ft_putchar_fd(g_base64[edata[3]], fd);
+**	ft_putchar_fd(g_base64[enc[2]], fd);
+**	ft_putchar_fd(g_base64[enc[3]], fd);
 */
 
-void			base64_nstr_fd(uint8_t *in, int len, int fd)
+void			base64_nstr_fd(uint8_t *in, int len, int fd, int *count)
 {
 	int			i;
-	uint8_t		edata[4];
+	uint8_t		enc[4];
 
 	i = 0;
-	while (i < len)
+	while (count ? in[i] : i < len)
 	{
 		DEBUG ? ft_printf("%02x %02x %02x\n", in[i], in[i + 1], in[i + 2]) : 0;
-		ft_bzero(edata, 4);
-		edata[0] |= in[i] >> 2;
-		edata[1] |= ((in[i] & 0x03) << 4);
-		edata[1] |= (in[i + 1] >> 4);
-		edata[2] |= ((in[i + 1] & 0x0F) << 2);
-		edata[2] |= (in[i + 2] >> 6);
-		edata[3] |= (in[i + 2] & 0x3F);
-		ft_putchar_fd(g_base64[edata[0]], fd);
-		ft_putchar_fd(g_base64[edata[1]], fd);
-		ft_putchar_fd((!edata[2] && len - i < 2) ?
-		'=' : g_base64[edata[2]], fd);
-		ft_putchar_fd((!edata[3] && len - i < 3) ?
-		'=' : g_base64[edata[3]], fd);
+		ft_bzero(enc, 4);
+		enc[0] |= in[i] >> 2;
+		enc[1] |= ((in[i] & 0x03) << 4);
+		enc[1] |= (in[i + 1] >> 4);
+		enc[2] |= ((in[i + 1] & 0x0F) << 2);
+		enc[2] |= (in[i + 2] >> 6);
+		enc[3] |= (in[i + 2] & 0x3F);
+		ft_putchar_fd(g_base64[enc[0]], fd);
+		ft_putchar_fd(g_base64[enc[1]], fd);
+		ft_putchar_fd((!enc[2] && len - i < 2) ? '=' : g_base64[enc[2]], fd);
+		ft_putchar_fd((!enc[3] && len - i < 3) ? '=' : g_base64[enc[3]], fd);
 		i += 3;
-		(i % 48) == 0 ? ft_putchar_fd('\n', fd) : 0;
+		count ? (*count) += 4 : 0;
+		count && *count % 64 == 0 ? ft_putchar_fd('\n', fd) : 0;
+		!count && (i % 48) == 0 ? ft_putchar_fd('\n', fd) : 0;
 	}
-	(i % 48) ? ft_putchar_fd('\n', fd) : 0;
+	!count && (i % 48) ? ft_putchar_fd('\n', fd) : 0;
+	count && len < 63 ? ft_putchar_fd('\n', fd) : 0;
 }
 
 int				base64_decode(uint8_t *enc, uint8_t *dec, int len)

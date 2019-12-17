@@ -71,7 +71,7 @@ void				des(char *input, char *to_hash, t_ssl *ssl, int i);
 int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl);
 
 int					base64_decode(uint8_t *enc, uint8_t *dec, int len);
-void				base64_nstr_fd(uint8_t *in, int len, int fd);
+void				base64_nstr_fd(uint8_t *in, int len, int fd, int *count);
 
 int					parse_b64(char**av, t_parse *b64, t_ssl *ssl, int i);
 
