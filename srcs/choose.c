@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 22:07:19 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 14:27:59 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,29 @@ void			ssl_md5(char **av, t_ssl *ssl)
 void			ssl_b64(char **av, t_ssl *ssl)
 {
 	t_parse		b64;
+	uint8_t		buf[64];
+	int			len;
+	int			i;
 
 	ft_bzero(&b64, sizeof(b64));
+	ft_bzero(buf, 64);
 	b64.fd_out = 1;
 	if (parse_b64(av, &b64, ssl, 1))
 		;
 	else
 	{
-		ft_printf("base64 done here: %s\n", b64.flag & D_FLAG ?\
-		"decode" : "encode");
-		ft_printf("read from fd: %d\n", b64.fd_in);
-		ft_printf("print to  fd: %d\n", b64.fd_out);
+		i = 0;
+		if (b64.flag & D_FLAG)
+			;
+		else
+		{
+			while ((len = read(b64.fd_in, buf, 63)) == 63)
+			{
+				base64_nstr_fd(buf, len, b64.fd_out, &i);
+				ft_bzero(buf, 64);
+			}
+			base64_nstr_fd(buf, len, b64.fd_out, &i);
+		}
 	}
 }
 
