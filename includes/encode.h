@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 22:07:28 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 11:59:10 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@
 
 typedef struct		s_parse
 {
+	int				fd_in;
+	int				fd_out;
 	uint16_t		flag:12;
-	uint8_t			fd_in;
-	uint8_t			fd_out;
 	uint8_t			mode:4;
 }					t_parse;
 
