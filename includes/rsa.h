@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:21:29 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/14 01:29:26 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 19:54:19 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 
 # define MAX_BIT_KEY 64
 
-# define F_OUT 0x1
-# define F_IN 0x2
 # define F_INK 0x4
 
 # define R_TEXT 0x4

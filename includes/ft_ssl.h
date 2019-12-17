@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 19:26:28 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 20:04:56 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 # define HELP_KEY 'h'
 # define I_HELP " -in file\tInput file (default stdin)\n"
 # define O_HELP " -out file\tOutput file (default stdout)\n"
+
+# define F_OUT 0x1
+# define F_IN 0x2
 
 /*
 **	--------------------------------
