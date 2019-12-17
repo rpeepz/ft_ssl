@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 21:47:05 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 11:52:06 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void			ft_error2(char *s, t_ssl *ssl, int e)
 		return ;
 	}
 	else if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") ||\
-	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey")))
+	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey") || ssl->flag == -42))
 		dprintf(2, "ft_ssl: Error: invalid option: \'%s\'\n", s);
 	if (ssl->type == 31)
 		dprintf(2, "%susage%s: genrsa [args] [numbits]\n", YEL, NOCOL);
