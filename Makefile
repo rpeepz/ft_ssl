@@ -21,8 +21,6 @@ OBJ_PATH= obj
 #COLOR OUTPUT OPIONS
 RED		=\033[0;31m
 GREEN	=\033[0;32m
-YELLOW	=\033[0;33m
-MAG		=\033[0;35m
 NC		=\033[0m
 
 SRCS 	=main.c\
@@ -63,14 +61,6 @@ OBJ		+= $(addprefix $(OBJ_PATH)/,$(RSA:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(UTIL:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(STAND:.c=.o))
 
-QSRCS	= $(addprefix srcs/,$(SRCS))
-QSRCS	+= $(addprefix srcs/hash/,$(HASH))
-QSRCS	+= $(addprefix srcs/encode/,$(ENCODE))
-QSRCS	+= $(addprefix srcs/rsa/,$(RSA))
-QSRCS	+= $(addprefix srcs/util/,$(UTIL))
-QSRCS	+= $(addprefix srcs/standard/,$(STAND))
-
-
 .PHONY: clean debug
 
 all:	$(NAME)
@@ -96,27 +86,6 @@ $(NAME): $(ARCHIVE) $(OBJ)
 		@printf "[$(NAME)]\t[:########  :]\r"
 		@gcc $(CFLAGS) -Werror $(OBJ_PATH)/*.o $(ARCHIVE) -o $(NAME)
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:##########:]\n"
-
-q:
-		@rm -rf $(NAME)
-		@rm -rf $(NAME).dSYM
-		@gcc $(CFLAGS) -g -I $(INCL) $(QSRCS) $(ARCHIVE) -o $(NAME)
-		@printf "[$(GREEN)$(NAME)$(NC)]\t[$(MAG)OK!$(NC)]\n" #PRINT
-
-debug:
-		@rm -rf $(NAME)
-		@rm -rf $(NAME).dSYM
-		@gcc -D$(RU_DEB) $(CFLAGS) -g -I $(INCL) $(QSRCS) $(ARCHIVE) -o $(NAME)
-		@printf "[$(YELLOW)debug$(NC)]\t\t[:##########:]\n"
-
-sanitize:
-		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):#         :$(NC)]\r"
-		@rm -rf $(NAME)
-		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##        :$(NC)]\r"
-		@rm -rf $(NAME).dSYM
-		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):###       :$(NC)]\r"
-		@gcc -g $(CFLAGS) -I $(INCL) $(QSRCS) $(ARCHIVE) -o $(NAME) -fsanitize=address
-		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##########:$(NC)]\n"
 
 $(OBJ_PATH):
 		@printf "[$(GREEN)$(NAME)$(NC)]\t[:#         :]\r"

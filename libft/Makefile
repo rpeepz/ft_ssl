@@ -101,7 +101,7 @@ fclean: clean
 re: fclean all
 
 $(NAME): $(OBJ)
-		@printf "[make  libft]\t[:######### :]\r"
+		@printf "[make  libft]\t[:########  :]\r"
 		@ar -rcs $(NAME) $(OBJ)
 		@printf "[$(CYN)make  libft$(NC)]\t[:##########:]\n"
 
@@ -110,13 +110,13 @@ $(OBJ_PATH):
 		@mkdir -p $@
 
 $(OBJ_PATH)/%.o: $(LIB_PATH)/%.c | $(OBJ_PATH)
-		@printf "[make  libft]\t[:###       :]\r"
+		@printf "[make  libft]\t[:##        :]\r"
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 
 $(OBJ_PATH)/%.o: $(PRNTF_PATH)/%.c | $(OBJ_PATH)
-		@printf "[make  libft]\t[:#####     :]\r"
+		@printf "[make  libft]\t[:####      :]\r"
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
 
 $(OBJ_PATH)/%.o: $(SPRNTF_PATH)/%.c | $(OBJ_PATH)
-		@printf "[make  libft]\t[:#######   :]\r"
+		@printf "[make  libft]\t[:#####     :]\r"
 		@gcc $(CFLAGS) $(INCL) -o $@ -c $<
