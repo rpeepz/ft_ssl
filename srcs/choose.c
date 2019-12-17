@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/10/06 16:13:11 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:07:19 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,28 @@ void			ssl_md5(char **av, t_ssl *ssl)
 
 void			ssl_b64(char **av, t_ssl *ssl)
 {
-	ft_printf("base64 done here\n");
-	(void)av;
-	(void)ssl;
+	t_parse		b64;
+
+	ft_bzero(&b64, sizeof(b64));
+	b64.fd_out = 1;
+	if (parse_b64(av, &b64, ssl, 1))
+		;
+	else
+	{
+		ft_printf("base64 done here: %s\n", b64.flag & D_FLAG ?\
+		"decode" : "encode");
+		ft_printf("read from fd: %d\n", b64.fd_in);
+		ft_printf("print to  fd: %d\n", b64.fd_out);
+	}
 }
+
+/*
+**	parse options for des
+**	subject to change
+**	if (av[i][j] == 'p' || av[i][j] == 'k' || av[i][j] == 's' ||
+**	av[i][j] == 'v' || av[i][j] == 'i' || av[i][j] == 'o'))
+**	p_k_s_v(av, &i, &j, ssl);
+*/
 
 void			ssl_des(char **av, t_ssl *ssl)
 {
@@ -56,7 +74,7 @@ void			ssl_des(char **av, t_ssl *ssl)
 	(void)ssl;
 }
 
-void				ssl_standard(char **av, t_ssl *ssl)
+void			ssl_standard(char **av, t_ssl *ssl)
 {
 	if (ssl->type == 41 && ft_printf("%s%s", VERSION, COPYRIGHT))
 		;
