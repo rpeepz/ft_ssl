@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:21:29 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 19:54:19 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:30:59 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define PUB_BEG "-----BEGIN PUBLIC KEY-----\n"
 # define PUB_END "-----END PUBLIC KEY-----\n"
 
+# define GEN_PRV "Generating RSA private key"
 # define EXPECT_PRV "Expecting: ANY PRIVATE KEY\n"
 # define EXPECT_PUB "Expecting: PUBLIC KEY\n"
 # define KEY_SMALL "rsa routines:RSA_BUILTIN_KEYGEN:key size too small\n"
