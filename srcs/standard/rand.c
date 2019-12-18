@@ -57,7 +57,7 @@ void			do_rand(t_ssl *ssl, int bytes)
 		ft_putstr_fd((char *)buf, ssl->fd[1]);
 	}
 	else if (ssl->flag & RAND_BASE64)
-		base64_nstr_fd(byte_string(buf, n), byte_len(n), ssl->fd[1]);
+		base64_nstr_fd(byte_string(buf, n), byte_len(n), ssl->fd[1], 0);
 	else
 	{
 		ft_sprintf((char *)buf, "%llu\n", n);
