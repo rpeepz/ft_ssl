@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 14:27:59 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:13:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			ssl_b64(char **av, t_ssl *ssl)
 	{
 		i = 0;
 		if (b64.flag & D_FLAG)
-			;
+			decode_driver(&b64);
 		else
 		{
 			while ((len = read(b64.fd_in, buf, 63)) == 63)

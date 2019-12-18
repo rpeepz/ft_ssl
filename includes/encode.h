@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 11:59:10 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 18:09:13 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void				des(char *input, char *to_hash, t_ssl *ssl, int i);
 int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl);
 
 int					base64_decode(uint8_t *enc, uint8_t *dec, int len);
+void				decode_driver(t_parse *b64);
 void				base64_nstr_fd(uint8_t *in, int len, int fd, int *count);
 
 int					parse_b64(char**av, t_parse *b64, t_ssl *ssl, int i);
