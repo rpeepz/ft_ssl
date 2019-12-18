@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 11:52:17 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:15:54 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int				base64_decode(uint8_t *enc, uint8_t *dec, int len)
 	{
 		if ((i + 4) % 64 == 0)
 		{
-			i++;
+			if (len == 64)
+				i++;
 			if (i == len)
 				return (i - 1);
 		}
@@ -91,6 +92,29 @@ int				base64_decode(uint8_t *enc, uint8_t *dec, int len)
 		i += 4;
 	}
 	return (i);
+}
+
+void			decode_driver(t_parse *b64)
+{
+	uint8_t		buf[66];
+	uint8_t		dec[50];
+	int			len;
+
+	ft_bzero(buf, 66);
+	ft_bzero(dec, 50);
+	while ((len = read(b64->fd_in, buf, 65)) == 65)
+	{
+		buf[ft_strchri((char *)buf, '\n')] = 0;
+		base64_decode(buf, dec, len);
+		dec[(len / 4) * 3] = 0;
+		ft_putstr_fd((char *)dec, b64->fd_out);
+		ft_bzero(buf, 65);
+		ft_bzero(dec, 49);
+	}
+	buf[ft_strchri((char *)buf, '\n')] = 0;
+	base64_decode(buf, dec, len);
+	dec[(int)((float)(len * 2) / 3.0)] = 0;
+	ft_putstr_fd((char *)dec, b64->fd_out);
 }
 
 static int		valid_arg(t_parse *b64, char *arg, char *fname)
