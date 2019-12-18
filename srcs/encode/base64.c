@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 19:15:54 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:58:22 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int				base64_decode(uint8_t *enc, uint8_t *dec, int len)
 	{
 		if ((i + 4) % 64 == 0)
 		{
-			if (len == 64)
+			if (len != 65)
 				i++;
 			if (i == len)
 				return (i - 1);
