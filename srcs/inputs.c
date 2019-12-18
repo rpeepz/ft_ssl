@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 21:05:23 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/22 21:24:53 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 21:35:33 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,8 @@ int				get_inputs(int *ac, char ***av)
 	return (0);
 }
 
-static int		default_mode(t_ssl *ssl)
-{
-	if (ssl->type < 20)
-		return (ft_error(5, "base64", ssl));
-	else
-		ssl->flag |= 0x10;
-	return (0);
-}
-
 int				parse_av(char **av, t_ssl *ssl, int i, int j)
 {
-	if (ssl->type > 10 && !av[2])
-		return (default_mode(ssl));
 	while ((av[++i]) && av[i][0] == '-' && !(j = 0))
 	{
 		if (av[i][1])
@@ -88,12 +77,9 @@ int				parse_av(char **av, t_ssl *ssl, int i, int j)
 			{
 				if (valid_flags(ssl, av[i][j]))
 					return ((ssl->flag = av[i][j] == HELP_KEY ? 1 : 0) + 1);
-				if ((ssl->type < 10 && av[i][j] == 's') || (ssl->type > 20 &&
-				(av[i][j] == 'p' || av[i][j] == 'k' || av[i][j] == 's' ||
-				av[i][j] == 'v' || av[i][j] == 'i' || av[i][j] == 'o')))
+				if (ssl->type < 10 && av[i][j] == 's')
 				{
-					if ((ssl->type < 10 && string_input(av, &i, &j, ssl)) ||
-					(ssl->type > 20 && p_k_s_v(av, &i, &j, ssl)))
+					if (ssl->type < 10 && string_input(av, &i, &j, ssl))
 						break ;
 					ssl->flag = av[--i][--j] ? av[i][j] : 0;
 					return (ft_error(2, ft_strtolower(av[1]), ssl));
@@ -108,8 +94,8 @@ int				parse_av(char **av, t_ssl *ssl, int i, int j)
 
 int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 {
-	static void	(*choose[4])(char **, t_ssl *) = {
-				ssl_md5, ssl_des, ssl_rsa, ssl_standard};
+	static void	(*choose[5])(char **, t_ssl *) = {
+				ssl_md5, ssl_b64, ssl_des, ssl_rsa, ssl_standard};
 	char		**pv;
 
 	if (*ac < 2 && (ssl->stdin = 1))
@@ -120,9 +106,9 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 		return (clean_exit(0, pv));
 	if (valid_command(pv[1], ssl))
 		return (ft_error(1, pv[1], ssl));
-	if (ssl->type > 30)
+	if (ssl->type > 10)
 	{
-		choose[ssl->type < 40 ? 2 : 3](pv, ssl);
+		choose[ssl->type / 10](pv, ssl);
 		return (1);
 	}
 	if (parse_av(*(av), ssl, 1, 0))
@@ -131,6 +117,6 @@ int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 		if ((ssl->type < 10) &&
 		!(ssl->flag & 0x38000) && ssl->flag && !ssl->file_index[0])
 			return (DEBUG ? ft_printf("Here I AM\n") : 1);
-	choose[ssl->type < 10 ? 0 : 1](pv, ssl);
+	choose[0](pv, ssl);
 	return (1);
 }

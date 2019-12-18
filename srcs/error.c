@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/14 02:05:01 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/17 11:52:06 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int				opt_desciption(int type)
 	if (type < 10)
 		dprintf(2, "%s%s%s%s", H_P, H_Q, H_R, H_S);
 	else if (type == 11)
-		dprintf(2, "%s%s%s%s%s", B_E, B_D, B_R, I_HELP, O_HELP);
+		dprintf(2, "%susage%s: %s%s%s%s%s", YEL, NOCOL, B_U,\
+		B_E, B_D, I_HELP, O_HELP);
 	else if (type < 30)
 		dprintf(2, "%s%s%s%s%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K,\
 		D_S, D_V, I_HELP, O_HELP);
@@ -50,8 +51,6 @@ void			full_usage(char *ex, int type)
 	dprintf(2, "%susage%s: ", YEL, NOCOL);
 	if (type < 10)
 		dprintf(2, "%s [-pqr] [-s string] [files ...]\n", ex);
-	else if (type == 11)
-		dprintf(2, "base64 [-d | -e] [-in file] [-out file]\n");
 	else if (type < 30)
 	{
 		dprintf(2, "%s [-a | -d | -e] [-p passwd] [-k key] [-s salt] ", ex);
@@ -59,7 +58,7 @@ void			full_usage(char *ex, int type)
 	}
 }
 
-void			rsa_error2(int e)
+void			rsa_error(int e)
 {
 	if (e == 20)
 		ft_putstr_fd("Only private keys can be checked\n", 2);
@@ -82,7 +81,7 @@ void			rsa_error2(int e)
 		ft_putstr_fd("asn1 encoding routines:ASN1_CHECK_T:wrong tag\n", 2);
 }
 
-void			rsa_error(char *s, t_ssl *ssl, int e)
+void			ft_error2(char *s, t_ssl *ssl, int e)
 {
 	if (e != 6)
 	{
@@ -94,11 +93,11 @@ void			rsa_error(char *s, t_ssl *ssl, int e)
 			ft_putstr_fd("for key size\n", 2);
 		}
 		else
-			rsa_error2(e);
+			rsa_error(e);
 		return ;
 	}
 	else if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") ||\
-	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey")))
+	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey") || ssl->flag == -42))
 		dprintf(2, "ft_ssl: Error: invalid option: \'%s\'\n", s);
 	if (ssl->type == 31)
 		dprintf(2, "%susage%s: genrsa [args] [numbits]\n", YEL, NOCOL);
@@ -133,6 +132,6 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 	if (err == 5)
 		dprintf(2, "ft_ssl: Error: %s need a flag\n", ex);
 	if (err >= 6)
-		rsa_error(ex, ssl, err);
+		ft_error2(ex, ssl, err);
 	return (!err ? 0 : -1);
 }

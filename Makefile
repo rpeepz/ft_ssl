@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/12/13 20:20:39 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/12/16 19:21:40 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,7 @@ HASH	=hash.c\
 ENCODE	=encode.c \
 		base64.c
 STAND	=prime.c \
-		rand.c \
-		standard.c
+		rand.c
 RSA		=ssl_rsa.c\
 		genrsa.c \
 		is_primary.c \

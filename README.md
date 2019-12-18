@@ -1,4 +1,4 @@
-# ft_ssl <br> [![Build Status](https://github.com/rpeepz/ft_ssl/workflows/C//Build/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![Hash Status](https://github.com/rpeepz/ft_ssl/workflows/Hash-Test/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![RSA Status](https://github.com/rpeepz/ft_ssl/workflows/RSA-Test/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ft_ssl?color=yellow&include_prereleases)](https://github.com/rpeepz/ft_ssl/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ft_ssl/total.svg)](https://github.com/rpeepz/ft_ssl/releases)<!-- [![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ft_ssl)](https://github.com/rpeepz/ft_ssl) -->[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ft_ssl/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
+# ft_ssl <br> [![Build Status](https://github.com/rpeepz/ft_ssl/workflows/C//Build/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![Hash Status](https://github.com/rpeepz/ft_ssl/workflows/Hash-Test/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![RSA Status](https://github.com/rpeepz/ft_ssl/workflows/RSA-Test/badge.svg)](https://github.com/rpeepz/ft_ssl/actions)[![GitHub release](https://img.shields.io/github/v/release/rpeepz/ft_ssl?&include_prereleases)](https://github.com/rpeepz/ft_ssl/releases)[![GitHub All Releases](https://img.shields.io/github/downloads/rpeepz/ft_ssl/total.svg)](https://github.com/rpeepz/ft_ssl/releases/download/v1.2a/ft.ssl.dmg)<!-- [![Github Code Size](https://img.shields.io/github/languages/code-size/rpeepz/ft_ssl)](https://github.com/rpeepz/ft_ssl) -->[![GitHub license](https://img.shields.io/badge/Licence-MIT-purple.svg)](https://raw.githubusercontent.com/rpeepz/ft_ssl/master/LICENSE)[![Twitter Follow](https://img.shields.io/twitter/follow/papagna94.svg?style=social&label=Follow)](https://twitter.com/papagna94)  
 A series of projects designed by [42][42] students, to help learn about the jungle of modern cryptography... <br/> 
 
 
@@ -53,6 +53,8 @@ md5 | sha1 | sha224 | sha256 | sha384 | sha512
 Chiper Commands _**_
 ```
 base64 | des | des-ecb | des-cbc | des-ofb | des3 | des3-ebc | des3-cbc | des3-ofb
+
+./ft_ssl base64 [-e | -d] [-in file] [-out file]  
 
 ./ft_ssl { command } [-a|d|e] [-p passwd] [-k key] [-s salt] [-v vector] [-in file] [-out file]  
 ```
@@ -115,8 +117,7 @@ src/
 │   └── ssl_rsa.c
 ├── standard/
 │   ├── prime.c
-│   ├── rand.c
-│   └── standard.c
+│   └── rand.c
 ├── uitl/
 │   ├── maths.c
 │   ├── reference.c
@@ -126,7 +127,7 @@ src/
 ├── inputs.c
 └── main.c
 
-5 directories, 29 files
+5 directories, 28 files
 ```
 
 ### Header files

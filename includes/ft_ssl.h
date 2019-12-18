@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/13 17:19:21 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/16 20:04:56 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@
 **	--------------------------------
 */
 
-# define VERSION "Ft_ssl, version 1.1b-release (x86_64-apple-darwin17)\n"
+# define VERSION "Ft_ssl, version 1.2a-release (x86_64-apple-darwin17)\n"
 # define COPYRIGHT "Copyright (C) 2019 Robert Papagna MIT License\n"
 # define VERBOSE 0
 # define HELP_KEY 'h'
 # define I_HELP " -in file\tInput file (default stdin)\n"
 # define O_HELP " -out file\tOutput file (default stdout)\n"
+
+# define F_OUT 0x1
+# define F_IN 0x2
 
 /*
 **	--------------------------------
@@ -65,6 +68,7 @@ __uint64_t			powmod(__uint64_t num, __uint64_t exp, __uint64_t mod);
 void				ssl_standard(char **av, t_ssl *ssl);
 void				ssl_rsa(char **av, t_ssl *ssl);
 void				ssl_des(char **av, t_ssl *ssl);
+void				ssl_b64(char **av, t_ssl *ssl);
 void				ssl_md5(char **av, t_ssl *ssl);
 
 int					clean_exit(int ac, char **av);

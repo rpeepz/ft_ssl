@@ -26,7 +26,7 @@ int				open_file_to_fd(int *fd, char *fname, int type)
 	}
 	if (tmp < 0)
 	{
-		ft_printf("%s: %s\n", fname, strerror(errno));
+		fname ? ft_printf("%s: %s\n", fname, strerror(errno)) : 0;
 		return (1);
 	}
 	*fd = tmp;
