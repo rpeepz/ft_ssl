@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/18 22:10:52 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/19 00:50:49 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,19 @@
 
 typedef struct		s_des_arg
 {
-	char			ptype;
-	uint8_t			*iv;
-	uint8_t			*key;
-	uint8_t			*pass;
+	uint64_t		iv;
+	uint64_t		key;
+	int				pass;
 	uint8_t			*salt;
+	uint64_t		salt_len;
 }					t_des_arg;
 
 typedef struct		s_parse
 {
 	int				fd_in;
 	int				fd_out;
-	uint8_t			flag:8;
-	uint8_t			mode:4;
+	char			flag;
+	char			mode;
 	t_des_arg		*args;
 }					t_parse;
 
