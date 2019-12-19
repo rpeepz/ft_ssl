@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/18 22:11:42 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/19 01:39:53 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,26 @@ void			ssl_des(char **av, t_ssl *ssl)
 	ft_bzero(&des, sizeof(des));
 	des.args = ft_memalloc(sizeof(t_des_arg));
 	des.fd_in = 1;
-	if (parse_des(av, &des, ssl, 0))
+	if (parse_des(av, &des, ssl, 1))
 		;
 	else
 	{
 		;
 	}
-	des.flag & D_VECT ? ft_memdel((void **)&des.args->iv) : 0;
-	des.flag & D_KEY ? ft_memdel ((void **)&des.args->key) : 0;
-	des.flag & D_PASS ? ft_memdel((void **)&des.args->pass) : 0;
-	des.flag & D_SALT ? ft_memdel((void **)&des.args->salt) : 0;
+	DEBUG ? ft_printf("flag = [%b]\n", des.flag) : 0;
+	DEBUG ? ft_printf("fd in = [%d]\n", des.fd_in) : 0;
+	DEBUG ? ft_printf("fd out = [%d]\n", des.fd_out) : 0;
+	DEBUG ? ft_printf("iv = [%llu]\n", des.args->iv) : 0;
+	DEBUG ? ft_printf("key = [%llu]\n", des.args->key) : 0;
+	DEBUG ? ft_printf("pass fd = [%d]\n", des.args->pass) : 0;
+	DEBUG ? ft_printf("salt = [%s]\n", des.args->salt) : 0;
+	DEBUG ? ft_printf("salt len = [%llu]\n", des.args->salt_len) : 0;
 	ft_memdel((void **)&des.args);
 }
+
+/*
+**des.flag & D_SALT ? ft_memdel((void **)&des.args->salt) : 0;
+*/
 
 void			ssl_standard(char **av, t_ssl *ssl)
 {
