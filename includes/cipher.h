@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   encode.h                                           :+:      :+:    :+:   */
+/*   cipher.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 18:09:13 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/18 16:55:41 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENCODE_H
-# define ENCODE_H
+#ifndef CIPHER_H
+# define CIPHER_H
 
 # include "ft_ssl.h"
 
@@ -21,13 +21,13 @@
 **	--------------------------------
 */
 
-# define A_FLAG 0x1
+# define A_FLAG 0x4
 # define D_FLAG 0x8
 # define E_FLAG 0x10
-# define I_FLAG 0x100
-# define K_FLAG 0x400
-# define O_FLAG 0x4000
-# define V_FLAG 0x200000
+# define D_PASS 0x10
+# define D_KEY 0x20
+# define D_SALT 0x40
+# define D_VECT 0x80
 
 # define B_U "base64 [-e | -d] [-in file] [-out file]\n"
 # define B_E " -e\t\tEncode input stream to Base64 (default)\n"
@@ -56,7 +56,7 @@ typedef struct		s_parse
 {
 	int				fd_in;
 	int				fd_out;
-	uint16_t		flag:12;
+	uint8_t			flag:8;
 	uint8_t			mode:4;
 }					t_parse;
 

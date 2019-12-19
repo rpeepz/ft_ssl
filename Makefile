@@ -38,7 +38,7 @@ HASH	=hash.c\
 		sha384.c\
 		sha512.c\
 		sha1.c
-ENCODE	=encode.c \
+CIPHER	=cipher.c \
 		base64.c
 STAND	=prime.c \
 		rand.c
@@ -57,14 +57,14 @@ UTIL	=maths.c \
 RU_DEB	=_DEBUG_RULE_
 OBJ		= $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(HASH:.c=.o))
-OBJ		+= $(addprefix $(OBJ_PATH)/,$(ENCODE:.c=.o))
+OBJ		+= $(addprefix $(OBJ_PATH)/,$(CIPHER:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(RSA:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(UTIL:.c=.o))
 OBJ		+= $(addprefix $(OBJ_PATH)/,$(STAND:.c=.o))
 
 QSRCS	= $(addprefix srcs/,$(SRCS))
 QSRCS	+= $(addprefix srcs/hash/,$(HASH))
-QSRCS	+= $(addprefix srcs/encode/,$(ENCODE))
+QSRCS	+= $(addprefix srcs/cipher/,$(CIPHER))
 QSRCS	+= $(addprefix srcs/rsa/,$(RSA))
 QSRCS	+= $(addprefix srcs/util/,$(UTIL))
 QSRCS	+= $(addprefix srcs/standard/,$(STAND))
@@ -124,7 +124,7 @@ $(OBJ_PATH):
 $(OBJ_PATH)/%.o: srcs/%.c includes/*.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:##        :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
-$(OBJ_PATH)/%.o: srcs/encode/%.c includes/encode.h | $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/cipher/%.c includes/cipher.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:####      :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/hash/%.c includes/hash.h | $(OBJ_PATH)
