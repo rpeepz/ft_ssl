@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 11:52:06 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/18 22:09:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int				opt_desciption(int type)
 		dprintf(2, "%susage%s: %s%s%s%s%s", YEL, NOCOL, B_U,\
 		B_E, B_D, I_HELP, O_HELP);
 	else if (type < 30)
-		dprintf(2, "%s%s%s%s%s%s%s%s%s", D_A, D_D, D_E, D_P, D_K,\
-		D_S, D_V, I_HELP, O_HELP);
+		;
 	else if (type == 31)
 		dprintf(2, "%s%s", O_HELP, R_B);
 	else if (type == 32)
@@ -46,16 +45,12 @@ int				opt_desciption(int type)
 	return (-1);
 }
 
-void			full_usage(char *ex, int type)
+void			opt_des(char *s)
 {
-	dprintf(2, "%susage%s: ", YEL, NOCOL);
-	if (type < 10)
-		dprintf(2, "%s [-pqr] [-s string] [files ...]\n", ex);
-	else if (type < 30)
-	{
-		dprintf(2, "%s [-a | -d | -e] [-p passwd] [-k key] [-s salt] ", ex);
-		dprintf(2, "[-v vector] [-in file] [-out file]\n");
-	}
+	dprintf(2, "%susage%s: %s\t[-e | -d | -a] [-in file]", YEL, NOCOL, s);
+	dprintf(2, " [-out file]\n\t\t[-v IV] [-k key] [-p source] [-s salt]\n\n");
+	dprintf(2, "%s%s%s%s%s%s%s%s%s", D_E, D_D, D_A, I_HELP, O_HELP,\
+	D_V, D_K, D_P, D_S);
 }
 
 void			rsa_error(int e)
@@ -96,6 +91,8 @@ void			ft_error2(char *s, t_ssl *ssl, int e)
 			rsa_error(e);
 		return ;
 	}
+	else if (ssl->type / 10 == 2)
+		opt_des(s);
 	else if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") ||\
 	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey") || ssl->flag == -42))
 		dprintf(2, "ft_ssl: Error: invalid option: \'%s\'\n", s);
@@ -123,7 +120,8 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 	}
 	if (err == 3)
 	{
-		full_usage(ex, ssl->type);
+		dprintf(2, "%susage%s: %s [-pqr] [-s string] [files ...]\n",
+		YEL, NOCOL, ex);
 		if (ssl->flag || VERBOSE)
 			opt_desciption(ssl->type);
 	}
