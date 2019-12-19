@@ -6,12 +6,12 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 18:13:16 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/18 22:11:42 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-#include "encode.h"
+#include "cipher.h"
 #include "hash.h"
 #include "standard.h"
 
@@ -71,19 +71,24 @@ void			ssl_b64(char **av, t_ssl *ssl)
 	}
 }
 
-/*
-**	parse options for des
-**	subject to change
-**	if (av[i][j] == 'p' || av[i][j] == 'k' || av[i][j] == 's' ||
-**	av[i][j] == 'v' || av[i][j] == 'i' || av[i][j] == 'o'))
-**	p_k_s_v(av, &i, &j, ssl);
-*/
-
 void			ssl_des(char **av, t_ssl *ssl)
 {
-	ft_printf("[%s] you made it to the part where you decide how to dispatch\n",
-	av[1]);
-	(void)ssl;
+	t_parse		des;
+
+	ft_bzero(&des, sizeof(des));
+	des.args = ft_memalloc(sizeof(t_des_arg));
+	des.fd_in = 1;
+	if (parse_des(av, &des, ssl, 0))
+		;
+	else
+	{
+		;
+	}
+	des.flag & D_VECT ? ft_memdel((void **)&des.args->iv) : 0;
+	des.flag & D_KEY ? ft_memdel ((void **)&des.args->key) : 0;
+	des.flag & D_PASS ? ft_memdel((void **)&des.args->pass) : 0;
+	des.flag & D_SALT ? ft_memdel((void **)&des.args->salt) : 0;
+	ft_memdel((void **)&des.args);
 }
 
 void			ssl_standard(char **av, t_ssl *ssl)

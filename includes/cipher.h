@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/18 16:55:41 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/18 22:10:52 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,31 @@
 # define B_U "base64 [-e | -d] [-in file] [-out file]\n"
 # define B_E " -e\t\tEncode input stream to Base64 (default)\n"
 # define B_D " -d\t\tDecode incoming Base64 stream to binary data\n"
-# define D_A " -a\t\tDecode/encode the input/output in base64\n"
-# define D_D " -d\t\tDecrypt mode\n"
-# define D_E " -e\t\tEncrypt mode\n"
-# define D_P " -p\t\tPassword in ascii is the next argument\n"
-# define D_K " -k\t\tKey in hex is the next arguement\n"
-# define D_S " -s\t\tSalt in hex is the next argument\n"
-# define D_V " -v\t\tInitialization vector in hex is the next argument\n"
+# define D_A " -a\t\tDecode/encode the input/output in base64 (alias -base64)\n"
+# define D_E " -e\t\tEncrypt the input data (default)\n"
+# define D_D " -d\t\tDecrypt the input data\n"
+# define D_V " -v IV\t\tIV to use, specified as a hexidecimal string\n"
+# define D_K " -k key\t\tKey to use, specified as a hexidecimal string\n"
+# define D_P " -p source\tPassword source\n"
+# define D_S " -s\t\tSalt to use, specified as a hexidecimal string\n"
+
+/*
+**	Extended flags that are available
+**	-a, -base64
+**	-d, --decode, --decrypt
+**	-e, --encode, --encrypt
+**	-k, --key
+**	-p, --pass
+**	-s, --salt
+*/
+
+/*
+**	Potential options to add
+**	-none
+**	Use NULL cipher (no encryption or decryption)
+**	-nosalt
+**	Do not use a salt in the key derivation routines
+*/
 
 # define SEQUENCE '\x30'
 # define BIT '\x03'
@@ -52,12 +70,22 @@
 **	--------------------------------
 */
 
+typedef struct		s_des_arg
+{
+	char			ptype;
+	uint8_t			*iv;
+	uint8_t			*key;
+	uint8_t			*pass;
+	uint8_t			*salt;
+}					t_des_arg;
+
 typedef struct		s_parse
 {
 	int				fd_in;
 	int				fd_out;
 	uint8_t			flag:8;
 	uint8_t			mode:4;
+	t_des_arg		*args;
 }					t_parse;
 
 /*
@@ -74,6 +102,7 @@ int					base64_decode(uint8_t *enc, uint8_t *dec, int len);
 void				decode_driver(t_parse *b64);
 void				base64_nstr_fd(uint8_t *in, int len, int fd, int *count);
 
+int					parse_des(char**av, t_parse *des, t_ssl *ssl, int i);
 int					parse_b64(char**av, t_parse *b64, t_ssl *ssl, int i);
 
 #endif
