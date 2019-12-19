@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/18 22:09:16 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/18 23:52:21 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,18 @@ int				opt_desciption(int type)
 	return (-1);
 }
 
-void			opt_des(char *s)
+void			opt_des(int type)
 {
+	char	*s;
+
+	s = "des3-ebc";
+	s = type == 27 ? "des3-cbc" : s;
+	s = type == 26 ? "des3-ofb" : s;
+	s = type == 25 ? "des3" : s;
+	s = type == 24 ? "des-ebc" : s;
+	s = type == 23 ? "des-cbc" : s;
+	s = type == 22 ? "des-ofb" : s;
+	s = type == 21 ? "des" : s;
 	dprintf(2, "%susage%s: %s\t[-e | -d | -a] [-in file]", YEL, NOCOL, s);
 	dprintf(2, " [-out file]\n\t\t[-v IV] [-k key] [-p source] [-s salt]\n\n");
 	dprintf(2, "%s%s%s%s%s%s%s%s%s", D_E, D_D, D_A, I_HELP, O_HELP,\
@@ -76,7 +86,7 @@ void			rsa_error(int e)
 		ft_putstr_fd("asn1 encoding routines:ASN1_CHECK_T:wrong tag\n", 2);
 }
 
-void			ft_error2(char *s, t_ssl *ssl, int e)
+void			ft_error2(int e, char *s, t_ssl *ssl)
 {
 	if (e != 6)
 	{
@@ -91,8 +101,6 @@ void			ft_error2(char *s, t_ssl *ssl, int e)
 			rsa_error(e);
 		return ;
 	}
-	else if (ssl->type / 10 == 2)
-		opt_des(s);
 	else if (!(!ft_strcmp(s, "help") || !ft_strcmp(s, "h") ||\
 	!ft_strcmp(s, "in") || !ft_strcmp(s, "inkey") || ssl->flag == -42))
 		dprintf(2, "ft_ssl: Error: invalid option: \'%s\'\n", s);
@@ -102,7 +110,7 @@ void			ft_error2(char *s, t_ssl *ssl, int e)
 		dprintf(2, "%susage%s: rsautl [options]\n", YEL, NOCOL);
 	else if (ssl->type == 33)
 		dprintf(2, "%susage%s: rsa [options]\n", YEL, NOCOL);
-	opt_desciption(ssl->type);
+	ssl->type / 10 == 2 ? opt_des(ssl->type) : opt_desciption(ssl->type);
 }
 
 int				ft_error(int err, char *ex, t_ssl *ssl)
@@ -130,6 +138,6 @@ int				ft_error(int err, char *ex, t_ssl *ssl)
 	if (err == 5)
 		dprintf(2, "ft_ssl: Error: %s need a flag\n", ex);
 	if (err >= 6)
-		ft_error2(ex, ssl, err);
+		ft_error2(err, ex, ssl);
 	return (!err ? 0 : -1);
 }
