@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 19:58:22 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/18 20:00:03 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,12 @@ int				base64_decode(uint8_t *enc, uint8_t *dec, int len)
 		dec[3 * (i / 4)] |= (g_base64_decode[enc[i]]) << 2;
 		dec[3 * (i / 4)] |= ((g_base64_decode[enc[i + 1]] & 0x30) >> 4);
 		dec[3 * (i / 4) + 1] |= ((g_base64_decode[enc[i + 1]] & 0x0F) << 4);
-		dec[3 * (i / 4) + 1] |= (g_base64_decode[enc[i + 2]] >> 2);
-		dec[3 * (i / 4) + 2] |= (g_base64_decode[enc[i + 2]] << 6);
-		dec[3 * (i / 4) + 2] |= g_base64_decode[enc[i + 3]];
+		if (enc[i + 2] != '=')
+			dec[3 * (i / 4) + 1] |= (g_base64_decode[enc[i + 2]] >> 2);
+		if (enc[i + 2] != '=')
+			dec[3 * (i / 4) + 2] |= (g_base64_decode[enc[i + 2]] << 6);
+		if (enc[i + 3] != '=')
+			dec[3 * (i / 4) + 2] |= g_base64_decode[enc[i + 3]];
 		i += 4;
 	}
 	return (i);
