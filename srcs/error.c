@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-#include "encode.h"
+#include "cipher.h"
 #include "hash.h"
 #include "rsa.h"
 #include "standard.h"

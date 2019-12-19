@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-#include "encode.h"
+#include "cipher.h"
 
 static int		check_for_spaces(char **input, char ***av, int *ac)
 {

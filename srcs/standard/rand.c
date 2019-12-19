@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "standard.h"
-#include "encode.h"
+#include "cipher.h"
 
 __uint64_t		genrand(__uint64_t min, __uint64_t max)
 {
