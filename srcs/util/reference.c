@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:50:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/15 03:51:13 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/18 17:28:12 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,6 @@ int				valid_command(char *input, t_ssl *ssl)
 	return (1);
 }
 
-/*
-**	ft_printf("base64\ndes\tdes-ecb\t\tdes-cbc\t\tdes-ofb\n");
-**	ft_printf("des3\tdes3-ecb\tdes3-cbc\tdes3-ofb\n");
-*/
-
 void			show_supported(void)
 {
 	dprintf(2, "%sStandard commands%s:\n", UWHT, NOCOL);
@@ -127,4 +122,6 @@ void			show_supported(void)
 	dprintf(2, "md5\t\tsha1\t\tsha224\t\tsha256\n");
 	dprintf(2, "sha384\t\tsha512\n\n");
 	dprintf(2, "%sCipher Commands%s:\n", UWHT, NOCOL);
+	dprintf(2, "base64\ndes\tdes-ecb\t\tdes-cbc\t\tdes-ofb\n");
+	dprintf(2, "des3\tdes3-ecb\tdes3-cbc\tdes3-ofb\n");
 }
