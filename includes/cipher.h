@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/19 00:50:49 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 01:17:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@
 **	Potential options to add
 **	-none
 **	Use NULL cipher (no encryption or decryption)
-**	-nosalt
-**	Do not use a salt in the key derivation routines
 */
 
 # define SEQUENCE '\x30'
@@ -74,16 +72,15 @@ typedef struct		s_des_arg
 {
 	uint64_t		iv;
 	uint64_t		key;
-	int				pass;
-	uint8_t			*salt;
-	uint64_t		salt_len;
+	uint64_t		salt;
+	char			*pass;
 }					t_des_arg;
 
 typedef struct		s_parse
 {
 	int				fd_in;
 	int				fd_out;
-	char			flag;
+	unsigned char	flag;
 	char			mode;
 	t_des_arg		*args;
 }					t_parse;
@@ -94,9 +91,7 @@ typedef struct		s_parse
 **	--------------------------------
 */
 
-void				des3(char *input, char *to_hash, t_ssl *ssl, int i);
-void				des(char *input, char *to_hash, t_ssl *ssl, int i);
-int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl);
+void				des_process(t_parse des, t_ssl *ssl, char *cipher);
 
 int					base64_decode(uint8_t *enc, uint8_t *dec, int len);
 void				decode_driver(t_parse *b64);
