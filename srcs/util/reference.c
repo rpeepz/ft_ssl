@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:50:51 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/18 17:28:12 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 00:09:59 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,19 @@ int				scan_standard(char *input)
 int				scan_encode(char *input)
 {
 	if (!ft_strcmp(input, "des3-ecb"))
-		return (28);
-	else if (!ft_strcmp(input, "des3-cbc"))
-		return (27);
-	else if (!ft_strcmp(input, "des3-ofb"))
 		return (26);
-	else if (!ft_strcmp(input, "des3"))
+	else if (!ft_strcmp(input, "des3-ofb"))
 		return (25);
-	else if (!ft_strcmp(input, "des-ecb"))
+	else if (!ft_strcmp(input, "des3-cbc"))
 		return (24);
-	else if (!ft_strcmp(input, "des-cbc"))
+	else if (!ft_strcmp(input, "des3"))
+		return (24);
+	else if (!ft_strcmp(input, "des-ecb"))
 		return (23);
 	else if (!ft_strcmp(input, "des-ofb"))
 		return (22);
+	else if (!ft_strcmp(input, "des-cbc"))
+		return (21);
 	else if (!ft_strcmp(input, "des"))
 		return (21);
 	return (scan_standard(input));
