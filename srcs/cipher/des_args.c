@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 20:52:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/20 01:23:25 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 01:45:46 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int			check_input(t_parse *des, char *arg, char *fname)
 
 static int			valid_arg(t_parse *des, char *arg, char *fname, int tmp)
 {
-	if ((des->fd_in == 1) && (!ft_strcmp(arg, "out") || !ft_strcmp(arg, "o")))
+	if ((des->fd_out == 1) && (!ft_strcmp(arg, "out") || !ft_strcmp(arg, "o")))
 	{
 		des->flag |= F_OUT;
 		!fname ? dprintf(2, "missing argument for '-out'\n") : 0;
