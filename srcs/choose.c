@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/20 01:26:15 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 02:18:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void			ssl_des(char **av, t_ssl *ssl)
 
 	ft_bzero(&des, sizeof(des));
 	des.args = ft_memalloc(sizeof(t_des_arg));
-	des.fd_in = 1;
+	des.fd_out = 1;
 	if (parse_des(av, &des, ssl, 1))
 		;
 	else
