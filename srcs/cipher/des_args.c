@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 20:52:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/20 01:45:46 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 20:46:09 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static int			check_input(t_parse *des, char *arg, char *fname)
 			return (-1);
 		}
 		else
-			des->args->pass = ft_strdup(fname);
+			ft_pipewrench("-s", &des->args->pass) &&\
+			(des->args->pass = ft_strdup(fname));
 	}
 	else
 		return (1);
