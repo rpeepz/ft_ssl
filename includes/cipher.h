@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/20 21:47:23 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/21 06:46:25 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,15 @@ typedef struct		s_parse
 **	--------------------------------
 */
 
+uint64_t			join_bits(uint64_t left, uint64_t right, int size);
+void				split_bits(uint64_t val, int size, uint32_t *left,\
+														uint32_t *right);
+uint64_t			reorder_bits(uint64_t src, const int *order, int n);
+uint64_t			endianflip_64bit(uint64_t val);
+
+void				key_schedule(uint64_t key, uint64_t *subkey);
+void				key_derivation(t_des_arg *des);
+char				*get_pass(t_parse des, char *cipher);
 void				des_process(t_parse des, t_ssl *ssl, char *cipher);
 
 int					base64_decode(uint8_t *enc, uint8_t *dec, int len);
