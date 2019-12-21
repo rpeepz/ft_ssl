@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/20 01:17:16 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 21:47:23 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@
 
 typedef struct		s_des_arg
 {
+	uint8_t			spec;
 	uint64_t		iv;
 	uint64_t		key;
 	uint64_t		salt;
