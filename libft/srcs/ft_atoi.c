@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 21:59:42 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/19 00:18:03 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 22:19:43 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,27 @@ unsigned long long	ft_atoull(const char *str)
 	return (n);
 }
 
+/*
+**	performs big endian output of hex
+*/
+
 unsigned long long	ft_hextoull(const char *str)
 {
 	int					i;
 	unsigned long long	n;
+	unsigned long long	val;
 
 	n = 0;
 	if (!str)
 		return (n);
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\r' ||\
-			str[i] == '\f' || str[i] == '\n' || str[i] == '\v')
-		i++;
-	while (ft_isdigit(str[i]) ||
-		(ft_toupper(str[i]) >= 'A' && ft_toupper(str[i]) <= 'F'))
+	while (i < 16 && str[i])
 	{
 		if (ft_isdigit(str[i]))
-			n = (n * 16) + (str[i] - '0');
-		else
-			n = (n * 16) + (ft_toupper(str[i]) - '7');
+			val = (str[i] - '0');
+		else if (ft_toupper(str[i]) >= 'A' && ft_toupper(str[i]) <= 'F')
+			val = (ft_toupper(str[i]) - '7');
+		n |= val << (60 - (i * 4));
 		i++;
 	}
 	return (n);
