@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 20:52:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/20 20:46:09 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/20 22:00:19 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,19 @@ static void			clear_arg(int *i, t_parse *des)
 	}
 	else if (des->args->key && des->flag & D_KEY)
 	{
+		des->args->spec |= D_KEY;
 		des->flag &= ~D_KEY;
 		++(*i);
 	}
-	else if (des->args->salt && des->flag & D_SALT)
+	else if (des->flag & D_SALT)
 	{
+		des->args->spec |= D_SALT;
 		des->flag &= ~D_SALT;
 		++(*i);
 	}
 	else if (des->args->iv && des->flag & D_VECT)
 	{
+		des->args->spec |= D_VECT;
 		des->flag &= ~D_VECT;
 		++(*i);
 	}
