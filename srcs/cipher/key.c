@@ -6,13 +6,17 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 05:43:05 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/21 06:13:35 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/21 07:07:14 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cipher.h"
 #include "hash.h"
 #include "standard.h"
+#include <readpassphrase.h>
+
+#define PASS_BUF 128
+
 
 static const int	g_permuted_choice1[56] = {
 	57, 49, 41, 33, 25, 17, 9,
@@ -89,3 +93,28 @@ void				key_derivation(t_des_arg *des)
 **
 **	Salted output
 */
+
+char					*get_pass(t_parse des, char *cipher)
+{
+	char	prompt[ft_strlen(cipher) + 27 + 1];
+	char	pass[PASS_BUF];
+	char	pass2[PASS_BUF];
+	char	*pswd;
+
+	ft_bzero(prompt, sizeof(prompt));
+	ft_strcat(prompt, "enter ");
+	ft_strcat(prompt, cipher);
+	ft_strcat(prompt, des.flag & D_FLAG ? " decryption" : " encryption");
+	ft_strcat(prompt, " password:");
+	if (!*readpassphrase(prompt, pass, PASS_BUF, 0))
+		return NULL;
+	ft_putstr_fd("Verifying - ", 2);
+	if (!*(pswd = readpassphrase(prompt, pass2, PASS_BUF, 0)))
+		return NULL;
+	if (ft_strcmp(pass, pass2))
+	{
+		ft_putstr_fd("Verify failure\n", 2);
+		return (NULL);
+	}
+	return (ft_strdup(pswd));
+}
