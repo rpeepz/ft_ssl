@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/12/18 21:51:25 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/12/21 07:06:44 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ HASH	=hash.c\
 		sha1.c
 CIPHER	=cipher.c \
 		base64.c \
+		key.c \
+		bit_operations.c \
 		des_args.c
 STAND	=prime.c \
 		rand.c
