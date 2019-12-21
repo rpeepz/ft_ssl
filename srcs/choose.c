@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/20 02:18:30 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/21 00:36:26 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,13 @@ void			ssl_des(char **av, t_ssl *ssl)
 		;
 	else
 	{
-		ft_printf("flag\t= [%.8b]\n", des.flag);
+		des_process(des, ssl, av[1]);
 		ft_printf("fd in\t= [%d]\n", des.fd_in);
 		ft_printf("fd out\t= [%d]\n", des.fd_out);
-		ft_printf("iv\t= [%llu]\n", des.args->iv);
-		ft_printf("key\t= [%llu]\n", des.args->key);
-		ft_printf("pass\t= [%s]\n", des.args->pass);
-		ft_printf("salt\t= [%llu]\n", des.args->salt);
-		des_process(des, ssl, av[1]);
+		ft_printf("iv\t= [%llX]\n", des.args->iv);
+		ft_printf("key\t= [%llX]\n", des.args->key);
+		ft_printf("salt\t= [%.16llX]\n", des.args->salt);
 	}
-	ft_strdel(&des.args->pass);
 	ft_memdel((void **)&des.args);
 }
 
