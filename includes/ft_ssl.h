@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:12:54 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 20:04:56 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/12/19 01:44:36 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 **	--------------------------------
 */
 
-# define VERSION "Ft_ssl, version 1.2a-release (x86_64-apple-darwin17)\n"
+# define VERSION "Ft_ssl, version 1.3a-release (x86_64-apple-darwin17)\n"
 # define COPYRIGHT "Copyright (C) 2019 Robert Papagna MIT License\n"
 # define VERBOSE 0
 # define HELP_KEY 'h'
