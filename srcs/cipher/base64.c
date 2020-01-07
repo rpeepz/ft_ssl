@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/18 20:00:03 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/01/06 17:35:17 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,24 @@ void			decode_driver(t_parse *b64)
 	uint8_t		buf[66];
 	uint8_t		dec[50];
 	int			len;
+	int			adj;
 
 	ft_bzero(buf, 66);
 	ft_bzero(dec, 50);
 	while ((len = read(b64->fd_in, buf, 65)) == 65)
 	{
-		buf[ft_strchri((char *)buf, '\n')] = 0;
+		adj = ft_strchri((char *)buf, '\n');
+		buf[adj >= 0 ? adj : len] = 0;
 		base64_decode(buf, dec, len);
 		dec[(len / 4) * 3] = 0;
 		ft_putstr_fd((char *)dec, b64->fd_out);
 		ft_bzero(buf, 65);
 		ft_bzero(dec, 49);
 	}
-	buf[ft_strchri((char *)buf, '\n')] = 0;
+	adj = ft_strchri((char *)buf, '\n');
+	buf[adj >= 0 ? adj : len] = 0;
+	len = (adj >= 0 ? len - 1 : len);
 	base64_decode(buf, dec, len);
-	dec[(int)((float)(len * 2) / 3.0)] = 0;
 	ft_putstr_fd((char *)dec, b64->fd_out);
 }
 
