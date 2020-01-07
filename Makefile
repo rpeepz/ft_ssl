@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/12/21 07:06:44 by rpapagna         ###   ########.fr        #
+#    Updated: 2020/01/06 18:18:56 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ CIPHER	=cipher.c \
 		base64.c \
 		key.c \
 		bit_operations.c \
-		des_args.c
+		des_args.c \
+		salt.c
 STAND	=prime.c \
 		rand.c
 RSA		=ssl_rsa.c\

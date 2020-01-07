@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:46:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/21 06:46:25 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/01/06 18:32:40 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void				split_bits(uint64_t val, int size, uint32_t *left,\
 uint64_t			reorder_bits(uint64_t src, const int *order, int n);
 uint64_t			endianflip_64bit(uint64_t val);
 
+int					handle_salt(t_parse des, uint64_t salt);
 void				key_schedule(uint64_t key, uint64_t *subkey);
 void				key_derivation(t_des_arg *des);
 char				*get_pass(t_parse des, char *cipher);

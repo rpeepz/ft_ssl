@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 00:53:07 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/21 06:46:18 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/01/06 20:24:41 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ uint64_t	mask_bits(int n)
 	i = 0;
 	while (i < n)
 	{
-		mask = (mask << 1) + 1;
-		++i;
+		mask <<= 1;
+		mask += 1;
+		i += 1;
 	}
 	return (mask);
 }

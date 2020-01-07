@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 05:43:05 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/21 07:07:14 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/01/06 20:13:35 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,6 @@ void				key_derivation(t_des_arg *des)
 	ft_strdel(&salted);
 	ft_strdel(&hash);
 }
-
-/*
-**	char		out[25];
-**
-**	ft_bzero(out, 25);
-**	ft_strcat(out, "Salted__");
-**	ft_strcat(out + 8, (char *)block);
-**	d.flag & A_FLAG ? base64_nstr_fd((uint8_t *)out, 16, d.fd_out, 0) :\
-**	ft_putstr_fd(out, d.fd_out);
-**
-**	Salted output
-*/
 
 char					*get_pass(t_parse des, char *cipher)
 {
