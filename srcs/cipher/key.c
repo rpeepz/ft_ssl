@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 05:43:05 by rpapagna          #+#    #+#             */
-/*   Updated: 2020/01/06 20:13:35 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 15:12:46 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <readpassphrase.h>
 
 #define PASS_BUF 128
-
 
 static const int	g_permuted_choice1[56] = {
 	57, 49, 41, 33, 25, 17, 9,
@@ -44,6 +43,14 @@ static const int	g_rotations[16] = {
 	1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1
 };
 
+/*
+**	the key is scrambled in the order of permuted choice 1, then
+**	split into two halves, both are left shifted by the amount
+**	given in the `g_rotation` table, using the current round as the index.
+**	both halves are joined and then scrambled based on the order of
+**	the permuted choice 2 table
+*/
+
 void				key_schedule(uint64_t key, uint64_t *subkey)
 {
 	uint32_t	left;
@@ -63,6 +70,12 @@ void				key_schedule(uint64_t key, uint64_t *subkey)
 	}
 }
 
+/*
+**	attaches specifed salt (or random salt if none is given) to the password
+**	and hashes the result, which is split in half to make the key and iv.
+**	the results are ignored if a key or iv is specified in the arguments
+*/
+
 void				key_derivation(t_des_arg *des)
 {
 	uint8_t		block[9];
@@ -81,6 +94,11 @@ void				key_derivation(t_des_arg *des)
 	ft_strdel(&salted);
 	ft_strdel(&hash);
 }
+
+/*
+**	prompt and validate password given from argument or stdin
+**	returns pass or NULL on error
+*/
 
 char					*get_pass(t_parse des, char *cipher)
 {

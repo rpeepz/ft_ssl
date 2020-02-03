@@ -6,11 +6,15 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 00:53:07 by rpapagna          #+#    #+#             */
-/*   Updated: 2020/01/06 20:24:41 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 15:54:33 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cipher.h"
+
+/*
+**	reverse endianness of a 64-bit value
+*/
 
 uint64_t	endianflip_64bit(uint64_t val)
 {
@@ -21,6 +25,10 @@ uint64_t	endianflip_64bit(uint64_t val)
 		(val & 0x00FF000000000000) >> 40 | (val & 0xFF00000000000000) >> 56
 		);
 }
+
+/*
+** return 64-bit value of `n` ones fliped on
+*/
 
 uint64_t	mask_bits(int n)
 {
@@ -38,6 +46,10 @@ uint64_t	mask_bits(int n)
 	return (mask);
 }
 
+/*
+**	join 2 `size` bit halves to form a single value
+*/
+
 uint64_t	join_bits(uint64_t left, uint64_t right, int size)
 {
 	uint64_t	mask;
@@ -47,6 +59,10 @@ uint64_t	join_bits(uint64_t left, uint64_t right, int size)
 	right = (right & mask) << (64 - (size * 2));
 	return (left + right);
 }
+
+/*
+**	split size bits of val and store in left and right pointers
+*/
 
 void		split_bits(uint64_t val, int size, uint32_t *left, uint32_t *right)
 {
@@ -58,6 +74,10 @@ void		split_bits(uint64_t val, int size, uint32_t *left, uint32_t *right)
 	*left = (val >> (64 - half)) & mask;
 	*right = (val >> (64 - (half * 2))) & mask;
 }
+
+/*
+**	shift bits from src in the table pointed by order, to the size of `n`
+*/
 
 uint64_t	reorder_bits(uint64_t src, const int *order, int n)
 {
