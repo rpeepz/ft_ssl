@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 23:45:13 by rpapagna          #+#    #+#             */
-/*   Updated: 2020/01/06 20:25:01 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:42:22 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include "cipher.h"
 #include "hash.h"
 #include "standard.h"
+
+/*
+**	send input from stdin or file to hashing function
+*/
 
 void			ssl_md5(char **av, t_ssl *ssl)
 {
@@ -41,6 +45,10 @@ void			ssl_md5(char **av, t_ssl *ssl)
 		hash(av[1], av[ssl->file_index[i]], ssl, i);
 	}
 }
+
+/*
+**	parse arguments and process base64 input or output
+*/
 
 void			ssl_b64(char **av, t_ssl *ssl)
 {
@@ -71,6 +79,10 @@ void			ssl_b64(char **av, t_ssl *ssl)
 	}
 }
 
+/*
+**	parse arguments before processing input to des encrypt/decrypt
+*/
+
 void			ssl_des(char **av, t_ssl *ssl)
 {
 	t_parse		des;
@@ -91,6 +103,10 @@ void			ssl_des(char **av, t_ssl *ssl)
 	}
 	ft_memdel((void **)&des.args);
 }
+
+/*
+**	dispatch to `standard` commands
+*/
 
 void			ssl_standard(char **av, t_ssl *ssl)
 {
