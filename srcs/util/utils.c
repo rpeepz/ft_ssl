@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 03:47:06 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/22 21:32:16 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:29:14 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ int				read_files(char **av, t_ssl *ssl, int i, int j)
 	}
 	return (j ? j : j);
 }
+
+/*
+**	reads stdin with behvior similar to openssl
+*/
 
 int				get_stdin(char **line, char *str, int x, int i)
 {

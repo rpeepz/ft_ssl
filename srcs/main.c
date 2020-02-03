@@ -6,11 +6,15 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/03 06:11:57 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/11/22 20:45:32 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:20:07 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
+
+/*
+**	frees necessary arguments for clean memory management
+*/
 
 int				clean_exit(int ac, char **av)
 {
@@ -25,6 +29,10 @@ int				clean_exit(int ac, char **av)
 	ft_memdel((void**)&av);
 	return (0);
 }
+
+/*
+**	initialize main ssl struct and runs input loop
+*/
 
 int				main(int ac, char **av)
 {

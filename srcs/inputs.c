@@ -6,12 +6,18 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 21:05:23 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/16 21:35:33 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:25:40 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
 #include "cipher.h"
+
+/*
+**	checks for existing spaces in a single string and returns true on
+**	sucessful replacement of a pointer to a char array, and a count
+**	of words in the replacement array
+*/
 
 static int		check_for_spaces(char **input, char ***av, int *ac)
 {
@@ -41,6 +47,10 @@ static int		check_for_spaces(char **input, char ***av, int *ac)
 	return (0);
 }
 
+/*
+**	gets input from stdin, returns strings split by spaces
+*/
+
 int				get_inputs(int *ac, char ***av)
 {
 	char	**replace;
@@ -68,6 +78,10 @@ int				get_inputs(int *ac, char ***av)
 	return (0);
 }
 
+/*
+**	checks argument list for flags before dispatching to hash funciton
+*/
+
 int				parse_av(char **av, t_ssl *ssl, int i, int j)
 {
 	while ((av[++i]) && av[i][0] == '-' && !(j = 0))
@@ -91,6 +105,11 @@ int				parse_av(char **av, t_ssl *ssl, int i, int j)
 	av[i] ? ssl->file_index[0] += i : 0;
 	return (0);
 }
+
+/*
+**	dispatch to the proper funcitons according to input
+**	after validation
+*/
 
 int				handle_inputs(int *ac, char ***av, t_ssl *ssl)
 {

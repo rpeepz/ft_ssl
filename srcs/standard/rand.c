@@ -6,12 +6,16 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 19:43:06 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/14 02:25:33 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:34:07 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "standard.h"
 #include "cipher.h"
+
+/*
+**	pulls between min-max specified bytes from /dev/urandom
+*/
 
 __uint64_t		genrand(__uint64_t min, __uint64_t max)
 {
@@ -38,6 +42,10 @@ __uint64_t		genrand(__uint64_t min, __uint64_t max)
 	free(buf);
 	return (tmp);
 }
+
+/*
+**	generates a random number and displays in format specified from user
+*/
 
 void			do_rand(t_ssl *ssl, int bytes)
 {
@@ -84,6 +92,10 @@ static int		valid_rand_arg(char **av, t_ssl *ssl, int *i, char *fname)
 	return (0);
 }
 
+/*
+**	Read inputs and assign flags for the rand command else throws error
+*/
+
 int				parse_rand(char **av, t_ssl *ssl, int *bytes, int i)
 {
 	while (av[++i])
@@ -112,6 +124,10 @@ int				parse_rand(char **av, t_ssl *ssl, int *bytes, int i)
 	}
 	return (0);
 }
+
+/*
+**	pre-process to the rand command, parses and validates input
+*/
 
 void			rand_command(char **av, t_ssl *ssl, int bytes)
 {
