@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:52:45 by rpapagna          #+#    #+#             */
-/*   Updated: 2020/01/06 20:15:48 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/03 16:35:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,10 @@ uint64_t			cipher(uint64_t block, uint64_t *subkey)
 	return (block);
 }
 
+/*
+**	Work on all cipher funcions above
+*/
+
 uint64_t			des_cbc(t_parse des, uint64_t n, uint64_t *subkey)
 {
 	(void)des;
@@ -250,6 +254,10 @@ uint64_t			des3_ecb(t_parse des, uint64_t n, uint64_t *subkey)
 	return 0;
 }
 
+/*
+**	read `size` bytes from desired fd, and pad until `size` is reached
+*/
+
 int					read_pad(int fd, void *p, int size)
 {
 	uint8_t	*block;
@@ -269,6 +277,10 @@ int					read_pad(int fd, void *p, int size)
 	return (1);
 }
 
+/*
+**	create subkeys, and pass input to desired ecryption method
+*/
+
 void				des_encrypt(t_parse des, t_ssl *ssl)
 {
 	uint64_t		subkey[16];
@@ -286,6 +298,10 @@ void				des_encrypt(t_parse des, t_ssl *ssl)
 		write(des.fd_out, (void *)&encrypted, 8);
 	}
 }
+
+/*
+**	get password, key, and salt, then pass to encrypt or decrypt
+*/
 
 void				des_process(t_parse des, t_ssl *ssl, char *cipher)
 {
