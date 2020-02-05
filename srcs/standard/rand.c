@@ -6,12 +6,12 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 19:43:06 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/14 02:25:33 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/05 15:39:25 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "standard.h"
-#include "encode.h"
+#include "cipher.h"
 
 __uint64_t		genrand(__uint64_t min, __uint64_t max)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   encode.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpapagna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 22:52:45 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/04 22:52:47 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/05 15:38:16 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "encode.h"
+#include "cipher.h"
 
 int					p_k_s_v(char **av, int *i, int *j, t_ssl *ssl)
 {

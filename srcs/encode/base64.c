@@ -6,11 +6,11 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:56:02 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 19:58:22 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/05 15:38:19 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "encode.h"
+#include "cipher.h"
 
 unsigned char	g_base64[64] =
 {

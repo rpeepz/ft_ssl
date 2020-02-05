@@ -6,12 +6,12 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/30 17:28:48 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/12/17 11:52:06 by rpapagna         ###   ########.fr       */
+/*   Updated: 2020/02/05 15:32:15 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl.h"
-#include "encode.h"
+#include "cipher.h"
 #include "hash.h"
 #include "rsa.h"
 #include "standard.h"

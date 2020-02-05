@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/01 20:19:37 by rpapagna          #+#    #+#              #
-#    Updated: 2019/12/16 19:21:40 by rpapagna         ###   ########.fr        #
+#    Updated: 2020/02/05 15:39:10 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,7 @@ $(OBJ_PATH):
 $(OBJ_PATH)/%.o: srcs/%.c includes/*.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:##        :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
-$(OBJ_PATH)/%.o: srcs/encode/%.c includes/encode.h | $(OBJ_PATH)
+$(OBJ_PATH)/%.o: srcs/encode/%.c includes/cipher.h | $(OBJ_PATH)
 		@printf "[$(NAME)]\t[:####      :]\r"
 		@gcc $(CFLAGS) -I $(INCL) -o $@ -c $<
 $(OBJ_PATH)/%.o: srcs/hash/%.c includes/hash.h | $(OBJ_PATH)
